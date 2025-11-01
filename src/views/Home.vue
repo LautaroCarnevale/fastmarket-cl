@@ -1,12 +1,10 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import Market from '../assets/icons/Market.vue';
 </script>
 
 <template>
     <section
              class="min-h-screen bg-linear-to-b from-rose-50 via-orange-50 to-white flex flex-col items-center justify-center px-4">
-        <!-- Header -->
         <section class="text-center mb-10">
             <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight">FastMarket</h1>
             <p class="mt-2 text-gray-600 text-lg max-w-md mx-auto">
@@ -14,7 +12,6 @@ import Market from '../assets/icons/Market.vue';
             </p>
         </section>
 
-        <!-- Card principal -->
         <section class="bg-white rounded-2xl p-8 w-full max-w-md text-center border border-gray-300">
             <h2 class="text-2xl font-semibold text-gray-800 mb-6">Bienvenido</h2>
             <p class="text-gray-500 mb-9">Accede a tu cuenta o crea una nueva</p>
@@ -31,7 +28,6 @@ import Market from '../assets/icons/Market.vue';
             </div>
         </section>
 
-        <!-- Accesos Rápidos -->
         <section class="flex flex-wrap justify-center gap-8 mt-15">
             <div class="flex flex-col items-center gap-2 min-w-[100px]">
                 <div class="bg-orange-100 p-4 rounded-xl shadow-sm flex items-center">
@@ -55,7 +51,6 @@ import Market from '../assets/icons/Market.vue';
             </div>
         </section>
 
-        <!-- Acceso Admin -->
         <section class="mt-12">
             <RouterLink to="/admin"
                         class="text-sm text-red-600 font-medium hover:underline cursor-pointer">

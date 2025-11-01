@@ -32,7 +32,7 @@ import { useAuthStore } from '../../store/auth'
 
 const auth = useAuthStore()
 
-const logout = () => {
+const logout = () => {  
   auth.logout()
 }
 

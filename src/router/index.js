@@ -75,15 +75,12 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const auth = useAuthStore()
     const isAuthenticated = auth?.isAuthenticated
-    const userRole = auth?.user?.roles?.find(r =>
-        ['vendor', 'driver', 'admin'].includes(r)
-    )
 
     if (!isAuthenticated) {
         try {
-            await auth.initializeAuth() 
+            await auth.initializeAuth()
         } catch {
-            // no hacemos nada
+            return next({ name: 'Login' })
         }
     }
 

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from '../api/index'
-import { loginRequest, validateSessionRequest } from '../api/auth'
+import { loginRequest, logoutRequest, validateSessionRequest } from '../api/auth'
 import router from '../router'
 
 export const useAuthStore = defineStore('auth', {
@@ -24,7 +24,6 @@ export const useAuthStore = defineStore('auth', {
 				if (role == 'vendor') router.push('/vendor/panel')
 				else if (role == 'driver') router.push('/driver/panel')
 				else if (role == 'admin') router.push('/admin/panel')
-				localStorage.setItem('token', this.token)
 			} catch (err) {
 				this.error = err.response?.data?.message || 'Error al iniciar sesión'
 				throw err
@@ -70,11 +69,17 @@ export const useAuthStore = defineStore('auth', {
 				this.isAuthenticated = false
 			}
 		},
-		logout() {
-			this.user = null
-			this.token = null
-			this.isAuthenticated = false
-			localStorage.removeItem('token')
+		async logout() {
+			try {
+				await logoutRequest() 
+			} catch (err) {
+				console.error('Error cerrando sesión:', err)
+			} finally {
+				this.user = null
+				this.token = null
+				this.isAuthenticated = false
+				router.push('/login')
+			}
 		},
 
 		setUser(user) {
