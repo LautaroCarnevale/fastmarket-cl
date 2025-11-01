@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@plugin "@iconify/tailwind4";
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+ 
+  background-color: #f5f5f5;
+
+}
+
+
