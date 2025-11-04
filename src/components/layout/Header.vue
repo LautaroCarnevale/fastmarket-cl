@@ -10,7 +10,6 @@
         <h1 class="text-xl font-semibold text-gray-800">FastMarket</h1>
       </RouterLink>
 
-      <!-- Navegación -->
       <nav class="hidden md:flex gap-6 text-gray-700 font-medium">
         <RouterLink to="/"
                     class="hover:text-blue-600 transition">Inicio</RouterLink>

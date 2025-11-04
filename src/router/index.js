@@ -1,76 +1,91 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { h } from 'vue'
 
-// --- Importación de vistas principales ---
+
+// --- Vistas principales ---
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 
-// --- Paneles ---
+// --- Layouts de panel ---
+import MarketplacePanel from '../views/MarketplacePanel.vue'
+import AdminPanel from '../views/AdminPanel.vue'
 import VendorPanel from '../views/VendorPanel.vue'
 import DriverPanel from '../views/DriverPanel.vue'
-import AdminPanel from '../views/AdminPanel.vue'
 
-// --- Guards opcionales (ej: autenticación, roles) ---
+// --- Pinia ---
 import { useAuthStore } from '../store/auth'
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        // --- Usuario final ---
+        // --- Público ---
+        { path: '/', name: 'Home', component: Home, meta: { layout: 'default' } },
+        { path: '/login', name: 'Login', component: Login, meta: { guest: true, layout: 'auth' } },
+        { path: '/register', name: 'Register', component: Register, meta: { guest: true, layout: 'auth' } },
+
+        // --- USUARIO FINAL ---
         {
-            path: '/',
-            name: 'Home',
-            component: Home,
-            meta: { layout: 'default' }
+            path: '/vendors',
+            component: MarketplacePanel,
+            meta: { requiresAuth: true, role: 'user', layout: 'dashboard' },
+            children: [
+                { path: '', name: 'UserVendors', component: { render: () => h('span', 'Listado de Restaurantes') } },
+                { path: ':id', name: 'UserVendorDetail', component: { render: () => h('span', 'Detalle del Restaurante') } },
+                { path: 'cart', name: 'UserCart', component: { render: () => h('span', 'Carrito de Compras') } },
+                { path: 'checkout', name: 'UserCheckout', component: { render: () => h('span', 'Finalizar Pedido') } },
+                { path: 'orders', name: 'UserOrders', component: { render: () => h('span', 'Historial de Pedidos') } },
+            ],
         },
 
-        // --- Autenticación ---
-        {
-            path: '/login',
-            name: 'Login',
-            component: Login,
-            meta: { guest: true, layout: 'auth' }
-        },
-        {
-            path: '/register',
-            name: 'Register',
-            component: Register,
-            meta: { guest: true, layout: 'auth' }
-        },
-
-        // --- Paneles ---
-        {
-            path: '/vendor/panel',
-            name: 'VendorPanel',
-            component: VendorPanel,
-            meta: { requiresAuth: true, role: 'vendor', layout: 'dashboard' }
-        },
-        {
-            path: '/driver/panel',
-            name: 'DriverPanel',
-            component: DriverPanel,
-            meta: { requiresAuth: true, role: 'driver', layout: 'dashboard' }
-        },
-        {
-            path: '/admin',
-            name: 'AdminLogin',
-            component: Login,
-            meta: { layout: 'default' }
-        },
+        // --- ADMIN ---
         {
             path: '/admin/panel',
-            name: 'AdminPanel',
             component: AdminPanel,
-            meta: { requiresAuth: true, role: 'admin', layout: 'dashboard' }
+            meta: { requiresAuth: true, role: 'admin', layout: 'dashboard' },
+            children: [
+                { path: '', name: 'AdminDashboard', component: { render: () => h('span', 'Admin Dashboard') } },
+                { path: 'vendors', name: 'AdminVendors', component: { render: () => h('span', 'Admin Vendors') } },
+                { path: 'drivers', name: 'AdminDrivers', component: { render: () => h('span', 'Admin Drivers') } },
+                { path: 'users', name: 'AdminUsers', component: { render: () => h('span', 'Admin Users') } },
+                { path: 'reports', name: 'AdminReports', component: { render: () => h('span', 'Admin Reports') } },
+                { path: 'settings', name: 'AdminSettings', component: { render: () => h('span', 'Admin Settings') } },
+            ],
+        },
+
+        // --- VENDOR ---
+        {
+            path: '/vendor/panel',
+            component: VendorPanel,
+            meta: { requiresAuth: true, role: 'vendor', layout: 'dashboard' },
+            children: [
+                { path: '', name: 'VendorDashboard', component: { render: () => h('span', 'Vendor Dashboard') } },
+                { path: 'orders', name: 'VendorOrders', component: { render: () => h('span', 'Vendor Orders') } },
+                { path: 'menu', name: 'VendorMenu', component: { render: () => h('span', 'Vendor Menu') } },
+                { path: 'promotions', name: 'VendorPromotions', component: { render: () => h('span', 'Vendor Promotions') } },
+                { path: 'sales', name: 'VendorSales', component: { render: () => h('span', 'Vendor Sales') } },
+            ],
+        },
+
+        // --- DRIVER ---
+        {
+            path: '/driver/panel',
+            component: DriverPanel,
+            meta: { requiresAuth: true, role: 'driver', layout: 'dashboard' },
+            children: [
+                { path: '', name: 'DriverDashboard', component: { render: () => h('span', 'Driver Dashboard') } },
+                { path: 'available', name: 'DriverAvailableOrders', component: { render: () => h('span', 'Driver Available Orders') } },
+                { path: 'deliveries', name: 'DriverMyDeliveries', component: { render: () => h('span', 'Driver My Deliveries') } },
+                { path: 'earnings', name: 'DriverEarnings', component: { render: () => h('span', 'Driver Earnings') } },
+                { path: 'profile', name: 'DriverProfile', component: { render: () => h('span', 'Driver Profile') } },
+            ],
         },
 
         // --- Fallback ---
-        {
-            path: '/:pathMatch(.*)*',
-            redirect: '/'
-        }
-    ]
+        { path: '/:pathMatch(.*)*', redirect: '/' },
+    ],
 })
+
 
 router.beforeEach(async (to, from, next) => {
     const auth = useAuthStore()
@@ -80,14 +95,12 @@ router.beforeEach(async (to, from, next) => {
         try {
             await auth.initializeAuth()
         } catch {
-            return next({ name: 'Login' })
+            // ignorar errores
         }
     }
 
     const authenticated = auth.isAuthenticated
-    const role = auth.user?.roles?.find(r =>
-        ['vendor', 'driver', 'admin'].includes(r)
-    )
+    const role = auth.user?.roles?.find(r => ['user', 'vendor', 'driver', 'admin'].includes(r))
 
     if (to.meta.requiresAuth && !authenticated) {
         return next({ name: 'Login' })
@@ -98,14 +111,14 @@ router.beforeEach(async (to, from, next) => {
     }
 
     if (['Login', 'Register'].includes(to.name) && authenticated) {
-        if (role === 'vendor') return next({ name: 'VendorPanel' })
-        if (role === 'driver') return next({ name: 'DriverPanel' })
-        if (role === 'admin') return next({ name: 'AdminPanel' })
+        if (role === 'user') return next({ name: 'UserVendors' })
+        if (role === 'vendor') return next({ name: 'VendorDashboard' })
+        if (role === 'driver') return next({ name: 'DriverDashboard' })
+        if (role === 'admin') return next({ name: 'AdminDashboard' })
         return next({ name: 'Home' })
     }
 
     next()
 })
-
 
 export default router

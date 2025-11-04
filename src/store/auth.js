@@ -71,7 +71,7 @@ export const useAuthStore = defineStore('auth', {
 		},
 		async logout() {
 			try {
-				await logoutRequest() 
+				await logoutRequest()
 			} catch (err) {
 				console.error('Error cerrando sesión:', err)
 			} finally {
