@@ -1,114 +1,112 @@
 <template>
-    <header class="bg-white border-b border-gray-200 flex justify-between items-center px-6 py-3 shadow-sm">
-        <h1 class="text-lg font-semibold text-gray-800">
-            {{ pageTitle }}
-        </h1>
-
-        <div class="flex items-center gap-5">
-            <RouterLink v-if="userRole === 'user'"
-                        to="/vendors/cart"
-                        class="relative text-gray-600 hover:text-blue-600 transition">
-                <span class="icon-[mdi--cart-outline] w-6 h-6"></span>
-                <span v-if="cartCount > 0"
-                      class="absolute -top-2 -right-2 bg-blue-600 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                    {{ cartCount }}
-                </span>
+    <header class="bg-white border-b border-gray-200 flex items-center justify-between px-6 py-3 shadow-sm">
+        <div class="flex items-center gap-4">
+            <RouterLink to="/"
+                        class="flex items-center gap-2">
+                <span class="text-lg font-semibold text-gray-800">FastMarket</span>
             </RouterLink>
 
-            <div class="flex items-center gap-3">
-                <img :src="user.avatar || '/default-avatar.png'"
-                     alt="avatar"
-                     class="w-9 h-9 rounded-full object-cover border border-gray-200" />
-                <div class="text-right">
-                    <p class="text-sm font-medium text-gray-800">{{ user.name }}</p>
-                    <p class="text-xs text-gray-500 capitalize">{{ userRoleLabel }}</p>
-                </div>
-            </div>
+            <div class="h-6 w-px bg-gray-300"></div>
 
-            <button @click="logout"
-                    class="text-sm text-red-600 hover:text-red-700 transition">
-                <span class="icon-[lucide--log-out] w-5 h-5 bg-black"></span>
-            </button>
+            <template v-if="userRole === 'user'">
+                <div class="flex items-center gap-2 text-sm text-gray-700">
+                    <span class="icon-[mdi--map-marker-outline] w-5 h-5 text-gray-500"></span>
+                    <p class="truncate max-w-[180px]">
+                        {{ userAddress || 'Selecciona tu dirección' }}
+                    </p>
+                </div>
+                <div class="h-6 w-px bg-gray-300"></div>
+            </template>
+
+            <nav v-if="userRole !== 'user'"
+                 class="flex items-center gap-4 text-sm text-gray-700">
+                <RouterLink v-for="link in commonLinks"
+                            :key="link.to"
+                            :to="link.to"
+                            class="hover:text-blue-600 transition"
+                            active-class="text-blue-700 font-medium">
+                    {{ link.label }}
+                </RouterLink>
+            </nav>
+        </div>
+
+        <div class="flex items-center gap-5 relative">
+            <div class="relative ">
+                <button @click="toggleUserMenu"
+                        title="Mi perfil"
+                        class="w-10 h-10 rounded-full overflow-hidden border border-gray-300 hover:opacity-90 transition cursor-pointer">
+                    <img :src="user.avatar || DefaultAvatar"
+                         alt="Perfil"
+                         class="w-full h-full object-cover" />
+                </button>
+
+                <UserMenu ref="userMenuRef" />
+            </div>
         </div>
     </header>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
+import { RouterLink } from 'vue-router'
 import { useAuthStore } from '../../store/auth'
-import { useRoute } from 'vue-router'
+import DefaultAvatar from '../../assets/images/person.png'
+import UserMenu from '../UserMenu.vue'
 
 const auth = useAuthStore()
-const route = useRoute()
+const userMenuRef = ref(null)
 
-// Usuario logueado o invitado
 const user = computed(() => auth.user || { name: 'Invitado', roles: ['guest'] })
 
-// Rol principal
-const userRole = computed(() =>
-    user.value.roles?.find((r) =>
-        ['user', 'vendor', 'driver', 'admin'].includes(r)
-    ) || 'guest'
+const userRole = computed(
+    () =>
+        user.value.roles?.find((r) =>
+            ['user', 'vendor', 'driver', 'admin'].includes(r)
+        ) || 'guest'
 )
 
-// Label legible del rol
-const userRoleLabel = computed(() => {
-    const labels = {
-        user: 'Cliente',
-        vendor: 'Comercio',
-        driver: 'Repartidor',
-        admin: 'Administrador',
-        guest: 'Invitado',
-    }
-    return labels[userRole.value] || 'Invitado'
-})
-
-// Contador ficticio de carrito (puedes conectar tu store del carrito)
-const cartCount = computed(() => 0)
-
-// Logout
 const logout = () => auth.logout()
 
-// Mapa de títulos por ruta
-const pageTitle = computed(() => {
-    const path = route.path
-
-    const map = {
-        // --- ADMIN ---
-        '/admin/panel': 'Panel de Administración',
-        '/admin/panel/vendors': 'Gestión de Comercios',
-        '/admin/panel/drivers': 'Gestión de Repartidores',
-        '/admin/panel/users': 'Gestión de Usuarios',
-        '/admin/panel/reports': 'Reportes',
-        '/admin/panel/settings': 'Configuración',
-
-        // --- VENDOR ---
-        '/vendor/panel': 'Panel del Comercio',
-        '/vendor/panel/orders': 'Pedidos',
-        '/vendor/panel/menu': 'Menú',
-        '/vendor/panel/promotions': 'Promociones',
-        '/vendor/panel/sales': 'Ventas',
-
-        // --- DRIVER ---
-        '/driver/panel': 'Panel del Repartidor',
-        '/driver/panel/available': 'Pedidos Disponibles',
-        '/driver/panel/deliveries': 'Mis Entregas',
-        '/driver/panel/earnings': 'Mis Ganancias',
-        '/driver/panel/profile': 'Perfil',
-
-        // --- USER ---
-        '/vendors': 'Restaurantes',
-        '/vendors/cart': 'Mi Carrito',
-        '/vendors/checkout': 'Finalizar Pedido',
-        '/vendors/orders': 'Mis Pedidos',
+const userAddress = computed(() => {
+    const addresses = auth.user?.addresses
+    if (addresses?.length) {
+        const main = addresses.find((a) => a.main) || addresses[0]
+        return `${main.street}`
     }
+    return null
+})
 
-    return map[path] || 'Panel'
+const toggleUserMenu = () => {
+    if (userMenuRef.value) userMenuRef.value.openMenu()
+}
+
+const commonLinks = computed(() => {
+    const role = userRole.value
+    if (role === 'admin') {
+        return [
+            { label: 'Comercios', to: '/admin/panel/vendors' },
+            { label: 'Repartidores', to: '/admin/panel/drivers' },
+            { label: 'Usuarios', to: '/admin/panel/users' },
+            { label: 'Reportes', to: '/admin/panel/reports' },
+            { label: 'Configuración', to: '/admin/panel/settings' },
+        ]
+    }
+    if (role === 'vendor') {
+        return [
+            { label: 'Pedidos', to: '/vendor/panel/orders' },
+            { label: 'Menú', to: '/vendor/panel/menu' },
+            { label: 'Promociones', to: '/vendor/panel/promotions' },
+            { label: 'Ventas', to: '/vendor/panel/sales' },
+        ]
+    }
+    if (role === 'driver') {
+        return [
+            { label: 'Disponibles', to: '/driver/panel/available' },
+            { label: 'Mis Entregas', to: '/driver/panel/deliveries' },
+            { label: 'Ganancias', to: '/driver/panel/earnings' },
+            { label: 'Perfil', to: '/driver/panel/profile' },
+        ]
+    }
+    return []
 })
 </script>
-
-<style scoped>
-.icon-[mdi--cart-outline] {
-    display: inline-block;
-}
-</style>
