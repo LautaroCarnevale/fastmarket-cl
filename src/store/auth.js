@@ -1,3 +1,4 @@
+// src/store/auth.js
 import { defineStore } from 'pinia'
 import axios from '../api/index'
 import { loginRequest, logoutRequest, validateSessionRequest } from '../api/auth'
@@ -10,25 +11,32 @@ export const useAuthStore = defineStore('auth', {
 		token: null,
 		isAuthenticated: false,
 		loading: false,
-		error: null
+		error: null,
 	}),
 
+	getters: {
+		role: (state) => state.user?.roles?.find((r) => Object.values(ROLES).includes(r)) || null,
+		isAdmin: (state) => state.user?.roles?.includes(ROLES.ADMIN),
+		isVendor: (state) => state.user?.roles?.includes(ROLES.VENDOR),
+		isDriver: (state) => state.user?.roles?.includes(ROLES.DRIVER),
+		isUser: (state) => state.user?.roles?.includes(ROLES.USER),
+	},
+
 	actions: {
+		// --- LOGIN ---
 		async login(credentials) {
+			this.loading = true
 			try {
-				this.loading = true
 				const res = await loginRequest(credentials)
 				this.user = res
 				this.token = res.token
 				this.isAuthenticated = true
-				const role = res.roles.find(r => Object.values(ROLES).includes(r))
 
-				if (role && ROLE_ROUTES[role]) {
-					router.push(ROLE_ROUTES[role])
-				} else {
-					console.warn('Rol desconocido:', role)
-					router.push('/')
-				}
+				const role = this.role
+				const redirect = ROLE_ROUTES[role] || '/'
+
+				router.push(redirect)
+				return res
 			} catch (err) {
 				this.error = err.response?.data?.message || 'Error al iniciar sesión'
 				throw err
@@ -37,18 +45,22 @@ export const useAuthStore = defineStore('auth', {
 			}
 		},
 
+		// --- REGISTER ---
 		async register(data) {
+			this.loading = true
 			try {
-				this.loading = true
 				await axios.post('/auth/register', data)
 			} catch (err) {
 				this.error = err.response?.data?.message || 'Error al registrarse'
+				throw err
 			} finally {
 				this.loading = false
 			}
 		},
 
+		// --- VALIDAR SESIÓN (COOKIE) ---
 		async initializeAuth() {
+			this.loading = true
 			try {
 				const user = await validateSessionRequest()
 
@@ -56,41 +68,50 @@ export const useAuthStore = defineStore('auth', {
 					this.user = user
 					this.isAuthenticated = true
 
-					const currentPath = router.currentRoute.value.path
-					const isAuthPage = ['/login', '/register'].includes(currentPath)
+					const path = router.currentRoute.value.path
+					const isAuthPage = ['/login', '/register'].includes(path)
 
 					if (isAuthPage) {
-						const role = user.roles.find(r => Object.values(ROLES).includes(r))
+						const role = this.role
 						const redirect = ROLE_ROUTES[role] || '/'
-
 						router.push(redirect)
 					}
 				} else {
-					this.user = null
-					this.isAuthenticated = false
+					this.resetAuth()
 				}
 			} catch (err) {
-				this.user = null
-				this.isAuthenticated = false
+				this.resetAuth()
 				this.error = err?.message || 'Error al validar sesión'
+			} finally {
+				this.loading = false
 			}
 		},
+
+		// --- LOGOUT ---
 		async logout() {
+			this.loading = true
 			try {
 				await logoutRequest()
 			} catch (err) {
-				console.error('Error cerrando sesión:', err)
+				console.warn('Error cerrando sesión:', err)
 			} finally {
-				this.user = null
-				this.token = null
-				this.isAuthenticated = false
+				this.resetAuth()
 				router.push('/login')
 			}
 		},
 
+		// --- UTILITARIOS ---
 		setUser(user) {
 			this.user = user
 			this.isAuthenticated = !!user
-		}
-	}
+		},
+
+		resetAuth() {
+			this.user = null
+			this.token = null
+			this.isAuthenticated = false
+			this.loading = false
+			this.error = null
+		},
+	},
 })

@@ -15,6 +15,7 @@ import DriverPanel from '../views/DriverPanel.vue'
 
 // --- Pinia ---
 import { useAuthStore } from '../store/auth'
+import { ROLES } from '../constants/roles'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -26,12 +27,12 @@ const router = createRouter({
 
         // --- USUARIO FINAL ---
         {
-            path: '/vendors',
+            path: '/marketplace',
             component: MarketplacePanel,
             meta: { requiresAuth: true, role: 'user', layout: 'dashboard' },
             children: [
-                { path: '', name: 'UserVendors', component: { render: () => h('span', 'Listado de Restaurantes') } },
-                { path: ':id', name: 'UserVendorDetail', component: { render: () => h('span', 'Detalle del Restaurante') } },
+                { path: '', name: 'UserMarketplace', component: MarketplacePanel  },
+                { path: 'restaurantes/:id', name: 'UserVendorDetail', component: { render: () => h('span', 'Detalle del Restaurante') } },
                 { path: 'cart', name: 'UserCart', component: { render: () => h('span', 'Carrito de Compras') } },
                 { path: 'checkout', name: 'UserCheckout', component: { render: () => h('span', 'Finalizar Pedido') } },
                 { path: 'orders', name: 'UserOrders', component: { render: () => h('span', 'Historial de Pedidos') } },
@@ -42,7 +43,7 @@ const router = createRouter({
         {
             path: '/admin/panel',
             component: AdminPanel,
-            meta: { requiresAuth: true, role: 'admin', layout: 'dashboard' },
+            meta: { requiresAuth: true, role: ROLES.ADMIN, layout: 'dashboard' },
             children: [
                 { path: '', name: 'AdminDashboard', component: { render: () => h('span', 'Admin Dashboard') } },
                 { path: 'vendors', name: 'AdminVendors', component: { render: () => h('span', 'Admin Vendors') } },
@@ -57,7 +58,7 @@ const router = createRouter({
         {
             path: '/vendor/panel',
             component: VendorPanel,
-            meta: { requiresAuth: true, role: 'vendor', layout: 'dashboard' },
+            meta: { requiresAuth: true, role: ROLES.VENDOR_STAFF, layout: 'dashboard' },
             children: [
                 { path: '', name: 'VendorDashboard', component: { render: () => h('span', 'Vendor Dashboard') } },
                 { path: 'orders', name: 'VendorOrders', component: { render: () => h('span', 'Vendor Orders') } },
@@ -71,7 +72,7 @@ const router = createRouter({
         {
             path: '/driver/panel',
             component: DriverPanel,
-            meta: { requiresAuth: true, role: 'driver', layout: 'dashboard' },
+            meta: { requiresAuth: true, role: ROLES.DRIVER, layout: 'dashboard' },
             children: [
                 { path: '', name: 'DriverDashboard', component: { render: () => h('span', 'Driver Dashboard') } },
                 { path: 'available', name: 'DriverAvailableOrders', component: { render: () => h('span', 'Driver Available Orders') } },
@@ -100,7 +101,7 @@ router.beforeEach(async (to, from, next) => {
     }
 
     const authenticated = auth.isAuthenticated
-    const role = auth.user?.roles?.find(r => ['user', 'vendor', 'driver', 'admin'].includes(r))
+    const role = auth.user?.roles.find(r => Object.values(ROLES).includes(r))
 
     if (to.meta.requiresAuth && !authenticated) {
         return next({ name: 'Login' })
@@ -111,10 +112,10 @@ router.beforeEach(async (to, from, next) => {
     }
 
     if (['Login', 'Register'].includes(to.name) && authenticated) {
-        if (role === 'user') return next({ name: 'UserVendors' })
-        if (role === 'vendor') return next({ name: 'VendorDashboard' })
-        if (role === 'driver') return next({ name: 'DriverDashboard' })
-        if (role === 'admin') return next({ name: 'AdminDashboard' })
+        if (role === ROLES.USER) return next({ name: 'UserMarketplace' })
+        if (role === ROLES.VENDOR_STAFF) return next({ name: 'VendorDashboard' })
+        if (role === ROLES.DRIVER) return next({ name: 'DriverDashboard' })
+        if (role === ROLES.ADMIN) return next({ name: 'AdminDashboard' })
         return next({ name: 'Home' })
     }
 
