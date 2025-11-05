@@ -23,7 +23,6 @@ export const useAuthStore = defineStore('auth', {
 	},
 
 	actions: {
-		// --- LOGIN ---
 		async login(credentials) {
 			this.loading = true
 			try {
@@ -45,7 +44,6 @@ export const useAuthStore = defineStore('auth', {
 			}
 		},
 
-		// --- REGISTER ---
 		async register(data) {
 			this.loading = true
 			try {
@@ -58,7 +56,6 @@ export const useAuthStore = defineStore('auth', {
 			}
 		},
 
-		// --- VALIDAR SESIÓN (COOKIE) ---
 		async initializeAuth() {
 			this.loading = true
 			try {
@@ -87,7 +84,6 @@ export const useAuthStore = defineStore('auth', {
 			}
 		},
 
-		// --- LOGOUT ---
 		async logout() {
 			this.loading = true
 			try {
@@ -100,7 +96,6 @@ export const useAuthStore = defineStore('auth', {
 			}
 		},
 
-		// --- UTILITARIOS ---
 		setUser(user) {
 			this.user = user
 			this.isAuthenticated = !!user

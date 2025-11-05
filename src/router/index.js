@@ -16,6 +16,8 @@ import DriverPanel from '../views/DriverPanel.vue'
 // --- Pinia ---
 import { useAuthStore } from '../store/auth'
 import { ROLES } from '../constants/roles'
+import VendorDetail from '../views/VendorDetail.vue'
+import MarketplaceLayout from '../components/layout/MarketplaceLayout.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -28,11 +30,11 @@ const router = createRouter({
         // --- USUARIO FINAL ---
         {
             path: '/marketplace',
-            component: MarketplacePanel,
+            component: MarketplaceLayout,
             meta: { requiresAuth: true, role: 'user', layout: 'dashboard' },
             children: [
-                { path: '', name: 'UserMarketplace', component: MarketplacePanel  },
-                { path: 'restaurantes/:id', name: 'UserVendorDetail', component: { render: () => h('span', 'Detalle del Restaurante') } },
+                { path: '', name: 'UserMarketplace', component: MarketplacePanel },
+                { path: 'restaurantes/:id', name: 'UserVendorDetail', component: VendorDetail },
                 { path: 'cart', name: 'UserCart', component: { render: () => h('span', 'Carrito de Compras') } },
                 { path: 'checkout', name: 'UserCheckout', component: { render: () => h('span', 'Finalizar Pedido') } },
                 { path: 'orders', name: 'UserOrders', component: { render: () => h('span', 'Historial de Pedidos') } },

@@ -1,37 +1,53 @@
 import { defineStore } from 'pinia'
-import axios from '../api/vendors'
-
+import { getVendors, getVendorById } from '../api/vendors'
+import vendors from '../json/vendors.json'
 export const useVendorsStore = defineStore('vendors', {
-  state: () => ({
-    vendors: [],
-    selectedVendor: null,
-    loading: false,
-    error: null
-  }),
+	state: () => ({
+		vendors: vendors,
+		selectedVendor: null,
+		loading: false,
+		error: null
+	}),
 
-  actions: {
-    async fetchVendors(query = '') {
-      try {
-        this.loading = true
-        const res = await axios.get(`/vendors?search=${query}`)
-        this.vendors = res.data
-      } catch (err) {
-        this.error = err.response?.data?.message || 'Error al cargar comercios'
-      } finally {
-        this.loading = false
-      }
-    },
+	getters: {
+		promotedVendors: (state) => state.vendors.filter((v) => v.promoted),
+		filteredByCategory: (state) => (category) =>
+			category
+				? state.vendors.filter((v) => v.category === category)
+				: state.vendors,
+	},
 
-    async fetchVendorById(id) {
-      try {
-        this.loading = true
-        const res = await axios.get(`/vendors/${id}`)
-        this.selectedVendor = res.data
-      } catch (err) {
-        this.error = err.response?.data?.message || 'No se encontró el comercio'
-      } finally {
-        this.loading = false
-      }
-    }
-  }
+	actions: {
+		async fetchVendors(query = '') {
+			this.loading = true
+			this.error = null
+			try {
+				const res = await getVendors(query)
+				this.vendors = res
+			} catch (err) {
+				this.error = err.message || 'Error al cargar comercios'
+			} finally {
+				this.loading = false
+			}
+		},
+
+		async fetchVendorById(id) {
+			this.loading = true
+			this.error = null
+			try {
+				const res = await getVendorById(id)
+				this.selectedVendor = res
+			} catch (err) {
+				this.error = err.message || 'No se encontró el comercio'
+			} finally {
+				this.loading = false
+			}
+		},
+		setSelectedVendor(vendor) {
+			this.selectedVendor = vendor
+		},
+		clearSelectedVendor() {
+			this.selectedVendor = null
+		},
+	},
 })
