@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from '../api/index'
 import { loginRequest, logoutRequest, validateSessionRequest } from '../api/auth'
 import router from '../router'
+import { ROLE_ROUTES, ROLES } from '../constants/roles'
 
 export const useAuthStore = defineStore('auth', {
 	state: () => ({
@@ -20,10 +21,14 @@ export const useAuthStore = defineStore('auth', {
 				this.user = res
 				this.token = res.token
 				this.isAuthenticated = true
-				const role = res.roles.find(role => role === 'vendor' || role === 'driver' || role === 'admin')
-				if (role == 'vendor') router.push('/vendor/panel')
-				else if (role == 'driver') router.push('/driver/panel')
-				else if (role == 'admin') router.push('/admin/panel')
+				const role = res.roles.find(r => Object.values(ROLES).includes(r))
+
+				if (role && ROLE_ROUTES[role]) {
+					router.push(ROLE_ROUTES[role])
+				} else {
+					console.warn('Rol desconocido:', role)
+					router.push('/')
+				}
 			} catch (err) {
 				this.error = err.response?.data?.message || 'Error al iniciar sesión'
 				throw err
@@ -51,22 +56,23 @@ export const useAuthStore = defineStore('auth', {
 					this.user = user
 					this.isAuthenticated = true
 
-					const path = router.currentRoute.value.path
+					const currentPath = router.currentRoute.value.path
+					const isAuthPage = ['/login', '/register'].includes(currentPath)
 
-					if (path === '/login' || path === '/register') {
-						const role = user.roles.find(role => role === 'vendor' || role === 'driver' || role === 'admin')
-						if (role === 'vendor') router.push('/vendor/panel')
-						else if (role === 'driver') router.push('/driver/panel')
-						else if (role === 'admin') router.push('/admin/panel')
-						else router.push('/')
+					if (isAuthPage) {
+						const role = user.roles.find(r => Object.values(ROLES).includes(r))
+						const redirect = ROLE_ROUTES[role] || '/'
+
+						router.push(redirect)
 					}
 				} else {
 					this.user = null
 					this.isAuthenticated = false
 				}
-			} catch {
+			} catch (err) {
 				this.user = null
 				this.isAuthenticated = false
+				this.error = err?.message || 'Error al validar sesión'
 			}
 		},
 		async logout() {
