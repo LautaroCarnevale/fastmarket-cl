@@ -3,9 +3,13 @@ import { ref } from "vue";
 import { RouterLink } from "vue-router";
 import { useAuthStore } from "../store/auth";
 import { Form, Field, ErrorMessage } from "vee-validate";
+import { ROLES } from "../constants/roles";
 
-const selectedType = ref("usuario");
-const auth = useAuthStore()
+import Input from "../components/ui/Input.vue";
+import Button from "../components/ui/Button.vue";
+
+const selectedType = ref(ROLES.USER);
+const auth = useAuthStore();
 
 const form = ref({
     email: "",
@@ -13,16 +17,16 @@ const form = ref({
 });
 
 async function onSubmit(values, { setErrors, setFieldError }) {
+    setErrors({});
     try {
         const payload = {
             email: values.email,
             password: values.password,
-            // tipoCuenta: selectedType.value
+            selectedType: selectedType.value,
         };
 
         await auth.login(payload);
     } catch (err) {
-        // erroes generales: ej: "usuario ya existente"
         if (err?.errors && typeof err.errors === "object") {
             setErrors(err.errors);
         } else if (Array.isArray(err?.message)) {
@@ -45,33 +49,33 @@ async function onSubmit(values, { setErrors, setFieldError }) {
     <div class="mb-6">
         <h3 class="text-sm font-medium text-gray-700 mb-2">Tipo de cuenta</h3>
         <div class="grid grid-cols-3 gap-3">
-            <button @click="selectedType = 'usuario'"
+            <button @click="selectedType = ROLES.USER"
                     :class="[
                         'flex flex-col items-center justify-center p-3 border rounded-lg transition-all duration-200 cursor-pointer',
-                        selectedType === 'usuario'
-                            ? 'border-orange-500 bg-orange-50 text-orange-700'
+                        selectedType === ROLES.USER
+                            ? 'border-azulBajo bg-azulBajo/10 text-azulBajo'
                             : 'border-gray-300 hover:border-gray-400 text-gray-600',
                     ]">
                 <i class="fa-solid fa-user text-xl mb-1"></i>
                 <span class="text-sm font-medium">Usuario</span>
             </button>
 
-            <button @click="selectedType = 'comercio'"
+            <button @click="selectedType = ROLES.VENDOR_STAFF"
                     :class="[
                         'flex flex-col items-center justify-center p-3 border rounded-lg transition-all duration-200 cursor-pointer',
-                        selectedType === 'comercio'
-                            ? 'border-orange-500 bg-orange-50 text-orange-700'
+                        selectedType === ROLES.VENDOR_STAFF
+                            ? 'border-azulBajo bg-azulBajo/10 text-azulBajo'
                             : 'border-gray-300 hover:border-gray-400 text-gray-600',
                     ]">
                 <i class="fa-solid fa-store text-xl mb-1"></i>
                 <span class="text-sm font-medium">Comercio</span>
             </button>
 
-            <button @click="selectedType = 'repartidor'"
+            <button @click="selectedType = ROLES.DRIVER"
                     :class="[
                         'flex flex-col items-center justify-center p-3 border rounded-lg transition-all duration-200 cursor-pointer',
-                        selectedType === 'repartidor'
-                            ? 'border-orange-500 bg-orange-50 text-orange-700'
+                        selectedType === ROLES.DRIVER
+                            ? 'border-azulBajo bg-azulBajo/10 text-azulBajo'
                             : 'border-gray-300 hover:border-gray-400 text-gray-600',
                     ]">
                 <i class="fa-solid fa-truck text-xl mb-1"></i>
@@ -82,39 +86,44 @@ async function onSubmit(values, { setErrors, setFieldError }) {
 
     <Form @submit="onSubmit"
           class="flex flex-col gap-4">
-        <div class="flex flex-col">
-            <label class="block text-sm font-semibold mb-2">Email</label>
-            <Field class="w-full border border-gray-300 rounded py-2 px-3"
-                   name="email"
-                   type="email"
-                   placeholder="tu@email.com"
-                   v-model="form.email" />
-            <ErrorMessage name="email"
-                          class="text-red-600 text-xs mt-1" />
-        </div>
+        <Field name="email"
+               v-slot="{ field, errorMessage }">
+            <Input label="Email"
+                     type="email"
+                     placeholder="tu@email.com"
+                     v-model="form.email"
+                     v-bind="field"
+                     :errorMessage="errorMessage" />
+        </Field>
 
-        <div class="flex flex-col">
-            <label class="block text-sm font-semibold mb-2">Contraseña</label>
-            <Field class="w-full border border-gray-300 rounded py-2 px-3"
-                   name="password"
-                   type="password"
-                   placeholder="••••••••"
-                   v-model="form.password" />
-            <ErrorMessage name="password"
-                          class="text-red-600 text-xs mt-1" />
-        </div>
+        <Field name="password"
+               v-slot="{ field, errorMessage }">
+            <Input label="Contraseña"
+                     type="password"
+                     placeholder="••••••••"
+                     v-model="form.password"
+                     v-bind="field"
+                     :errorMessage="errorMessage" />
+        </Field>
 
-        <button type="submit"
-                class="bg-orange-600 hover:bg-orange-700 text-white font-medium py-2.5 rounded-lg mt-2 transition-all duration-200 shadow-sm">
+        <ErrorMessage name="__root__"
+                      class="text-red-600 text-sm" />
+
+        <Button type="submit"
+                  variant="default"
+                  size="md"
+                  :loading="auth.loading"
+                  fullWidth
+                  class="mt-2">
             Iniciar Sesión
-        </button>
+        </Button>
     </Form>
 
     <div class="text-center mt-5 text-sm text-gray-600">
         <p>
             ¿No tienes cuenta?
             <RouterLink to="/register"
-                        class="text-orange-600 font-medium hover:underline">
+                        class="text-azulBajo font-medium hover:underline">
                 Regístrate aquí
             </RouterLink>
         </p>

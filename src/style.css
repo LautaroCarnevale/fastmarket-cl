@@ -8,4 +8,27 @@
 
 }
 
+@theme {
+    --color-naranjaBajo: #ff6b4a;      /* naranja base principal */
+    --color-naranjaMedio: #ff441f;     /* naranja más intenso (hover) */
+    --color-naranjaAlto: #d83412;      /* naranja oscuro (active) */
+    --color-crema: #fff2ed;            /* fondos claros */
+    --color-grisClaro: #f5f5f5;        /* gris para backgrounds neutros */
+    --color-grisMedio: #bdbdbd;        /* gris medio */
+    --color-grisOscuro: #4b4b4b;       /* gris alto para textos */
+    --color-blanco: #ffffff;
+    --color-rojoError: #e53935;
+    --color-verdeOk: #4caf50;
+
+ 
+    --font-weight-bold: 700;
+    --font-weight-medium: 500;
+    --font-weight-regular: 400;
+    --font-weight-light: 300;
+
+    --text-title: 2rem;         /* títulos grandes */
+    --text-subtitle: 1.25rem;   /* subtítulos */
+    --text-text: 1rem;          /* texto base */
+    --text-small: 0.875rem;     /* texto pequeño */
+}
 
