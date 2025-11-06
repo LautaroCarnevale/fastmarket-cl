@@ -6,7 +6,7 @@
 
 <script setup>
 import { computed, ref, onMounted } from 'vue'
-import { useRoute, RouterView } from 'vue-router' 
+import { useRoute, RouterView } from 'vue-router'
 
 // --- Layouts ---
 import DefaultLayout from './components/layout/DefaultLayout.vue'
@@ -34,5 +34,3 @@ const layout = computed(() => {
   }
 })
 </script>
-
-

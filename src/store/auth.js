@@ -58,14 +58,14 @@ export const useAuthStore = defineStore('auth', {
 
 		async initializeAuth() {
 			this.loading = true
-			try {
-				const user = await validateSessionRequest()
 
+			try {
+				const user = await validateSessionRequest()				
 				if (user) {
 					this.user = user
 					this.isAuthenticated = true
 
-					const path = router.currentRoute.value.path
+					const path = router.currentRoute.value.path					
 					const isAuthPage = ['/login', '/register'].includes(path)
 
 					if (isAuthPage) {

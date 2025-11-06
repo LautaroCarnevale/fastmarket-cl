@@ -1,6 +1,5 @@
 [
   {
-    "_id": "671a01a1c1a1b001",
     "displayName": "Burger Zone",
     "description": "Hamburguesas artesanales con ingredientes frescos.",
     "address": {
@@ -15,22 +14,11 @@
     ],
     "active": true,
     "categories": [
-      {
-        "_id": "671a01b1c1a1b011",
-        "name": "Bebidas",
-        "description": "Refrescos y gaseosas",
-        "order": 1
-      },
-      {
-        "_id": "671a01b1c1a1b012",
-        "name": "Comidas",
-        "description": "Platos principales",
-        "order": 2
-      }
+      { "name": "Bebidas", "description": "Refrescos y gaseosas", "order": 1 },
+      { "name": "Comidas", "description": "Platos principales", "order": 2 }
     ],
     "products": [
       {
-        "_id": "671a01c1c1a1b021",
         "name": "Hamburguesa Clásica",
         "description": "Carne, queso, tomate y lechuga",
         "price": { "currency": "ARS", "amount": 4500 },
@@ -39,13 +27,12 @@
         "tags": ["burger", "classic"]
       }
     ],
-    "image": "https://dcdn-us.mitiendanube.com/stores/001/135/090/products/20x20-burguer-zone-6934aa048ae64325e017162144352682-1024-1024.jpg",
+    "image": "[https://dcdn-us.mitiendanube.com/stores/001/135/090/products/20x20-burguer-zone-6934aa048ae64325e017162144352682-1024-1024.jpg](https://dcdn-us.mitiendanube.com/stores/001/135/090/products/20x20-burguer-zone-6934aa048ae64325e017162144352682-1024-1024.jpg)",
     "rating": { "average": 4.7, "count": 245 },
     "createdAt": "2024-10-28T14:00:00.000Z",
     "updatedAt": "2024-10-28T14:30:00.000Z"
   },
   {
-    "_id": "671a01a1c1a1b002",
     "displayName": "Pizzería Napoli",
     "description": "Auténtica pizza italiana al horno de leña.",
     "address": {
@@ -58,7 +45,6 @@
     "active": true,
     "categories": [
       {
-        "_id": "671a01b1c1a1b013",
         "name": "Pizzas",
         "description": "Pizzas clásicas y gourmet",
         "order": 1
@@ -66,20 +52,18 @@
     ],
     "products": [
       {
-        "_id": "671a01c1c1a1b022",
         "name": "Pizza Margarita",
         "description": "Salsa de tomate, mozzarella y albahaca fresca",
         "price": { "currency": "ARS", "amount": 5200 },
         "active": true
       }
     ],
-    "image": "https://www.orillialakecountry.ca/wp-content/uploads/cache/images/2025/11/napoli-pizza/napoli-pizza-3049343761.png",
+    "image": "[https://www.orillialakecountry.ca/wp-content/uploads/cache/images/2025/11/napoli-pizza/napoli-pizza-3049343761.png](https://www.orillialakecountry.ca/wp-content/uploads/cache/images/2025/11/napoli-pizza/napoli-pizza-3049343761.png)",
     "rating": { "average": 4.8, "count": 312 },
     "createdAt": "2024-10-28T14:00:00.000Z",
     "updatedAt": "2024-10-28T14:30:00.000Z"
   },
   {
-    "_id": "671a01a1c1a1b003",
     "displayName": "La Parrilla del Centro",
     "description": "Carnes a las brasas con el mejor sabor argentino.",
     "address": {
@@ -90,24 +74,20 @@
     },
     "hours": [{ "weekday": 6, "open": "12:00", "close": "00:00" }],
     "active": true,
-    "categories": [
-      { "_id": "671a01b1c1a1b014", "name": "Parrilla", "order": 1 }
-    ],
+    "categories": [{ "name": "Parrilla", "order": 1 }],
     "products": [
       {
-        "_id": "671a01c1c1a1b023",
         "name": "Asado Completo",
         "price": { "currency": "ARS", "amount": 9500 },
         "active": true
       }
     ],
-    "image": "https://scontent.fcor10-3.fna.fbcdn.net/v/t39.30808-6/476372344_1215940383554998_340070985041979683_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=SJMgb5SSBYEQ7kNvwHpYQ1X&_nc_oc=AdmVVI347p2kfRDn_U1F28CsGFKNIfktSkOgjb0yiTTVNFX4idRycmzVVxH0iZq28es&_nc_zt=23&_nc_ht=scontent.fcor10-3.fna&_nc_gid=9PdJmWaBx36d7EgQP3hY_w&oh=00_Afh6KnIuLsqfq8Zz5PSUOE4AiaD062k-SNfFqDT3VgB4zg&oe=6910C2A3",
+    "image": "[https://scontent.fcor10-3.fna.fbcdn.net/v/t39.30808-6/476372344_1215940383554998_340070985041979683_n.jpg](https://scontent.fcor10-3.fna.fbcdn.net/v/t39.30808-6/476372344_1215940383554998_340070985041979683_n.jpg)",
     "rating": { "average": 4.9, "count": 420 },
     "createdAt": "2024-10-28T14:00:00.000Z",
     "updatedAt": "2024-10-28T14:30:00.000Z"
   },
   {
-    "_id": "671a01a1c1a1b004",
     "displayName": "Green Bowl",
     "description": "Ensaladas saludables y jugos naturales.",
     "address": {
@@ -118,24 +98,20 @@
     },
     "hours": [{ "weekday": 1, "open": "09:00", "close": "20:00" }],
     "active": true,
-    "categories": [
-      { "_id": "671a01b1c1a1b015", "name": "Ensaladas", "order": 1 }
-    ],
+    "categories": [{ "name": "Ensaladas", "order": 1 }],
     "products": [
       {
-        "_id": "671a01c1c1a1b024",
         "name": "Bowl Mediterráneo",
         "price": { "currency": "ARS", "amount": 5600 },
         "active": true
       }
     ],
-    "image": "https://images.rappi.com.ar/restaurants_logo/c5687ff5-fa7e-499d-b0ba-f56b8517376a-1694452066808.png",
+    "image": "[https://images.rappi.com.ar/restaurants_logo/c5687ff5-fa7e-499d-b0ba-f56b8517376a-1694452066808.png](https://images.rappi.com.ar/restaurants_logo/c5687ff5-fa7e-499d-b0ba-f56b8517376a-1694452066808.png)",
     "rating": { "average": 4.6, "count": 178 },
     "createdAt": "2024-10-28T14:00:00.000Z",
     "updatedAt": "2024-10-28T14:30:00.000Z"
   },
   {
-    "_id": "671a01a1c1a1b005",
     "displayName": "Panadería La Dulce Vida",
     "description": "Facturas, tortas y pan recién horneado.",
     "address": {
@@ -147,24 +123,22 @@
     "hours": [{ "weekday": 0, "open": "08:00", "close": "20:00" }],
     "active": true,
     "categories": [
-      { "_id": "671a01b1c1a1b016", "name": "Panadería", "order": 1 },
-      { "_id": "671a01b1c1a1b017", "name": "Pastelería", "order": 2 }
+      { "name": "Panadería", "order": 1 },
+      { "name": "Pastelería", "order": 2 }
     ],
     "products": [
       {
-        "_id": "671a01c1c1a1b025",
         "name": "Medialunas de manteca",
         "price": { "currency": "ARS", "amount": 2500 },
         "active": true
       }
     ],
-    "image": "https://carta.avocaty.io/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Falacartadigital-700c3.appspot.com%2Fo%2Fuser%252FLLCK5EVn4gWGJpiWGKlzDawlc1J3%252Fv50mz-Screenshot_20230825_232104_ReadEra.jpg%3Falt%3Dmedia%26token%3Dcfdaa26e-80ca-4f25-bd5a-c27b2c5d2489&w=3840&q=75",
+    "image": "[https://carta.avocaty.io/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Falacartadigital-700c3.appspot.com%2Fo%2Fuser%252FLLCK5EVn4gWGJpiWGKlzDawlc1J3%252Fv50mz-Screenshot_20230825_232104_ReadEra.jpg%3Falt%3Dmedia%26token%3Dcfdaa26e-80ca-4f25-bd5a-c27b2c5d2489&w=3840&q=75](https://carta.avocaty.io/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Falacartadigital-700c3.appspot.com%2Fo%2Fuser%252FLLCK5EVn4gWGJpiWGKlzDawlc1J3%252Fv50mz-Screenshot_20230825_232104_ReadEra.jpg%3Falt%3Dmedia%26token%3Dcfdaa26e-80ca-4f25-bd5a-c27b2c5d2489&w=3840&q=75)",
     "rating": { "average": 4.5, "count": 320 },
     "createdAt": "2024-10-28T14:00:00.000Z",
     "updatedAt": "2024-10-28T14:30:00.000Z"
   },
   {
-    "_id": "671a01a1c1a1b006",
     "displayName": "Café Central",
     "description": "Cafetería clásica con ambiente acogedor.",
     "address": {
@@ -175,24 +149,20 @@
     },
     "hours": [{ "weekday": 1, "open": "08:00", "close": "22:00" }],
     "active": true,
-    "categories": [
-      { "_id": "671a01b1c1a1b018", "name": "Cafetería", "order": 1 }
-    ],
+    "categories": [{ "name": "Cafetería", "order": 1 }],
     "products": [
       {
-        "_id": "671a01c1c1a1b026",
         "name": "Café Latte",
         "price": { "currency": "ARS", "amount": 1800 },
         "active": true
       }
     ],
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEEQTxqJGENladafSHkPb84PnMBNoFiy-FN4BPAsEqWoq6Whu3S7K5Okneq3uk3Dj1pHo&usqp=CAU",
+    "image": "[https://encrypted-tbn0.gstatic.com/images?q=tbn](https://encrypted-tbn0.gstatic.com/images?q=tbn):ANd9GcSEEQTxqJGENladafSHkPb84PnMBNoFiy-FN4BPAsEqWoq6Whu3S7K5Okneq3uk3Dj1pHo&usqp=CAU",
     "rating": { "average": 4.4, "count": 275 },
     "createdAt": "2024-10-28T14:00:00.000Z",
     "updatedAt": "2024-10-28T14:30:00.000Z"
   },
   {
-    "_id": "671a01a1c1a1b007",
     "displayName": "Sushi House",
     "description": "Sushi fresco preparado por chefs expertos.",
     "address": {
@@ -203,22 +173,20 @@
     },
     "hours": [{ "weekday": 3, "open": "12:00", "close": "23:00" }],
     "active": true,
-    "categories": [{ "_id": "671a01b1c1a1b019", "name": "Sushi", "order": 1 }],
+    "categories": [{ "name": "Sushi", "order": 1 }],
     "products": [
       {
-        "_id": "671a01c1c1a1b027",
         "name": "Combo Especial",
         "price": { "currency": "ARS", "amount": 8900 },
         "active": true
       }
     ],
-    "image": "https://www.creativefabrica.com/wp-content/uploads/2022/02/10/sushi-house-design-logo-vector-Graphics-25001245-1-1-580x386.jpg",
+    "image": "[https://www.creativefabrica.com/wp-content/uploads/2022/02/10/sushi-house-design-logo-vector-Graphics-25001245-1-1-580x386.jpg](https://www.creativefabrica.com/wp-content/uploads/2022/02/10/sushi-house-design-logo-vector-Graphics-25001245-1-1-580x386.jpg)",
     "rating": { "average": 4.9, "count": 510 },
     "createdAt": "2024-10-28T14:00:00.000Z",
     "updatedAt": "2024-10-28T14:30:00.000Z"
   },
   {
-    "_id": "671a01a1c1a1b008",
     "displayName": "Tienda Vegana",
     "description": "Productos veganos, naturales y sustentables.",
     "address": {
@@ -229,24 +197,20 @@
     },
     "hours": [{ "weekday": 2, "open": "09:00", "close": "21:00" }],
     "active": true,
-    "categories": [
-      { "_id": "671a01b1c1a1b020", "name": "Comida Vegana", "order": 1 }
-    ],
+    "categories": [{ "name": "Comida Vegana", "order": 1 }],
     "products": [
       {
-        "_id": "671a01c1c1a1b028",
         "name": "Tarta de tofu",
         "price": { "currency": "ARS", "amount": 6200 },
         "active": true
       }
     ],
-    "image": "",
+    "image": "[https://cdn.businessinsider.es/sites/navi.axelspringer.es/public/media/image/2023/04/tienda-vegana-3002134.jpg](https://cdn.businessinsider.es/sites/navi.axelspringer.es/public/media/image/2023/04/tienda-vegana-3002134.jpg)",
     "rating": { "average": 4.7, "count": 192 },
     "createdAt": "2024-10-28T14:00:00.000Z",
     "updatedAt": "2024-10-28T14:30:00.000Z"
   },
   {
-    "_id": "671a01a1c1a1b009",
     "displayName": "Heladería Polar",
     "description": "Helados artesanales con sabores únicos.",
     "address": {
@@ -257,47 +221,40 @@
     },
     "hours": [{ "weekday": 4, "open": "11:00", "close": "23:00" }],
     "active": true,
-    "categories": [
-      { "_id": "671a01b1c1a1b021", "name": "Helados", "order": 1 }
-    ],
+    "categories": [{ "name": "Helados", "order": 1 }],
     "products": [
       {
-        "_id": "671a01c1c1a1b029",
         "name": "1/4 Kg de Helado",
         "price": { "currency": "ARS", "amount": 3500 },
         "active": true
       }
     ],
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVhE_TpKHQGQIf_qQvn-3bDn-U19ZPhGUXdHGD9aMVcBTLrJp4Grj86iTcYpsScAJf9D8&usqp=CAU",
+    "image": "[https://encrypted-tbn0.gstatic.com/images?q=tbn](https://encrypted-tbn0.gstatic.com/images?q=tbn):ANd9GcQVhE_TpKHQGQIf_qQvn-3bDn-U19ZPhGUXdHGD9aMVcBTLrJp4Grj86iTcYpsScAJf9D8&usqp=CAU",
     "rating": { "average": 4.8, "count": 420 },
     "createdAt": "2024-10-28T14:00:00.000Z",
     "updatedAt": "2024-10-28T14:30:00.000Z"
   },
   {
-    "_id": "671a01a1c1a1b010",
-    "displayName": "Farmacia Salud+",
-    "description": "Farmacia 24 horas con servicio a domicilio.",
+    "displayName": "Librería Horizonte",
+    "description": "Librería y papelería con una amplia selección de libros y artículos escolares.",
     "address": {
-      "street": "Av. Juan B. Justo 2100",
+      "street": "Av. San Martín 1450",
       "city": "Buenos Aires",
       "province": "Buenos Aires",
       "country": "Argentina"
     },
-    "hours": [{ "weekday": 0, "open": "00:00", "close": "23:59" }],
+    "hours": [{ "weekday": 0, "open": "09:00", "close": "20:00" }],
     "active": true,
-    "categories": [
-      { "_id": "671a01b1c1a1b022", "name": "Farmacia", "order": 1 }
-    ],
+    "categories": [{ "name": "Librería", "order": 1 }],
     "products": [
       {
-        "_id": "671a01c1c1a1b030",
-        "name": "Paracetamol 500mg",
-        "price": { "currency": "ARS", "amount": 1200 },
+        "name": "Cuaderno A4 Rayado",
+        "price": { "currency": "ARS", "amount": 1900 },
         "active": true
       }
     ],
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkzep6OxCtbepUkd9UXoGCEpCOd9c_1JYTwQ&s",
-    "rating": { "average": 4.5, "count": 150 },
+    "image": "[https://revistamagazzine.com/wp-content/uploads/2023/04/libreria-interior.jpg](https://revistamagazzine.com/wp-content/uploads/2023/04/libreria-interior.jpg)",
+    "rating": { "average": 4.6, "count": 240 },
     "createdAt": "2024-10-28T14:00:00.000Z",
     "updatedAt": "2024-10-28T14:30:00.000Z"
   }

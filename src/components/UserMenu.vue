@@ -64,18 +64,15 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '../store/auth'
+import { computed, ref, } from 'vue'
+import { useAuth } from '../composables/useAuth'
 
-const auth = useAuthStore()
-const router = useRouter()
+const auth = useAuth()
 
 const isOpen = ref(false)
-const user = computed(() => auth.user || { name: 'Invitado', roles: ['guest'] })
-const userRole = computed(() =>
-    user.value.roles?.find((r) => ['user', 'vendor', 'driver', 'admin'].includes(r)) || 'guest'
-)
+
+const user = computed(() => auth.user.value)
+const userRole = computed(() => auth.role)
 
 const openMenu = () => (isOpen.value = true)
 const closeMenu = () => (isOpen.value = false)

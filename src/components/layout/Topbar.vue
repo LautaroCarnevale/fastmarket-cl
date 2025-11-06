@@ -19,12 +19,13 @@
             </template>
 
             <nav v-if="userRole !== 'user'"
-                 class="flex items-center gap-4 text-sm text-gray-700">
+                 class="flex items-center gap-1 text-sm text-gray-700 ">
                 <RouterLink v-for="link in commonLinks"
                             :key="link.to"
                             :to="link.to"
-                            class="hover:text-blue-600 transition"
-                            active-class="text-blue-700 font-medium">
+                            exact-active-class="text-black font-medium bg-grisMedio/15 rounded-md"
+                            class="hover:bg-grisMedio/15 hover:rounded-md transition py-2 px-4 text-md font-semibold"
+                            active-class="text-black font-medium bg-grisMedio/15 rounded-md">
                     {{ link.label }}
                 </RouterLink>
             </nav>
@@ -49,23 +50,15 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { useAuthStore } from '../../store/auth'
 import DefaultAvatar from '../../assets/images/person.png'
 import UserMenu from '../UserMenu.vue'
+import { ROLES } from '../../constants/roles'
+import { useAuth } from '../../composables/useAuth'
 
-const auth = useAuthStore()
+const auth = useAuth()
 const userMenuRef = ref(null)
-
-const user = computed(() => auth.user || { name: 'Invitado', roles: ['guest'] })
-
-const userRole = computed(
-    () =>
-        user.value.roles?.find((r) =>
-            ['user', 'vendor', 'driver', 'admin'].includes(r)
-        ) || 'guest'
-)
-
-const logout = () => auth.logout()
+const user = auth.user
+const userRole = auth.role
 
 const userAddress = computed(() => {
     const addresses = auth.user?.addresses
@@ -82,7 +75,7 @@ const toggleUserMenu = () => {
 
 const commonLinks = computed(() => {
     const role = userRole.value
-    if (role === 'admin') {
+    if (role === ROLES.ADMIN) {
         return [
             { label: 'Comercios', to: '/admin/panel/vendors' },
             { label: 'Repartidores', to: '/admin/panel/drivers' },
@@ -91,15 +84,16 @@ const commonLinks = computed(() => {
             { label: 'Configuración', to: '/admin/panel/settings' },
         ]
     }
-    if (role === 'vendor') {
+    if (role === ROLES.VENDOR_STAFF) {
         return [
-            { label: 'Pedidos', to: '/vendor/panel/orders' },
+            { label: 'Dashboard', to: '/vendor/panel' },
             { label: 'Menú', to: '/vendor/panel/menu' },
+            { label: 'Pedidos', to: '/vendor/panel/orders' },
             { label: 'Promociones', to: '/vendor/panel/promotions' },
             { label: 'Ventas', to: '/vendor/panel/sales' },
         ]
     }
-    if (role === 'driver') {
+    if (role === ROLES.DRIVER) {
         return [
             { label: 'Disponibles', to: '/driver/panel/available' },
             { label: 'Mis Entregas', to: '/driver/panel/deliveries' },

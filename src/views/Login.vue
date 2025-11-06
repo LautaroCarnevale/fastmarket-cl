@@ -1,15 +1,15 @@
 <script setup>
 import { ref } from "vue";
 import { RouterLink } from "vue-router";
-import { useAuthStore } from "../store/auth";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { ROLES } from "../constants/roles";
 
 import Input from "../components/ui/Input.vue";
 import Button from "../components/ui/Button.vue";
+import { useAuth } from "../composables/useAuth";
 
 const selectedType = ref(ROLES.USER);
-const auth = useAuthStore();
+const auth = useAuth();
 
 const form = ref({
     email: "",
@@ -38,6 +38,7 @@ async function onSubmit(values, { setErrors, setFieldError }) {
         }
     }
 }
+
 </script>
 
 <template>
@@ -89,32 +90,32 @@ async function onSubmit(values, { setErrors, setFieldError }) {
         <Field name="email"
                v-slot="{ field, errorMessage }">
             <Input label="Email"
-                     type="email"
-                     placeholder="tu@email.com"
-                     v-model="form.email"
-                     v-bind="field"
-                     :errorMessage="errorMessage" />
+                   type="email"
+                   placeholder="tu@email.com"
+                   v-model="form.email"
+                   v-bind="field"
+                   :errorMessage="errorMessage" />
         </Field>
 
         <Field name="password"
                v-slot="{ field, errorMessage }">
             <Input label="Contraseña"
-                     type="password"
-                     placeholder="••••••••"
-                     v-model="form.password"
-                     v-bind="field"
-                     :errorMessage="errorMessage" />
+                   type="password"
+                   placeholder="••••••••"
+                   v-model="form.password"
+                   v-bind="field"
+                   :errorMessage="errorMessage" />
         </Field>
 
         <ErrorMessage name="__root__"
                       class="text-red-600 text-sm" />
 
         <Button type="submit"
-                  variant="default"
-                  size="md"
-                  :loading="auth.loading"
-                  fullWidth
-                  class="mt-2">
+                variant="default"
+                size="md"
+                :loading="auth.loading.value"
+                fullWidth
+                class="mt-2">
             Iniciar Sesión
         </Button>
     </Form>

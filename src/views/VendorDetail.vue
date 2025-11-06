@@ -154,9 +154,8 @@ import { useVendor } from '../composables/useVendor'
 // composable reactivo compartido
 const { selectedVendor } = useVendor()
 const router = useRouter()
-console.log(selectedVendor);
 
-// --- 🛒 Carrito local ---
+// --- Carrito local ---
 const cart = ref([])
 
 const addToCart = (product) => {
@@ -187,7 +186,7 @@ const cartItemsCount = computed(() =>
 
 const goToCheckout = () => router.push('/vendors/checkout')
 
-// 🔹 Filtrar productos según categoría
+//Filtrar productos según categoría
 const productsByCategory = (categoryName) => {
     if (!selectedVendor.value?.products) return []
     return selectedVendor.value.products.filter((p) => p.active)

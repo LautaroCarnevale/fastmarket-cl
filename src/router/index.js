@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { h } from 'vue'
+import { computed, h } from 'vue'
 
 
 // --- Vistas principales ---
@@ -10,14 +10,16 @@ import Register from '../views/Register.vue'
 // --- Layouts de panel ---
 import MarketplacePanel from '../views/MarketplacePanel.vue'
 import AdminPanel from '../views/AdminPanel.vue'
-import VendorPanel from '../views/VendorPanel.vue'
 import DriverPanel from '../views/DriverPanel.vue'
 
 // --- Pinia ---
-import { useAuthStore } from '../store/auth'
 import { ROLES } from '../constants/roles'
 import VendorDetail from '../views/VendorDetail.vue'
 import MarketplaceLayout from '../components/layout/MarketplaceLayout.vue'
+import VendorLayout from '../components/layout/VendorLayout.vue'
+import VendorDashboard from '../views/VendorDashboard.vue'
+import { useAuth } from '../composables/useAuth'
+import VendorMenu from '../views/VendorMenu.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -59,12 +61,12 @@ const router = createRouter({
         // --- VENDOR ---
         {
             path: '/vendor/panel',
-            component: VendorPanel,
+            component: VendorLayout,
             meta: { requiresAuth: true, role: ROLES.VENDOR_STAFF, layout: 'dashboard' },
             children: [
-                { path: '', name: 'VendorDashboard', component: { render: () => h('span', 'Vendor Dashboard') } },
+                { path: '', name: 'VendorDashboard', component: VendorDashboard },
+                { path: 'menu', name: 'VendorMenu', component: VendorMenu },
                 { path: 'orders', name: 'VendorOrders', component: { render: () => h('span', 'Vendor Orders') } },
-                { path: 'menu', name: 'VendorMenu', component: { render: () => h('span', 'Vendor Menu') } },
                 { path: 'promotions', name: 'VendorPromotions', component: { render: () => h('span', 'Vendor Promotions') } },
                 { path: 'sales', name: 'VendorSales', component: { render: () => h('span', 'Vendor Sales') } },
             ],
@@ -91,21 +93,20 @@ const router = createRouter({
 
 
 router.beforeEach(async (to, from, next) => {
-    const auth = useAuthStore()
-    const isAuthenticated = auth?.isAuthenticated
+    const auth = useAuth()
+
+    const isAuthenticated = auth.isAuthenticated.value
 
     if (!isAuthenticated) {
         try {
-            await auth.initializeAuth()
+            await auth.initialize()
         } catch {
             // ignorar errores
         }
     }
+    const role = auth.role.value
 
-    const authenticated = auth.isAuthenticated
-    const role = auth.user?.roles.find(r => Object.values(ROLES).includes(r))
-
-    if (to.meta.requiresAuth && !authenticated) {
+    if (to.meta.requiresAuth && !isAuthenticated) {
         return next({ name: 'Login' })
     }
 
@@ -113,7 +114,7 @@ router.beforeEach(async (to, from, next) => {
         return next({ name: 'Home' })
     }
 
-    if (['Login', 'Register'].includes(to.name) && authenticated) {
+    if (['Login', 'Register'].includes(to.name) && isAuthenticated) {
         if (role === ROLES.USER) return next({ name: 'UserMarketplace' })
         if (role === ROLES.VENDOR_STAFF) return next({ name: 'VendorDashboard' })
         if (role === ROLES.DRIVER) return next({ name: 'DriverDashboard' })

@@ -18,11 +18,11 @@ export const useVendorsStore = defineStore('vendors', {
 	},
 
 	actions: {
-		async fetchVendors(query = '') {
+		async fetchVendors() {
 			this.loading = true
 			this.error = null
 			try {
-				const res = await getVendors(query)
+				const res = await getVendors()
 				this.vendors = res
 			} catch (err) {
 				this.error = err.message || 'Error al cargar comercios'
@@ -35,6 +35,7 @@ export const useVendorsStore = defineStore('vendors', {
 			this.loading = true
 			this.error = null
 			try {
+
 				const res = await getVendorById(id)
 				this.selectedVendor = res
 			} catch (err) {
@@ -51,3 +52,4 @@ export const useVendorsStore = defineStore('vendors', {
 		},
 	},
 })
+
