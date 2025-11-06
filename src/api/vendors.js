@@ -1,7 +1,7 @@
 import api from './index' // tu instancia base de axios
 
 export async function getVendors() {
-    const res = await api.get(`/vendors/find`)
+    const res = await api.get(`/vendors/find`)    
     return res.data
 }
 

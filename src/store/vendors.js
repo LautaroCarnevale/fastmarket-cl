@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia'
 import { getVendors, getVendorById } from '../api/vendors'
-import vendors from '../json/vendors.json'
 export const useVendorsStore = defineStore('vendors', {
 	state: () => ({
-		vendors: vendors,
+		vendors: [],
 		selectedVendor: null,
 		loading: false,
 		error: null
@@ -11,10 +10,7 @@ export const useVendorsStore = defineStore('vendors', {
 
 	getters: {
 		promotedVendors: (state) => state.vendors.filter((v) => v.promoted),
-		filteredByCategory: (state) => (category) =>
-			category
-				? state.vendors.filter((v) => v.category === category)
-				: state.vendors,
+		filteredByCategory: (state) => (category) => category ? state.vendors.filter((v) => v.category === category) : state.vendors,
 	},
 
 	actions: {
@@ -22,7 +18,7 @@ export const useVendorsStore = defineStore('vendors', {
 			this.loading = true
 			this.error = null
 			try {
-				const res = await getVendors()
+				const res = await getVendors()				
 				this.vendors = res
 			} catch (err) {
 				this.error = err.message || 'Error al cargar comercios'
@@ -35,7 +31,6 @@ export const useVendorsStore = defineStore('vendors', {
 			this.loading = true
 			this.error = null
 			try {
-
 				const res = await getVendorById(id)
 				this.selectedVendor = res
 			} catch (err) {

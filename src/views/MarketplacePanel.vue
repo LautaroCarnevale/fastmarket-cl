@@ -17,11 +17,11 @@
                 <h2 class="text-xl font-bold mb-4">Categorías</h2>
                 <div class="flex gap-3 overflow-x-auto pb-2">
                     <button v-for="category in uniqueCategories"
-                            :key="category._id"
-                            @click="toggleCategory(category._id)"
+                            :key="category.id"
+                            @click="toggleCategory(category.id)"
                             :class="[
                                 'shrink-0 px-4 py-2 rounded-full border text-sm transition-all',
-                                selectedCategory === category._id
+                                selectedCategory === category.id
                                     ? 'bg-blue-600 text-white border-blue-600'
                                     : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
                             ]">
@@ -134,17 +134,19 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useVendor } from '../composables/useVendor'
-const { vendors, setSelectedVendor, loading, searchQuery, selectedCategory } = useVendor()
 import defaultRest from '../assets/images/defaultRest.jpg'
+
+const { vendors, setSelectedVendor, loading, searchQuery, selectedCategory } = useVendor()
 
 // Obtener categorías únicas de todos los vendors
 const uniqueCategories = computed(() => {
     const map = new Map()
     vendors.value.forEach((v) => {
-        v.categories?.forEach((cat) => map.set(cat._id, cat))
+        v.categories?.forEach((cat) => map.set(cat.id, cat))
     })
+
     return Array.from(map.values())
 })
 
@@ -158,7 +160,7 @@ const filteredVendors = computed(() => {
             .includes(searchQuery.value.toLowerCase())
         const matchCategory =
             !selectedCategory.value ||
-            v.categories?.some((c) => c._id === selectedCategory.value)
+            v.categories?.some((c) => c.id === selectedCategory.value)
         return matchSearch && matchCategory && v.active
     })
 })

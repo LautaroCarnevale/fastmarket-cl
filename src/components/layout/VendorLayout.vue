@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, } from 'vue-router'
-import { computed, watch as vueWatch, onMounted as vueOnMounted } from 'vue'
+import { computed, onMounted as vueOnMounted } from 'vue'
 import { useAuth } from '../../composables/useAuth'
 import { useVendor } from '../../composables/useVendor'
 
@@ -17,13 +17,13 @@ const titles = {
 const currentTitle = computed(() => titles[route.name] || 'Panel del Comercio')
 
 const auth = useAuth()
-const { fetchVendorById, selectedVendor } = useVendor()
+const { fetchVendorById } = useVendor()
 
-const loadVendorIfAuthenticated =  () => {
+const loadVendorIfAuthenticated = () => {
     const user = auth.user.value
 
     if (user?.id) {
-         fetchVendorById(user.id)
+        fetchVendorById(user.id)
     }
 }
 

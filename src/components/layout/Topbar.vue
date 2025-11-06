@@ -3,7 +3,9 @@
         <div class="flex items-center gap-4">
             <RouterLink to="/"
                         class="flex items-center gap-2">
-                <span class="text-lg font-semibold text-gray-800">FastMarket</span>
+                <img :src="logo"
+                     alt="FastMarket"
+                     class="w-35" />
             </RouterLink>
 
             <div class="h-6 w-px bg-gray-300"></div>
@@ -51,6 +53,7 @@
 import { ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import DefaultAvatar from '../../assets/images/person.png'
+import logo from '../../../public/images/logo.png'
 import UserMenu from '../UserMenu.vue'
 import { ROLES } from '../../constants/roles'
 import { useAuth } from '../../composables/useAuth'

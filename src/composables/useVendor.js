@@ -11,6 +11,7 @@ export function useVendor() {
 
     // --- Estado global del store (compartido) ---
     const vendors = computed(() => store.vendors)
+    
     const loading = computed(() => store.loading)
     const error = computed(() => store.error)
     const selectedVendor = computed(() => store.selectedVendor)
@@ -39,24 +40,14 @@ export function useVendor() {
     })
 
     // --- Funciones del store (reusables) ---
-    const fetchVendors = async (query = '') => {
-        await store.fetchVendors(query)
+    const fetchVendors = async () => {
+        await store.fetchVendors()        
     }
-
+    
     const fetchVendorById = async (id) => {
         await store.fetchVendorById(id)
     }
 
-    const clearSelectedVendor = () => {
-        store.clearSelectedVendor()
-    }
-
-    // --- Auto-actualización: si cambia la búsqueda, vuelve a pedir ---
-    watch(searchQuery, (newQuery) => {
-        if (newQuery.length === 0 || newQuery.length > 2) {
-            fetchVendors(newQuery)
-        }
-    })
 
     // --- Retorno del composable ---
     return {
@@ -78,6 +69,5 @@ export function useVendor() {
         setSelectedVendor,
         fetchVendors,
         fetchVendorById,
-        clearSelectedVendor,
     }
 }
