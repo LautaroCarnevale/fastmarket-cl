@@ -1,7 +1,7 @@
 // src/store/auth.js
 import { defineStore } from 'pinia'
 import axios from '../api/index'
-import { loginRequest, logoutRequest, registerRequest, validateSessionRequest } from '../api/auth'
+import { loginRequest, logoutRequest, registerAddressRequest, registerRequest, updateAddressRequest, validateSessionRequest } from '../api/auth'
 import router from '../router'
 import { ROLE_ROUTES, ROLES } from '../constants/roles'
 
@@ -56,6 +56,33 @@ export const useAuthStore = defineStore('auth', {
 			}
 		},
 
+
+		async newAdress(id, data) {
+			this.loading = true
+			try {
+				await registerAddressRequest(id, data)
+			} catch (err) {
+				this.error = err.response?.data?.message || 'Error al registrarse'
+				throw err
+			} finally {
+				this.loading = false
+			}
+		},
+
+
+		async updateAdress(id, data) {
+			this.loading = true
+			try {
+				await updateAddressRequest(id, data)
+			} catch (err) {
+				this.error = err.response?.data?.message || 'Error al registrarse'
+				throw err
+			} finally {
+				this.loading = false
+			}
+		},
+
+
 		async initializeAuth() {
 			this.loading = true
 
@@ -64,7 +91,6 @@ export const useAuthStore = defineStore('auth', {
 				if (user) {
 					this.user = user
 					this.isAuthenticated = true
-
 					const path = router.currentRoute.value.path
 					const isAuthPage = ['/login', '/register'].includes(path)
 

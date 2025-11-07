@@ -51,6 +51,10 @@ const router = createRouter({
                     path: 'account',
                     component: AccountLayout,
                     children: [
+                        {
+                            path: '',
+                            redirect: { name: 'UserAccountSettings' }
+                        },
                         { path: 'profile', name: 'UserAccountSettings', component: UserAccountSettings },
                         { path: 'payments', name: 'UserPayments', component: UserPayments },
                         { path: 'notifications', name: 'UserNotifications', component: UserNotifications },

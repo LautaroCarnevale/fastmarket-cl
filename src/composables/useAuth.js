@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useAuthStore } from '../store/auth'
 
+
 export function useAuth() {
     const auth = useAuthStore()
     const user = computed(() => auth.user)
@@ -9,6 +10,7 @@ export function useAuth() {
     const role = computed(() => auth.role)
     const loading = computed(() => auth.loading)
     const error = computed(() => auth.error)
+
 
     const login = async (credentials) => {
         try {
@@ -19,6 +21,7 @@ export function useAuth() {
         }
     }
 
+
     const register = async (credentials) => {
         try {
             await auth.register(credentials)
@@ -28,13 +31,36 @@ export function useAuth() {
         }
     }
 
+
+    const newAdress = async (id, data) => {
+        try {
+            await auth.newAdress(id, data)
+        } catch (err) {
+            console.error('Error en registro:', err)
+            throw err
+        }
+    }
+
+
+    const updateAdress = async (id, data) => {
+        try {
+            await auth.updateAdress(id, data)
+        } catch (err) {
+            console.error('Error en registro:', err)
+            throw err
+        }
+    }
+
+
     const logout = async () => {
         await auth.logout()
     }
 
+
     const initialize = async () => {
         await auth.initializeAuth()
     }
+
 
     const is = {
         admin: computed(() => auth.isAdmin),
@@ -42,6 +68,7 @@ export function useAuth() {
         driver: computed(() => auth.isDriver),
         user: computed(() => auth.isUser),
     }
+
 
     return {
         user,
@@ -51,6 +78,8 @@ export function useAuth() {
         error,
         login,
         register,
+        newAdress,
+        updateAdress,
         logout,
         initialize,
         is,

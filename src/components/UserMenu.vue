@@ -15,9 +15,9 @@
                 <ul class="list-none p-0 m-0 text-gray-700">
                     <li>
                         <RouterLink @click="closeMenu"
-                                    to="/profile"
+                                    to="marketplace/account"
                                     class="flex justify-between items-center w-full px-5 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">
-                            Editar cuenta
+                            Mi cuenta
                             <span class="icon-[lucide--edit] w-5 h-5"></span>
                         </RouterLink>
                     </li>

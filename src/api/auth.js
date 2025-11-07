@@ -19,12 +19,31 @@ export const registerRequest = async (data) => {
     }
 }
 
+export const registerAddressRequest = async (id, data) => {
+    try {
+        const res = await api.post(`/auth/address/${id}`, data)
+        return res.data
+    } catch (err) {
+        throw err.response?.data || { message: 'Error al registrarse' }
+    }
+}
+
+
+export const updateAddressRequest = async (id, data) => {
+    try {
+        const res = await api.patch(`/auth/address/${id}`, data)
+        return res.data
+    } catch (err) {
+        throw err.response?.data || { message: 'Error al editar la dirección' }
+    }
+}
+
 export const validateSessionRequest = async () => {
     try {
-        const res = await api.get('/auth/profile')                        
+        const res = await api.get('/auth/profile')
         return res.data
     } catch {
-        return null 
+        return null
     }
 }
 
