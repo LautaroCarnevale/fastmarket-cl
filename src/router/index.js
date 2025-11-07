@@ -22,6 +22,11 @@ import { useAuth } from '../composables/useAuth'
 import VendorMenu from '../views/VendorMenu.vue'
 import VendorCheckout from '../views/VendorCheckout.vue'
 import VendorOrders from '../views/VendorOrders.vue'
+import AccountLayout from '../components/layout/AccountLayout.vue'
+import UserAccountSettings from '../views/UserAccountSettings.vue'
+import UserPayments from '../views/UserPayments.vue'
+import UserNotifications from '../views/UserNotifications.vue'
+import UserLastOrders from '../views/UserLastOrders.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -41,6 +46,17 @@ const router = createRouter({
                 { path: 'restaurantes/:id', name: 'UserVendorDetail', component: VendorDetail },
                 { path: 'checkout/:id', name: 'UserCheckout', component: VendorCheckout },
                 { path: 'orders', name: 'UserOrders', component: VendorOrders },
+                // Configuración de cuenta 
+                {
+                    path: 'account',
+                    component: AccountLayout,
+                    children: [
+                        { path: 'profile', name: 'UserAccountSettings', component: UserAccountSettings },
+                        { path: 'payments', name: 'UserPayments', component: UserPayments },
+                        { path: 'notifications', name: 'UserNotifications', component: UserNotifications },
+                        { path: 'last-orders', name: 'UserLastOrders', component: UserLastOrders }
+                    ]
+                }
             ],
         },
 
