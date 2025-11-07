@@ -1,11 +1,16 @@
 import api from './index' // tu instancia base de axios
 
 export async function getVendors() {
-    const res = await api.get(`/vendors/find`)    
+    const res = await api.get(`/vendors/find`)
     return res.data
 }
 
 export async function getVendorById(id) {
-    const res = await api.get(`/vendors/find/${id}`)
+    const res = await api.get(`/vendors/find/${id}`)    
+    return res.data
+}
+
+export async function getVendorByOwnerId(id) {
+    const res = await api.get(`/vendors/findByOwner/${id}`)
     return res.data
 }

@@ -35,9 +35,9 @@
                 <h2 class="text-xl font-bold mb-4">Destacados</h2>
                 <div class="grid md:grid-cols-2 gap-4">
                     <RouterLink v-for="vendor in topVendors"
-                                :key="vendor._id"
+                                :key="vendor.id"
                                 @click="setSelectedVendor(vendor)"
-                                :to="`/marketplace/restaurantes/${vendor._id}`"
+                                :to="`/marketplace/restaurantes/${vendor.id}`"
                                 class="block">
                         <div
                              class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer">
@@ -149,7 +149,6 @@ const uniqueCategories = computed(() => {
 
     return Array.from(map.values())
 })
-
 
 
 //Filtrar vendors por búsqueda y categoría

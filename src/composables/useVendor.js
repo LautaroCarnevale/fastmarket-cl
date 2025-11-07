@@ -1,5 +1,4 @@
-// src/composables/useVendor.js
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useVendorsStore } from '../store/vendors'
 
 export function useVendor() {
@@ -11,12 +10,14 @@ export function useVendor() {
 
     // --- Estado global del store (compartido) ---
     const vendors = computed(() => store.vendors)
-    
+    const cart = computed(() => store.cart)
     const loading = computed(() => store.loading)
     const error = computed(() => store.error)
     const selectedVendor = computed(() => store.selectedVendor)
 
-    const setSelectedVendor = (vendor) => store.setSelectedVendor(vendor)
+    // Getters del carrito
+    const cartTotal = computed(() => store.cartTotal)
+    const cartItemsCount = computed(() => store.cartItemsCount)
 
     // --- Lógica extendida ---
     const promotedVendors = computed(() => store.promotedVendors)
@@ -39,20 +40,53 @@ export function useVendor() {
         return result
     })
 
-    // --- Funciones del store (reusables) ---
+    // --- Funciones del store ---
     const fetchVendors = async () => {
-        await store.fetchVendors()        
+        await store.fetchVendors()
     }
-    
+
     const fetchVendorById = async (id) => {
         await store.fetchVendorById(id)
     }
 
+    const setSelectedVendor = (vendor) => {
+        store.setSelectedVendor(vendor)
+    }
+
+    const clearSelectedVendor = () => {
+        store.clearSelectedVendor()
+    }
+
+    // --- Funciones del carrito ---
+    const addToCart = (product) => {
+        store.addToCart(product)
+    }
+
+    const removeFromCart = (productId) => {
+        store.removeFromCart(productId)
+    }
+
+    const updateQuantity = (productId, quantity) => {
+        store.updateQuantity(productId, quantity)
+    }
+
+    const clearCart = () => {
+        store.clearCart()
+    }
+
+    const getItemQuantity = (productId) => {
+        return store.getItemQuantity(productId)
+    }
+
+    const removeItemFromCart = (productId) => {
+        store.removeItemFromCart(productId)
+    }
 
     // --- Retorno del composable ---
     return {
         // Estado global (store)
         vendors,
+        cart,
         loading,
         error,
         selectedVendor,
@@ -64,10 +98,21 @@ export function useVendor() {
         // Datos derivados
         promotedVendors,
         filteredVendors,
+        cartTotal,
+        cartItemsCount,
 
         // Acciones
         setSelectedVendor,
+        clearSelectedVendor,
         fetchVendors,
         fetchVendorById,
+
+        // Acciones del carrito
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+        getItemQuantity,
+        removeItemFromCart
     }
 }

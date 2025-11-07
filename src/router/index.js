@@ -20,6 +20,8 @@ import VendorLayout from '../components/layout/VendorLayout.vue'
 import VendorDashboard from '../views/VendorDashboard.vue'
 import { useAuth } from '../composables/useAuth'
 import VendorMenu from '../views/VendorMenu.vue'
+import VendorCheckout from '../views/VendorCheckout.vue'
+import VendorOrders from '../views/VendorOrders.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -37,9 +39,8 @@ const router = createRouter({
             children: [
                 { path: '', name: 'UserMarketplace', component: MarketplacePanel },
                 { path: 'restaurantes/:id', name: 'UserVendorDetail', component: VendorDetail },
-                { path: 'cart', name: 'UserCart', component: { render: () => h('span', 'Carrito de Compras') } },
-                { path: 'checkout', name: 'UserCheckout', component: { render: () => h('span', 'Finalizar Pedido') } },
-                { path: 'orders', name: 'UserOrders', component: { render: () => h('span', 'Historial de Pedidos') } },
+                { path: 'checkout/:id', name: 'UserCheckout', component: VendorCheckout },
+                { path: 'orders', name: 'UserOrders', component: VendorOrders },
             ],
         },
 
