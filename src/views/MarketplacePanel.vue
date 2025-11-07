@@ -81,9 +81,9 @@
                 <div v-else-if="filteredVendors.length"
                      class="grid md:grid-cols-3 gap-6">
                     <RouterLink v-for="vendor in filteredVendors"
-                                :key="vendor._id"
+                                :key="vendor.id"
                                 @click="setSelectedVendor(vendor)"
-                                :to="`/marketplace/restaurantes/${vendor._id}`"
+                                :to="`/marketplace/restaurantes/${vendor.id}`"
                                 class="block">
                         <div
                              class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow h-full">

@@ -140,7 +140,7 @@
                         <!-- Items -->
                         <div class="space-y-3 mb-4 max-h-64 overflow-y-auto">
                             <div v-for="item in cart"
-                                 :key="item._id"
+                                 :key="item.id"
                                  class="flex gap-3 pb-3 border-b border-gray-100">
                                 <img :src="item.images?.[0] || defaultRest"
                                      :alt="item.name"
@@ -187,12 +187,6 @@
                                   class="icon-[lucide--check] w-5 h-5"></span>
                             {{ isProcessing ? 'Procesando...' : 'Confirmar pedido' }}
                         </Button>
-
-                        <!-- Mensaje de seguridad -->
-                        <p class="text-xs text-center text-gray-500 mt-4 flex items-center justify-center gap-1">
-                            <span class="icon-[lucide--shield-check] w-4 h-4"></span>
-                            Pago seguro y protegido
-                        </p>
                     </div>
                 </div>
             </div>
