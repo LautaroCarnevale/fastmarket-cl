@@ -19,6 +19,15 @@ export function useAuth() {
         }
     }
 
+    const register = async (credentials) => {
+        try {
+            await auth.register(credentials)
+        } catch (err) {
+            console.error('Error en registro:', err)
+            throw err
+        }
+    }
+
     const logout = async () => {
         await auth.logout()
     }
@@ -41,6 +50,7 @@ export function useAuth() {
         loading,
         error,
         login,
+        register,
         logout,
         initialize,
         is,
