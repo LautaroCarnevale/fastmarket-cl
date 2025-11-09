@@ -18,7 +18,6 @@ const currentRoute = computed(() => router.currentRoute.value.name)
     <div class="min-h-screen bg-crema p-6">
         <div class="max-w-6xl mx-auto">
             <div class="flex gap-6">
-                <!-- Sidebar -->
                 <aside class="w-64 bg-blanco rounded-lg shadow-soft p-4 h-fit">
                     <div class="flex items-center gap-3 mb-6 pb-4 border-b border-grisBajo">
                         <div
@@ -47,7 +46,6 @@ const currentRoute = computed(() => router.currentRoute.value.name)
                     </nav>
                 </aside>
 
-                <!-- Content -->
                 <main class="flex-1">
                     <router-view />
                 </main>

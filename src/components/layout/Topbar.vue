@@ -83,8 +83,6 @@ const userRole = computed(() => auth.role.value)
 
 const userAddress = computed(() => {
     const addresses = userInfo.value?.addresses
-    console.log(addresses);
-
 
     if (addresses?.length) {
         const main = addresses.find((a) => a.main) || addresses[0]

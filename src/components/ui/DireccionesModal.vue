@@ -23,12 +23,18 @@
                     <article v-for="(address, index) in addresses"
                              :key="index"
                              class="flex items-center gap-4 p-4 rounded-lg border border-gray-200 hover:border-naranjaMedio/50 transition">
+                        <div v-if="address.select === true">
+                            <span class="icon-[grommet-icons--radial-selected] w-5.5 h-5.5 text-verdeOk"></span>
+                        </div>
+                        <div v-else>
+                            <span class="icon-[lsicon--radio-unselected-filled] w-5.5 h-5.5 text-grisOscuro/70"></span>
+                        </div>
                         <div class="flex-1 min-w-0">
                             <p class="font-medium text-grisOscuro">{{ address.street }}</p>
                             <p class="text-sm text-grisMedio truncate">{{ address.city }}, {{ address.province }}</p>
                         </div>
 
-                        <div class="flex items-center gap-2 flex-shrink-0">
+                        <div class="flex items-center gap-2 shrink-0">
                             <button @click="editAddress(address, index)"
                                     class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-blue-100 transition">
                                 <span class="icon-[lucide--edit] w-4 h-4 text-blue-600"></span>
@@ -72,6 +78,7 @@ const editingAddress = ref(null)
 const editingAddressIndex = ref(null)
 
 const addresses = computed(() => user.value?.addresses || [])
+console.log(addresses.value[2].select);
 
 const openModal = () => {
     isOpen.value = true
