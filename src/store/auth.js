@@ -1,6 +1,5 @@
 // src/store/auth.js
 import { defineStore } from 'pinia'
-import axios from '../api/index'
 import { loginRequest, logoutRequest, registerAddressRequest, registerRequest, updateAddressRequest, validateSessionRequest } from '../api/auth'
 import router from '../router'
 import { ROLE_ROUTES, ROLES } from '../constants/roles'
@@ -60,7 +59,11 @@ export const useAuthStore = defineStore('auth', {
 		async newAdress(id, data) {
 			this.loading = true
 			try {
-				await registerAddressRequest(id, data)
+				const res = await registerAddressRequest(id, data)
+				const user = this.user
+				user.addresses.push(res)
+				this.user = user
+
 			} catch (err) {
 				this.error = err.response?.data?.message || 'Error al registrarse'
 				throw err
@@ -68,21 +71,32 @@ export const useAuthStore = defineStore('auth', {
 				this.loading = false
 			}
 		},
-
 
 		async updateAdress(id, data) {
 			this.loading = true
 			try {
-				await updateAddressRequest(id, data)
+				const res = await updateAddressRequest(id, data)
+				const user = { ...this.user }
+
+				if (Array.isArray(user.addresses)) {
+					user.addresses = user.addresses.map(addr => {
+						if (addr.id === res.id) return { ...res }
+
+						if (res.select === true) return { ...addr, select: false }
+
+						return addr
+					})
+				}
+
+				this.user = user
+				return res
 			} catch (err) {
-				this.error = err.response?.data?.message || 'Error al registrarse'
+				this.error = err.response?.data?.message || 'Error al actualizar dirección'
 				throw err
 			} finally {
 				this.loading = false
 			}
 		},
-
-
 		async initializeAuth() {
 			this.loading = true
 

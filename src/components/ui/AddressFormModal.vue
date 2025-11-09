@@ -128,6 +128,7 @@ async function onSubmit(values, { setErrors, setFieldError }) {
 
     try {
         const addressData = {
+            id: isEditing.value && props.address.id,
             street: formData.value.street,
             city: formData.value.city,
             province: formData.value.province,

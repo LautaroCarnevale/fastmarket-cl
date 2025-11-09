@@ -85,11 +85,12 @@ const userAddress = computed(() => {
     const addresses = userInfo.value?.addresses
 
     if (addresses?.length) {
-        const main = addresses.find((a) => a.main) || addresses[0]
-        return `${main.street}`
+        const selected = addresses.find((a) => a.select) || addresses[0]
+        return `${selected.street}`
     }
     return null
 })
+
 
 
 const toggleUserMenu = () => {

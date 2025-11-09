@@ -22,16 +22,21 @@
                 <div class="space-y-3">
                     <article v-for="(address, index) in addresses"
                              :key="index"
-                             class="flex items-center gap-4 p-4 rounded-lg border border-gray-200 hover:border-naranjaMedio/50 transition">
-                        <div v-if="address.select === true">
-                            <span class="icon-[grommet-icons--radial-selected] w-5.5 h-5.5 text-verdeOk"></span>
-                        </div>
-                        <div v-else>
-                            <span class="icon-[lsicon--radio-unselected-filled] w-5.5 h-5.5 text-grisOscuro/70"></span>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="font-medium text-grisOscuro">{{ address.street }}</p>
-                            <p class="text-sm text-grisMedio truncate">{{ address.city }}, {{ address.province }}</p>
+                             class="flex justify-between p-4 rounded-lg border border-gray-200 hover:border-naranjaMedio/50 transition cursor-pointer">
+                        <div class="flex items-center gap-5 w-full"
+                             @click="editAddressSelect(address)">
+                            <div v-if="address.select === true">
+                                <span class="icon-[grommet-icons--radial-selected] w-5.5 h-5.5 text-verdeOk"></span>
+                            </div>
+                            <div v-else>
+                                <span
+                                      class="icon-[lsicon--radio-unselected-filled] w-5.5 h-5.5 text-grisOscuro/70"></span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="font-medium text-grisOscuro">{{ address.street }}</p>
+                                <p class="text-sm text-grisMedio truncate">{{ address.city }}, {{ address.province }}
+                                </p>
+                            </div>
                         </div>
 
                         <div class="flex items-center gap-2 shrink-0">
@@ -69,7 +74,7 @@ import { useAuth } from '../../composables/useAuth'
 import Button from './Button.vue'
 import AddressFormModal from './AddressFormModal.vue'
 
-const { user } = useAuth()
+const { user, updateAdress } = useAuth()
 
 const isOpen = ref(false)
 const isAddingAddress = ref(false)
@@ -78,7 +83,7 @@ const editingAddress = ref(null)
 const editingAddressIndex = ref(null)
 
 const addresses = computed(() => user.value?.addresses || [])
-console.log(addresses.value[2].select);
+console.log(addresses.value);
 
 const openModal = () => {
     isOpen.value = true
@@ -92,6 +97,24 @@ const showAddAddressForm = () => {
     editingAddress.value = null
     editingAddressIndex.value = null
     isAddingAddress.value = true
+}
+
+async function editAddressSelect(values) {
+    if (values.select) return
+
+    const address = {
+        ...values,
+        select: !values.select
+    }
+
+    try {
+        closeModal()
+        console.log(address);
+
+        await updateAdress(user.value.id, address)
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 const editAddress = (address, index) => {

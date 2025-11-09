@@ -21,7 +21,7 @@ export const registerRequest = async (data) => {
 
 export const registerAddressRequest = async (id, data) => {
     try {
-        const res = await api.post(`/auth/address/${id}`, data)
+        const res = await api.post(`/auth/address/${id.toString()}`, data)
         return res.data
     } catch (err) {
         throw err.response?.data || { message: 'Error al registrarse' }
@@ -31,6 +31,7 @@ export const registerAddressRequest = async (id, data) => {
 
 export const updateAddressRequest = async (id, data) => {
     try {
+
         const res = await api.patch(`/auth/address/${id}`, data)
         return res.data
     } catch (err) {
