@@ -1,8 +1,7 @@
 <script setup>
 const props = defineProps({
-    class: { type: String, default: '' },
+    class: { default: '' },
     variant: {
-        type: String,
         default: 'default',
         validator: v =>
             ['default', 'secondary', 'outline', 'ghost', 'link', 'danger'].includes(v)
@@ -12,17 +11,16 @@ const props = defineProps({
         default: 'md',
         validator: s => ['xs', 'sm', 'md', 'lg'].includes(s)
     },
-    disabled: { type: Boolean, default: false },
-    loading: { type: Boolean, default: false },
-    fullWidth: { type: Boolean, default: false },
-    type: { type: String, default: 'button' }
+    disabled: { default: false },
+    loading: { default: false },
+    fullWidth: { default: false },
+    type: { default: 'button' }
 })
 
 const base = `font-medium rounded-md transition-all duration-200 cursor-pointer
 disabled:cursor-not-allowed flex justify-center items-center gap-2 
 focus:outline-none shadow-soft disabled:opacity-60`
 
-// 🎨 Variantes actualizadas al esquema Rappi
 const variants = {
     default:
         'bg-naranjaMedio text-blanco hover:bg-naranjaAlto active:bg-naranjaBajo focus-visible:ring-2 focus-visible:ring-naranjaMedio',

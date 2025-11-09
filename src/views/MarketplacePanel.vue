@@ -14,7 +14,15 @@
             </div>
 
             <div class="mb-8">
-                <h2 class="text-xl font-bold mb-4">Categorías</h2>
+                <div class="flex items-center gap-6 mb-4">
+                    <h2 class=" text-xl font-bold ">Categorías</h2>
+                    <Button @click="
+                        selectedCategory = null"
+                            variant="ghost"
+                            size="xs">
+                        Limpiar
+                    </Button>
+                </div>
                 <div class="flex gap-3 overflow-x-auto pb-2">
                     <button v-for="category in uniqueCategories"
                             :key="category.id"
@@ -30,7 +38,7 @@
                 </div>
             </div>
 
-            <div v-if="topVendors.length"
+            <!-- <div v-if="topVendors.length"
                  class="mb-8">
                 <h2 class="text-xl font-bold mb-4">Destacados</h2>
                 <div class="grid md:grid-cols-2 gap-4">
@@ -68,7 +76,7 @@
                         </div>
                     </RouterLink>
                 </div>
-            </div>
+            </div> -->
 
             <div>
                 <h2 class="text-xl font-bold mb-4">Todos los restaurantes</h2>
@@ -137,6 +145,7 @@
 import { computed } from 'vue'
 import { useVendor } from '../composables/useVendor'
 import defaultRest from '../assets/images/defaultRest.jpg'
+import Button from '../components/ui/Button.vue'
 
 const { vendors, setSelectedVendor, loading, searchQuery, selectedCategory } = useVendor()
 

@@ -12,16 +12,9 @@ export const useVendorsStore = defineStore('vendors', {
 
 	getters: {
 		promotedVendors: (state) => state.vendors.filter((v) => v.promoted),
-		filteredByCategory: (state) => (category) =>
-			category ? state.vendors.filter((v) => v.category === category) : state.vendors,
-
-		// Getters del carrito
-		cartTotal: (state) =>
-			state.cart.reduce((sum, item) => sum + item.price.amount * item.quantity, 0),
-
-		cartItemsCount: (state) =>
-			state.cart.reduce((sum, item) => sum + item.quantity, 0),
-
+		filteredByCategory: (state) => (category) => category ? state.vendors.filter((v) => v.category === category) : state.vendors,
+		cartTotal: (state) => state.cart.reduce((sum, item) => sum + item.price.amount * item.quantity, 0),
+		cartItemsCount: (state) => state.cart.reduce((sum, item) => sum + item.quantity, 0),
 		getItemQuantity: (state) => (productId) => {
 			const item = state.cart.find(i => i.id === productId)
 			return item ? item.quantity : 0
