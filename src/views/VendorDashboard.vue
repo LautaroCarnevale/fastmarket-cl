@@ -1,19 +1,39 @@
 <script setup>
-import { computed } from 'vue';
 import { useVendor } from '../composables/useVendor';
 const { selectedVendor } = useVendor()
 
-
-
 const recentActivity = [
-    { id: 1, type: "order", message: "Nuevo pedido recibido #1245", time: "Hace 5 min" },
-    { id: 2, type: "menu", message: "Producto 'Empanadas' actualizado", time: "Hace 20 min" },
-    { id: 3, type: "promotion", message: "Promoción '2x1 en pizzas' activada", time: "Hace 1 hora" },
-    { id: 4, type: "sale", message: "Ventas totales: $12.540 hoy", time: "Hace 2 horas" },
-]
-
-const vendor = computed(() => selectedVendor.value)
-
+    {
+        id: 1,
+        title: "Pedido #12345",
+        status: "Nuevo",
+        description: "Cliente: María González — 2x Whopper, 1x Papas",
+        amount: "$2100",
+        time: "Hace 2 min",
+        actions: [
+            { label: "Aceptar", icon: "fa-check", type: "primary" },
+            { label: "Rechazar", icon: "fa-xmark", type: "danger" },
+        ],
+    },
+    {
+        id: 2,
+        title: "Pedido #12344",
+        status: "Preparando",
+        description: "Cliente: Carlos Ruiz — 1x Big King, 1x Coca Cola",
+        amount: "$1200",
+        time: "Hace 8 min",
+        actions: [{ label: "Marcar como listo", type: "primary" }],
+    },
+    {
+        id: 3,
+        title: "Pedido #12343",
+        status: "Listo",
+        description: "Cliente: Ana Martínez — 1x Combo Familiar",
+        amount: "$2340",
+        time: "Hace 15 min",
+        actions: null,
+    },
+];
 
 
 
@@ -55,8 +75,8 @@ const vendor = computed(() => selectedVendor.value)
                     <p class="text-sm font-medium text-grisOscuro">Calificación</p>
                     <span class="text-naranjaBajo text-lg">⭐</span>
                 </div>
-                <span class="text-2xl font-bold text-grisOscuro">{{ vendor?.rating.average }}</span>
-                <p class="text-xs text-grisMedio mt-1">Basado en {{ vendor?.rating.count }} reseñas</p>
+                <span class="text-2xl font-bold text-grisOscuro">{{ selectedVendor?.rating.average }}</span>
+                <p class="text-xs text-grisMedio mt-1">Basado en {{ selectedVendor?.rating.count }} reseñas</p>
             </div>
         </div>
 
@@ -95,24 +115,63 @@ const vendor = computed(() => selectedVendor.value)
             <h2 class="text-lg font-semibold mb-4 text-grisOscuro">
                 Actividad reciente
             </h2>
+
+            <div class="flex gap-3 mb-4">
+                <button
+                        class="px-4 py-1.5 text-sm font-medium rounded-lg border border-grisMedio text-grisOscuro hover:bg-blancoBajo transition">
+                    Activas
+                </button>
+                <button
+                        class="px-4 py-1.5 text-sm font-medium rounded-lg border border-grisMedio text-grisOscuro/60 hover:bg-blancoBajo transition">
+                    Completadas
+                </button>
+            </div>
+
             <div class="space-y-4">
                 <div v-for="activity in recentActivity"
                      :key="activity.id"
-                     class="flex items-start gap-4 p-4 border border-grisMedio/30 rounded-lg hover:bg-crema transition">
-                    <div class="w-10 h-10 flex items-center justify-center rounded-full text-blanco font-bold"
-                         :class="{
-                            'bg-naranjaBajo': activity.type === 'order',
-                            'bg-verdeOk': activity.type === 'menu',
-                            'bg-[varnaranjaAlto': activity.type === 'promotion',
-                            'bg-grisOscuro': activity.type === 'sale',
-                        }">
-                        {{ activity.type.charAt(0).toUpperCase() }}
-                    </div>
-                    <div class="flex-1">
-                        <p class="font-medium text-grisOscuro">
-                            {{ activity.message }}
+                     class="border border-grisMedio/40 rounded-xl p-5 flex flex-col md:flex-row justify-between gap-4 shadow-sm hover:shadow transition bg-blanco">
+                    <div class="flex flex-col">
+                        <p class="font-bold text-grisOscuro">
+                            {{ activity.title || `Evento #${activity.id}` }}
+                            <span class="ml-2 px-2 py-0.5 text-xs font-medium rounded-full"
+                                  :class="{
+                                    'bg-[#FFF3CD] text-[#856404]': activity.status === 'Nuevo',
+                                    'bg-[#CCE5FF] text-[#004085]': activity.status === 'Preparando',
+                                    'bg-[#D4EDDA] text-[#155724]': activity.status === 'Listo',
+                                }">
+                                {{ activity.status }}
+                            </span>
                         </p>
-                        <p class="text-sm text-grisMedio">{{ activity.time }}</p>
+
+                        <p class="text-sm text-grisAlto mt-1">
+                            {{ activity.description }}
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col items-end justify-between">
+                        <div class="text-right">
+                            <p class="text-xl font-bold text-azulBajo">
+                                {{ activity.amount }}
+                            </p>
+                            <p class="text-xs text-grisMedio">{{ activity.time }}</p>
+                        </div>
+
+                        <div v-if="activity.actions"
+                             class="flex gap-2 mt-2">
+                            <button v-for="(action, i) in activity.actions"
+                                    :key="i"
+                                    class="px-4 py-1.5 text-sm font-medium rounded-md transition"
+                                    :class="{
+                                        'bg-azulBajo text-white hover:bg-azulAlto': action.type === 'primary',
+                                        'bg-rojoError text-white hover:bg-red-600': action.type === 'danger',
+                                        'bg-grisMedio/10 text-grisOscuro hover:bg-grisMedio/20': action.type === 'neutral',
+                                    }">
+                                <i v-if="action.icon"
+                                   :class="['fa-solid', action.icon, 'mr-1']"></i>
+                                {{ action.label }}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

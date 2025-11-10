@@ -21,31 +21,31 @@
         </div>
 
         <!-- Contenido principal -->
-        <div v-else-if="selectedVendor">
+        <div v-else-if="vendor">
             <!-- Hero Banner -->
             <div class="relative h-64 md:h-80">
-                <img :src="selectedVendor.image || defaultRest"
-                     :alt="selectedVendor.displayName"
+                <img :src="vendor.image || defaultRest"
+                     :alt="vendor.displayName"
                      class="w-full h-full object-cover" />
                 <div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
                 <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
                     <div class="container mx-auto">
-                        <h1 class="text-4xl font-bold mb-2">{{ selectedVendor.displayName }}</h1>
-                        <p class="text-lg mb-2">{{ selectedVendor.description }}</p>
+                        <h1 class="text-4xl font-bold mb-2">{{ vendor.displayName }}</h1>
+                        <p class="text-lg mb-2">{{ vendor.description }}</p>
 
                         <div class="flex items-center flex-wrap gap-4 text-sm">
                             <span class="flex items-center gap-1">
                                 <span class="icon-[lucide--star] w-4 h-4 text-yellow-400 fill-yellow-400"></span>
-                                {{ selectedVendor.rating?.average?.toFixed(1) || 0 }}
-                                ({{ selectedVendor.rating?.count || 0 }} reseñas)
+                                {{ vendor.rating?.average?.toFixed(1) || 0 }}
+                                ({{ vendor.rating?.count || 0 }} reseñas)
                             </span>
                             <span class="flex items-center gap-1">
                                 <span class="icon-[lucide--map-pin] w-4 h-4"></span>
-                                {{ selectedVendor.address.city }}, {{ selectedVendor.address.province }}
+                                {{ vendor.address.city }}, {{ vendor.address.province }}
                             </span>
                             <span class="flex items-center gap-1">
                                 <span class="icon-[lucide--clock] w-4 h-4"></span>
-                                {{ selectedVendor.hours?.[0]?.open }} - {{ selectedVendor.hours?.[0]?.close }}
+                                {{ vendor.hours?.[0]?.open }} - {{ vendor.hours?.[0]?.close }}
                             </span>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                 <div class="grid lg:grid-cols-3 gap-8">
                     <!-- Productos por categoría -->
                     <div class="lg:col-span-2">
-                        <div v-for="category in selectedVendor.categories"
+                        <div v-for="category in vendor.categories"
                              :key="category.id"
                              class="mb-8">
                             <h2 class="text-2xl font-bold mb-4">{{ category.name }}</h2>
@@ -183,7 +183,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useVendor } from '../composables/useVendor'
 import defaultRest from '../assets/images/defaultRest.jpg'
@@ -205,11 +205,6 @@ const {
     removeItemFromCart
 } = useVendor()
 
-
-
-const selectedVendor = vendor.value
-
-// Cargar vendor por ID de la ruta
 onMounted(async () => {
     const vendorId = route.params.id
     if (vendorId) {
@@ -218,15 +213,15 @@ onMounted(async () => {
 })
 
 // Filtrar productos por categoría
-const productsByCategory = (categoryName) => {
-    if (!selectedVendor.products) return []
-    return selectedVendor.products.filter(
-        (p) => p.category === categoryName && p.active
+const productsByCategory = (categoryId) => {
+    if (!vendor.value?.products) return []
+    return vendor.value.products.filter(
+        (p) => p.category === categoryId && p.active
     )
 }
 
 // Ir al checkout
 const goToCheckout = () => {
-    router.push('/marketplace/checkout/' + selectedVendor.id)
+    router.push('/marketplace/checkout/' + vendor.value.id)
 }
 </script>

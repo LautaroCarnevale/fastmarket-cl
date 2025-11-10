@@ -83,7 +83,6 @@ const editingAddress = ref(null)
 const editingAddressIndex = ref(null)
 
 const addresses = computed(() => user.value?.addresses || [])
-console.log(addresses.value);
 
 const openModal = () => {
     isOpen.value = true

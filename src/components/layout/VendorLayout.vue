@@ -17,20 +17,19 @@ const titles = {
 const currentTitle = computed(() => titles[route.name] || 'Panel del Comercio')
 
 const auth = useAuth()
-const { fetchVendorById } = useVendor()
+const { fetchVendorByOwnerId } = useVendor()
 
 const loadVendorIfAuthenticated = () => {
     const user = auth.user.value
 
     if (user?.id) {
-        fetchVendorById(user.id)
+        fetchVendorByOwnerId(user.id)
     }
 }
 
 vueOnMounted(() => {
     loadVendorIfAuthenticated()
 })
-
 
 </script>
 

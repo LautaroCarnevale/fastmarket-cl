@@ -1,24 +1,22 @@
+// src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
-import { computed, h } from 'vue'
-
+import { h } from 'vue'
+import { useAuth } from '../composables/useAuth'
+import { ROLES } from '../constants/roles'
 
 // --- Vistas principales ---
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 
-// --- Layouts de panel ---
+// --- Layouts y paneles ---
 import MarketplacePanel from '../views/MarketplacePanel.vue'
 import AdminPanel from '../views/AdminPanel.vue'
 import DriverPanel from '../views/DriverPanel.vue'
-
-// --- Pinia ---
-import { ROLES } from '../constants/roles'
 import VendorDetail from '../views/VendorDetail.vue'
 import MarketplaceLayout from '../components/layout/MarketplaceLayout.vue'
 import VendorLayout from '../components/layout/VendorLayout.vue'
 import VendorDashboard from '../views/VendorDashboard.vue'
-import { useAuth } from '../composables/useAuth'
 import VendorMenu from '../views/VendorMenu.vue'
 import VendorCheckout from '../views/VendorCheckout.vue'
 import VendorOrders from '../views/VendorOrders.vue'
@@ -36,35 +34,31 @@ const router = createRouter({
         { path: '/login', name: 'Login', component: Login, meta: { guest: true, layout: 'auth' } },
         { path: '/register', name: 'Register', component: Register, meta: { guest: true, layout: 'auth' } },
 
-        // --- USUARIO FINAL ---
+        // --- Marketplace (usuario final) ---
         {
             path: '/marketplace',
             component: MarketplaceLayout,
-            meta: { requiresAuth: true, role: 'user', layout: 'dashboard' },
+            meta: { requiresAuth: true, role: ROLES.USER, layout: 'dashboard' },
             children: [
                 { path: '', name: 'UserMarketplace', component: MarketplacePanel },
                 { path: 'restaurantes/:id', name: 'UserVendorDetail', component: VendorDetail },
                 { path: 'checkout/:id', name: 'UserCheckout', component: VendorCheckout },
                 { path: 'orders', name: 'UserOrders', component: VendorOrders },
-                // Configuración de cuenta 
                 {
                     path: 'account',
                     component: AccountLayout,
                     children: [
-                        {
-                            path: '',
-                            redirect: { name: 'UserAccountSettings' }
-                        },
+                        { path: '', redirect: { name: 'UserAccountSettings' } },
                         { path: 'profile', name: 'UserAccountSettings', component: UserAccountSettings },
                         { path: 'payments', name: 'UserPayments', component: UserPayments },
                         { path: 'notifications', name: 'UserNotifications', component: UserNotifications },
-                        { path: 'last-orders', name: 'UserLastOrders', component: UserLastOrders }
-                    ]
-                }
+                        { path: 'last-orders', name: 'UserLastOrders', component: UserLastOrders },
+                    ],
+                },
             ],
         },
 
-        // --- ADMIN ---
+        // --- Admin ---
         {
             path: '/admin/panel',
             component: AdminPanel,
@@ -72,14 +66,10 @@ const router = createRouter({
             children: [
                 { path: '', name: 'AdminDashboard', component: { render: () => h('span', 'Admin Dashboard') } },
                 { path: 'vendors', name: 'AdminVendors', component: { render: () => h('span', 'Admin Vendors') } },
-                { path: 'drivers', name: 'AdminDrivers', component: { render: () => h('span', 'Admin Drivers') } },
-                { path: 'users', name: 'AdminUsers', component: { render: () => h('span', 'Admin Users') } },
-                { path: 'reports', name: 'AdminReports', component: { render: () => h('span', 'Admin Reports') } },
-                { path: 'settings', name: 'AdminSettings', component: { render: () => h('span', 'Admin Settings') } },
             ],
         },
 
-        // --- VENDOR ---
+        // --- Vendor ---
         {
             path: '/vendor/panel',
             component: VendorLayout,
@@ -88,22 +78,16 @@ const router = createRouter({
                 { path: '', name: 'VendorDashboard', component: VendorDashboard },
                 { path: 'menu', name: 'VendorMenu', component: VendorMenu },
                 { path: 'orders', name: 'VendorOrders', component: { render: () => h('span', 'Vendor Orders') } },
-                { path: 'promotions', name: 'VendorPromotions', component: { render: () => h('span', 'Vendor Promotions') } },
-                { path: 'sales', name: 'VendorSales', component: { render: () => h('span', 'Vendor Sales') } },
             ],
         },
 
-        // --- DRIVER ---
+        // --- Driver ---
         {
             path: '/driver/panel',
             component: DriverPanel,
             meta: { requiresAuth: true, role: ROLES.DRIVER, layout: 'dashboard' },
             children: [
                 { path: '', name: 'DriverDashboard', component: { render: () => h('span', 'Driver Dashboard') } },
-                { path: 'available', name: 'DriverAvailableOrders', component: { render: () => h('span', 'Driver Available Orders') } },
-                { path: 'deliveries', name: 'DriverMyDeliveries', component: { render: () => h('span', 'Driver My Deliveries') } },
-                { path: 'earnings', name: 'DriverEarnings', component: { render: () => h('span', 'Driver Earnings') } },
-                { path: 'profile', name: 'DriverProfile', component: { render: () => h('span', 'Driver Profile') } },
             ],
         },
 
@@ -112,19 +96,14 @@ const router = createRouter({
     ],
 })
 
-
 router.beforeEach(async (to, from, next) => {
     const auth = useAuth()
 
-    const isAuthenticated = auth.isAuthenticated.value
-
-    if (!isAuthenticated) {
-        try {
-            await auth.initialize()
-        } catch {
-            // ignorar errores
-        }
+    if (!auth.initialized.value) {
+        await auth.initialize()
     }
+
+    const isAuthenticated = auth.isAuthenticated.value
     const role = auth.role.value
 
     if (to.meta.requiresAuth && !isAuthenticated) {

@@ -6,6 +6,7 @@ import { useAuthStore } from '../store/auth'
 export function useAuth() {
     const auth = useAuthStore()
     const user = computed(() => auth.user)
+    const initialized = computed(() => auth.initialized)
     const isAuthenticated = computed(() => auth.isAuthenticated)
     const role = computed(() => auth.role)
     const loading = computed(() => auth.loading)
@@ -73,6 +74,7 @@ export function useAuth() {
     return {
         user,
         role,
+        initialized,
         isAuthenticated,
         loading,
         error,

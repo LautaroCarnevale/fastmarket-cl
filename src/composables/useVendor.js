@@ -49,6 +49,10 @@ export function useVendor() {
         await store.fetchVendorById(id)
     }
 
+    const fetchVendorByOwnerId = async (id) => {
+        await store.fetchVendorByOwnerId(id)
+    }
+
     const setSelectedVendor = (vendor) => {
         store.setSelectedVendor(vendor)
     }
@@ -106,7 +110,7 @@ export function useVendor() {
         clearSelectedVendor,
         fetchVendors,
         fetchVendorById,
-
+        fetchVendorByOwnerId,
         // Acciones del carrito
         addToCart,
         removeFromCart,
