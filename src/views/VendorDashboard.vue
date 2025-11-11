@@ -1,7 +1,9 @@
 <script setup>
 import { computed } from 'vue'
 import { useVendor } from '../composables/useVendor'
+import { useProduct } from '../composables/useProducts'
 const { selectedVendor, loading } = useVendor()
+const { products } = useProduct()
 
 const recentActivity = [
     {
@@ -36,8 +38,7 @@ const recentActivity = [
     },
 ]
 
-
-const productosActivos = computed(() => { return selectedVendor.value?.products?.filter(p => p.active) ?? [] })
+const productosActivos = computed(() => { return products?.value.filter(p => p.active) ?? [] })
 
 </script>
 
@@ -183,7 +184,7 @@ const productosActivos = computed(() => { return selectedVendor.value?.products?
              class="flex items-center justify-center h-screen">
             <p class="text-grisOscuro text-lg">No se encontró información del comercio</p>
         </div>
-   
+
 
     </section>
 </template>

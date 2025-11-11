@@ -50,7 +50,6 @@ export function useVendor() {
     }
 
     const fetchVendorByOwnerId = async (id) => {
-        console.log("as");
         await store.fetchVendorByOwnerId(id)
     }
 

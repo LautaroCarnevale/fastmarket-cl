@@ -17,12 +17,12 @@
                             <th class="py-3 px-4 font-semibold">Precio</th>
                             <th class="py-3 px-4 font-semibold">Categoría</th>
                             <th class="py-3 px-4 font-semibold">Disponibilidad</th>
-                            <th class="py-3 px-4 font-semibold text-right">Acciones</th>
+                            <th class="py-3 px-4 font-semibold">Acciones</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr v-for="product in selectedVendor.products"
+                        <tr v-for="product in products"
                             :key="product.id"
                             class="border-b border-grisMedio/30 hover:bg-blancoBajo transition">
                             <td class="py-3 px-4 font-medium text-grisOscuro">
@@ -32,13 +32,14 @@
                                 {{ product.price?.amount }} {{ product.price?.currency }}
                             </td>
                             <td class="py-3 px-4 text-grisAlto">
-                                {{ getCategoryName(product.category) }}
+                                {{ getCategoryName(product.categoryId) }}
                             </td>
                             <td class="py-3 px-4">
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox"
                                            class="sr-only peer"
-                                           v-model="product.active" />
+                                           v-model="product.active"
+                                           @change="toggleProductActive(product)" />
                                     <div
                                          class="group peer bg-white rounded-full duration-300 w-14 h-7 ring-2 ring-red-500 after:duration-300 after:bg-red-500 peer-checked:after:bg-green-500 peer-checked:ring-green-500 after:rounded-full after:absolute after:h-5 after:w-5 after:top-1 after:left-1 peer-checked:after:translate-x-7">
                                     </div>
@@ -56,7 +57,7 @@
                             </td>
                         </tr>
 
-                        <tr v-if="selectedVendor.products.length === 0">
+                        <tr v-if="products.length === 0">
                             <td colspan="5"
                                 class="text-center py-6 text-grisMedio italic">
                                 No hay productos cargados.
@@ -72,10 +73,10 @@
             Cargando comercio...
         </div>
     </section>
+
     <CreateProductModal :show="showCreateModal"
                         @close="showCreateModal = false"
                         @create="handleCreateProduct" />
-
 </template>
 
 <script setup>
@@ -88,7 +89,7 @@ import { useProduct } from "../composables/useProducts";
 const showCreateModal = ref(false);
 
 const { selectedVendor } = useVendor();
-const { createProduct } = useProduct()
+const { createProduct, updateProduct, products } = useProduct();
 
 const getCategoryName = (categoryId) => {
     if (!selectedVendor.value?.categories) return "";
@@ -97,20 +98,35 @@ const getCategoryName = (categoryId) => {
     );
     return category ? category.name : "Sin categoría";
 };
+
 const handleCreateProduct = (newProduct) => {
     createProduct(newProduct);
     showCreateModal.value = false;
 };
 
+const toggleProductActive = async (product) => {
+    try {
+        console.log(product);
+        
+        await updateProduct(product.id, {
+            ...product,
+            active: product.active
+        });
+
+    } catch (error) {
+        product.active = !product.active;
+        console.error('Error al actualizar producto:', error);
+        alert('Error al actualizar el producto');
+    }
+};
+
 const editProduct = (product) => {
-    console.log("Editar producto:", product);
+    console.log(product);
 };
 
 const deleteProduct = (productId) => {
     if (confirm("¿Seguro que deseas eliminar este producto?")) {
-        selectedVendor.value.products = selectedVendor.value.products.filter(
-            (p) => p.id !== productId
-        );
+        products.value = products.value.filter((p) => p.id !== productId);
     }
 };
 </script>

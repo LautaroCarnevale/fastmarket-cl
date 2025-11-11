@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute, } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { computed, onMounted as vueOnMounted } from 'vue'
 import { useAuth } from '../../composables/useAuth'
 import { useVendor } from '../../composables/useVendor'
@@ -21,32 +21,27 @@ const auth = useAuth()
 const { fetchVendorByOwnerId, selectedVendor } = useVendor()
 const { fetchProducts } = useProduct()
 
-const loadVendorIfAuthenticated = async () => {
+const loadVendorAndProducts = async () => {
     const user = auth.user.value
 
     if (user?.id) {
         await fetchVendorByOwnerId(user.id)
-    }
-}
 
-const loadPorductIfAuthenticated = async () => {
-    const vendorId = selectedVendor.value?.id
+        const vendorId = selectedVendor.value?.id
 
-    if (vendorId) {
-        await fetchProducts(vendorId)
+        if (vendorId) {
+            await fetchProducts(vendorId)
+        }
     }
 }
 
 vueOnMounted(() => {
-    loadVendorIfAuthenticated()
-    loadPorductIfAuthenticated()
+    loadVendorAndProducts()
 })
-
 </script>
 
 <template>
     <div class="min-h-screen">
-        <!-- Header -->
         <header class="flex items-center justify-between px-6 py-4">
             <h1 class="text-3xl font-semibold text-grisOscuro">
                 {{ currentTitle }}
@@ -57,7 +52,6 @@ vueOnMounted(() => {
             </div>
         </header>
 
-        <!-- Contenido dinámico -->
         <main class="p-6">
             <RouterView />
         </main>
