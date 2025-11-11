@@ -54,8 +54,6 @@ export const useAuthStore = defineStore('auth', {
 				if (user) {
 					this.user = user
 					this.isAuthenticated = true
-					console.log(this.user);
-
 					const path = router.currentRoute.value.path
 					const isAuthPage = ['/login', '/register'].includes(path)
 					if (isAuthPage) {

@@ -1,48 +1,116 @@
 <template>
-    <section class="min-h-screen container mx-auto px-4 py-6">
-        <div v-if="selectedVendor"
-             class="space-y-10">
-            <div v-for="category in selectedVendor.categories"
-                 :key="category.id"
-                 class="border-b border-gray-200 pb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-3">
-                    {{ category.name }}
-                </h2>
+    <section class="min-h-screen container mx-auto px-4 py-8">
+        <div v-if="selectedVendor">
+            <div class="flex items-center justify-between mb-6">
+                <h1 class="text-2xl font-semibold text-grisOscuro">Productos</h1>
+                <Button variant="default"
+                        @click="showCreateModal = true">
+                    Agregar producto
+                </Button>
+            </div>
 
-                <ul class="space-y-2">
-                    <li v-for="product in productsByCategory(category.id)"
-                        :key="product.id"
-                        class="p-3 bg-gray-50 rounded-md shadow-sm">
-                        <div class="font-medium">{{ product.name }}</div>
-                        <div class="text-sm text-gray-600">
-                            {{ product.price?.amount }} {{ product.price?.currency }}
-                        </div>
-                    </li>
-                    <li v-if="productsByCategory(category.id).length === 0"
-                        class="text-gray-400 italic">
-                        No hay productos disponibles en esta categoría.
-                    </li>
-                </ul>
+            <div class="overflow-x-auto bg-blanco rounded-xl shadow-sm border border-grisMedio/30">
+                <table class="min-w-full border-collapse">
+                    <thead class="bg-blancoBajo">
+                        <tr class="text-left text-sm text-grisAlto border-b border-grisMedio/30">
+                            <th class="py-3 px-4 font-semibold">Nombre</th>
+                            <th class="py-3 px-4 font-semibold">Precio</th>
+                            <th class="py-3 px-4 font-semibold">Categoría</th>
+                            <th class="py-3 px-4 font-semibold">Disponibilidad</th>
+                            <th class="py-3 px-4 font-semibold text-right">Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr v-for="product in selectedVendor.products"
+                            :key="product.id"
+                            class="border-b border-grisMedio/30 hover:bg-blancoBajo transition">
+                            <td class="py-3 px-4 font-medium text-grisOscuro">
+                                {{ product.name }}
+                            </td>
+                            <td class="py-3 px-4 text-grisOscuro">
+                                {{ product.price?.amount }} {{ product.price?.currency }}
+                            </td>
+                            <td class="py-3 px-4 text-grisAlto">
+                                {{ getCategoryName(product.category) }}
+                            </td>
+                            <td class="py-3 px-4">
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox"
+                                           class="sr-only peer"
+                                           v-model="product.active" />
+                                    <div
+                                         class="group peer bg-white rounded-full duration-300 w-14 h-7 ring-2 ring-red-500 after:duration-300 after:bg-red-500 peer-checked:after:bg-green-500 peer-checked:ring-green-500 after:rounded-full after:absolute after:h-5 after:w-5 after:top-1 after:left-1 peer-checked:after:translate-x-7">
+                                    </div>
+                                </label>
+                            </td>
+                            <td class="py-3 px-4 text-right flex gap-2">
+                                <button @click="editProduct(product)"
+                                        class="text-azulBajo hover:text-azulAlto p-2 hover:bg-grisMedio/40 flex items-center justify-center rounded-md">
+                                    <span class="icon-[akar-icons--edit] w-6 h-6"></span>
+                                </button>
+                                <button @click="deleteProduct(product.id)"
+                                        class="text-azulBajo hover:text-azulAlto p-2 hover:bg-grisMedio/40 flex items-center justify-center rounded-md">
+                                    <span class="icon-[iconamoon--trash] w-6 h-6 text-red-500"></span>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr v-if="selectedVendor.products.length === 0">
+                            <td colspan="5"
+                                class="text-center py-6 text-grisMedio italic">
+                                No hay productos cargados.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
         <div v-else
-             class="text-center py-10 text-gray-400">
+             class="text-center py-10 text-grisMedio">
             Cargando comercio...
         </div>
     </section>
+    <CreateProductModal :show="showCreateModal"
+                        @close="showCreateModal = false"
+                        @create="handleCreateProduct" />
+
 </template>
 
 <script setup>
-import { useVendor } from '../composables/useVendor'
+import { ref } from "vue";
+import CreateProductModal from "../components/CreateProductModal.vue";
+import Button from "../components/ui/Button.vue";
+import { useVendor } from "../composables/useVendor";
+import { useProduct } from "../composables/useProducts";
 
-const { selectedVendor } = useVendor()
+const showCreateModal = ref(false);
 
-// 🔹 Función que devuelve los productos de una categoría
-const productsByCategory = (categoryId) => {
-    if (!selectedVendor.value?.products) return []
-    return selectedVendor.value.products.filter(
-        (p) => p.category?.toString() === categoryId.toString() && p.active
-    )
-}
+const { selectedVendor } = useVendor();
+const { createProduct } = useProduct()
+
+const getCategoryName = (categoryId) => {
+    if (!selectedVendor.value?.categories) return "";
+    const category = selectedVendor.value.categories.find(
+        (c) => c.id?.toString() === categoryId?.toString()
+    );
+    return category ? category.name : "Sin categoría";
+};
+const handleCreateProduct = (newProduct) => {
+    createProduct(newProduct);
+    showCreateModal.value = false;
+};
+
+const editProduct = (product) => {
+    console.log("Editar producto:", product);
+};
+
+const deleteProduct = (productId) => {
+    if (confirm("¿Seguro que deseas eliminar este producto?")) {
+        selectedVendor.value.products = selectedVendor.value.products.filter(
+            (p) => p.id !== productId
+        );
+    }
+};
 </script>

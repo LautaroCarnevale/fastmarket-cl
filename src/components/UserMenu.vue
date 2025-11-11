@@ -5,7 +5,7 @@
         <div class="fixed bg-white top-[70px] right-[25px] w-[250px] rounded-xl shadow-md border border-gray-300 p-2 z-60 animate-fadeIn"
              @click.stop>
             <header class="px-5 py-4 border-b border-gray-200">
-                <p class="text-lg font-medium text-gray-800 truncate">{{ user.name + ' ' + user.lastname }}</p>
+                <p class="text-lg font-medium text-gray-800 truncate">{{ user.name + ' ' + user.surname }}</p>
                 <p class="text-sm mt-1 inline-block bg-blue-600 text-white rounded px-2 py-0.5">
                     {{ userRole }}
                 </p>

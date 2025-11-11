@@ -3,6 +3,7 @@ import { useRoute, } from 'vue-router'
 import { computed, onMounted as vueOnMounted } from 'vue'
 import { useAuth } from '../../composables/useAuth'
 import { useVendor } from '../../composables/useVendor'
+import { useProduct } from '../../composables/useProducts'
 
 const route = useRoute()
 
@@ -17,18 +18,28 @@ const titles = {
 const currentTitle = computed(() => titles[route.name] || 'Panel del Comercio')
 
 const auth = useAuth()
-const { fetchVendorByOwnerId } = useVendor()
+const { fetchVendorByOwnerId, selectedVendor } = useVendor()
+const { fetchProducts } = useProduct()
 
-const loadVendorIfAuthenticated = () => {
+const loadVendorIfAuthenticated = async () => {
     const user = auth.user.value
 
     if (user?.id) {
-        fetchVendorByOwnerId(user.id)
+        await fetchVendorByOwnerId(user.id)
+    }
+}
+
+const loadPorductIfAuthenticated = async () => {
+    const vendorId = selectedVendor.value?.id
+
+    if (vendorId) {
+        await fetchProducts(vendorId)
     }
 }
 
 vueOnMounted(() => {
     loadVendorIfAuthenticated()
+    loadPorductIfAuthenticated()
 })
 
 </script>

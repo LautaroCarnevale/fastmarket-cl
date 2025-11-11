@@ -187,6 +187,7 @@ import { onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useVendor } from '../composables/useVendor'
 import defaultRest from '../assets/images/defaultRest.jpg'
+import { useProduct } from '../composables/useProducts'
 
 const route = useRoute()
 const router = useRouter()
@@ -204,19 +205,27 @@ const {
     getItemQuantity,
     removeItemFromCart
 } = useVendor()
+const { fetchProducts, products } = useProduct()
 
 onMounted(async () => {
     const vendorId = route.params.id
     if (vendorId) {
         await fetchVendorById(vendorId)
+        await fetchProducts(vendorId)
     }
+  
+
 })
+
+
 
 // Filtrar productos por categoría
 const productsByCategory = (categoryId) => {
-    if (!vendor.value?.products) return []
-    return vendor.value.products.filter(
-        (p) => p.category === categoryId && p.active
+    if (!products.value) return;
+    console.log(products.value);
+    
+    return products.value.filter(
+        (p) => p.categoryId === categoryId && p.active
     )
 }
 
