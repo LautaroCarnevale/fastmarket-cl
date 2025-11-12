@@ -4,6 +4,7 @@ import {
     getProductById,
     createProduct,
     updateProduct,
+    updateStatusProduct,
     deleteProduct
 } from '../api/products'
 
@@ -68,7 +69,21 @@ export const useProductsStore = defineStore('products', {
                 this.loading = false
             }
         },
-
+        
+        async updateStatusProduct(id, data) {
+            try {
+                this.loading = true
+                const updated = await updateStatusProduct(id, data)
+                const index = this.products.findIndex((p) => p.id === id)
+                if (index !== -1) this.products[index] = updated
+                return updated
+            } catch (err) {
+                this.error = err.response?.data?.message || 'Error al actualizar producto'
+                throw err
+            } finally {
+                this.loading = false
+            }
+        },
         async deleteProduct(id) {
             try {
                 this.loading = true

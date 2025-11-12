@@ -10,6 +10,11 @@ export async function updateProduct(id, data) {
     return res.data
 }
 
+export async function updateStatusProduct(id, data) {
+    const res = await api.post(`/products/updateStatus/${id}`, data)
+    return res.data
+}
+
 export async function deleteProduct(id) {
     const res = await api.delete(`/products/delete/${id}`)
     return res.data

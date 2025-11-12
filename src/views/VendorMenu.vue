@@ -50,7 +50,7 @@
                                         class="text-azulBajo hover:text-azulAlto p-2 hover:bg-grisMedio/40 flex items-center justify-center rounded-md">
                                     <span class="icon-[akar-icons--edit] w-6 h-6"></span>
                                 </button>
-                                <button @click="deleteProduct(product.id)"
+                                <button @click="eliminarProducto(product.id)"
                                         class="text-azulBajo hover:text-azulAlto p-2 hover:bg-grisMedio/40 flex items-center justify-center rounded-md">
                                     <span class="icon-[iconamoon--trash] w-6 h-6 text-red-500"></span>
                                 </button>
@@ -74,26 +74,36 @@
         </div>
     </section>
 
-    <CreateProductModal :show="showCreateModal"
-                        @close="showCreateModal = false"
-                        @create="handleCreateProduct" />
+    <!-- Modal de crear -->
+    <ProductFormModal :show="showCreateModal"
+                      mode="create"
+                      @close="showCreateModal = false"
+                      @create="handleCreateProduct" />
+
+    <!-- Modal de editar -->
+    <ProductFormModal :show="showEditModal"
+                      mode="edit"
+                      :product="selectedProductToEdit"
+                      @close="showEditModal = false"
+                      @update="handleUpdateProduct" />
 </template>
 
 <script setup>
 import { ref } from "vue";
-import CreateProductModal from "../components/CreateProductModal.vue";
+import ProductFormModal from "../components/ProductFormModal.vue";
 import Button from "../components/ui/Button.vue";
 import { useVendor } from "../composables/useVendor";
 import { useProduct } from "../composables/useProducts";
 
 const showCreateModal = ref(false);
+const showEditModal = ref(false);
+const selectedProductToEdit = ref(null);
 
 const { selectedVendor } = useVendor();
-const { createProduct, updateProduct, products } = useProduct();
+const { createProduct, updateStatusProduct, deleteProduct, updateProduct, products } = useProduct();
 
 const getCategoryName = (categoryId) => {
-    if (!selectedVendor.value?.categories) return "";
-    const category = selectedVendor.value.categories.find(
+    const category = selectedVendor.value?.categories?.find(
         (c) => c.id?.toString() === categoryId?.toString()
     );
     return category ? category.name : "Sin categoría";
@@ -104,11 +114,24 @@ const handleCreateProduct = (newProduct) => {
     showCreateModal.value = false;
 };
 
+const handleUpdateProduct = async (updatedData) => {
+    await updateProduct(selectedProductToEdit.value.id, updatedData);
+    showEditModal.value = false;
+    selectedProductToEdit.value = null;
+};
+
+const eliminarProducto = async (productId) => {
+    try {
+        await deleteProduct(productId);
+    } catch (error) {
+        console.error("Error al eliminar producto:", error);
+        alert("Error al eliminar el producto");
+    }
+};
+
 const toggleProductActive = async (product) => {
     try {
-        console.log(product);
-        
-        await updateProduct(product.id, {
+        await updateStatusProduct(product.id, {
             ...product,
             active: product.active
         });
@@ -121,12 +144,7 @@ const toggleProductActive = async (product) => {
 };
 
 const editProduct = (product) => {
-    console.log(product);
-};
-
-const deleteProduct = (productId) => {
-    if (confirm("¿Seguro que deseas eliminar este producto?")) {
-        products.value = products.value.filter((p) => p.id !== productId);
-    }
+    selectedProductToEdit.value = product;
+    showEditModal.value = true;
 };
 </script>

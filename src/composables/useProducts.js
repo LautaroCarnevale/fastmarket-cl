@@ -45,6 +45,10 @@ export function useProduct() {
         return await store.updateProduct(id, data)
     }
 
+    const updateStatusProduct = async (id, data) => {
+        return await store.updateStatusProduct(id, data)
+    }
+
     const deleteProduct = async (id) => {
         await store.deleteProduct(id)
     }
@@ -76,6 +80,7 @@ export function useProduct() {
         fetchProductById,
         createProduct,
         updateProduct,
+        updateStatusProduct,
         deleteProduct,
         setSelectedProduct,
         clearSelectedProduct
