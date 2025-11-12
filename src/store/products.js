@@ -46,6 +46,7 @@ export const useProductsStore = defineStore('products', {
                 this.loading = true
                 const newProduct = await createProduct(data)
                 this.products.push(newProduct)
+                
                 return newProduct
             } catch (err) {
                 this.error = err.response?.data?.message || 'Error al crear producto'

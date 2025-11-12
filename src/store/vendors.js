@@ -1,3 +1,4 @@
+// store/vendors.js
 import { defineStore } from 'pinia'
 import { getVendors, getVendorById, getVendorByOwnerId } from '../api/vendors'
 
@@ -27,7 +28,7 @@ export const useVendorsStore = defineStore('vendors', {
 			this.error = null
 			try {
 				const res = await getVendors()
-				this.vendors = res				
+				this.vendors = res
 			} catch (err) {
 				this.error = err.message || 'Error al cargar comercios'
 			} finally {
@@ -69,7 +70,6 @@ export const useVendorsStore = defineStore('vendors', {
 			this.selectedVendor = null
 		},
 
-		// --- Acciones del carrito ---
 		addToCart(product) {
 			const existing = this.cart.find(i => i.id === product.id)
 			if (existing) {
@@ -114,4 +114,10 @@ export const useVendorsStore = defineStore('vendors', {
 			this.cart = this.cart.filter(i => i.id !== productId)
 		}
 	},
+
+	persist: {
+		key: 'fastmarket-cart',
+		storage: localStorage,
+		paths: ['cart'] 
+	}
 })

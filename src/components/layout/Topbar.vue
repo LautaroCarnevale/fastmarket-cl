@@ -1,5 +1,6 @@
 <template>
-    <header class="bg-white border-b border-gray-200 flex items-center justify-between px-6 py-3 shadow-sm">
+    <header
+            class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 flex items-center justify-between px-6 py-3 shadow-sm z-50">
         <div class="flex items-center gap-4">
             <RouterLink to="/"
                         class="flex items-center gap-2">

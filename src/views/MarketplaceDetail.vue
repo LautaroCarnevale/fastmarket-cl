@@ -213,8 +213,6 @@ onMounted(async () => {
         await fetchVendorById(vendorId)
         await fetchProducts(vendorId)
     }
-
-
 })
 
 const productsByCategory = (categoryId) => {
