@@ -13,7 +13,6 @@ import Register from '../views/Register.vue'
 import MarketplacePanel from '../views/MarketplacePanel.vue'
 import AdminPanel from '../views/AdminPanel.vue'
 import DriverPanel from '../views/DriverPanel.vue'
-import VendorDetail from '../views/VendorDetail.vue'
 import MarketplaceLayout from '../components/layout/MarketplaceLayout.vue'
 import VendorLayout from '../components/layout/VendorLayout.vue'
 import VendorDashboard from '../views/VendorDashboard.vue'
@@ -25,6 +24,7 @@ import UserAccountSettings from '../views/UserAccountSettings.vue'
 import UserPayments from '../views/UserPayments.vue'
 import UserNotifications from '../views/UserNotifications.vue'
 import UserLastOrders from '../views/UserLastOrders.vue'
+import MarketplaceDetail from '../views/MarketplaceDetail.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -41,7 +41,7 @@ const router = createRouter({
             meta: { requiresAuth: true, role: ROLES.USER, layout: 'dashboard' },
             children: [
                 { path: '', name: 'UserMarketplace', component: MarketplacePanel },
-                { path: 'restaurantes/:id', name: 'UserVendorDetail', component: VendorDetail },
+                { path: 'restaurantes/:id', name: 'UserVendorDetail', component: MarketplaceDetail },
                 { path: 'checkout/:id', name: 'UserCheckout', component: VendorCheckout },
                 { path: 'orders', name: 'UserOrders', component: VendorOrders },
                 {

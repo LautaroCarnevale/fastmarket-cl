@@ -19,7 +19,7 @@ export const useProductsStore = defineStore('products', {
         async fetchProducts(vendorId) {
             try {
                 this.loading = true
-                const data = await getProductsByVendor(vendorId)                
+                const data = await getProductsByVendor(vendorId)
                 this.products = data
             } catch (err) {
                 this.error = err.response?.data?.message || 'Error al cargar productos'
@@ -43,8 +43,6 @@ export const useProductsStore = defineStore('products', {
         async createProduct(data) {
             try {
                 this.loading = true
-                console.log(data);
-
                 const newProduct = await createProduct(data)
                 this.products.push(newProduct)
                 return newProduct

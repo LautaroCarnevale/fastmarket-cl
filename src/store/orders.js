@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import axios from '../api/orders'
+import { createOrder, getOrderById, getOrdersByCustomer } from '../api/orders'
 
 export const useOrdersStore = defineStore('orders', {
     state: () => ({
@@ -13,8 +13,8 @@ export const useOrdersStore = defineStore('orders', {
         async createOrder(payload) {
             try {
                 this.loading = true
-                const res = await axios.post('/orders', payload)
-                this.currentOrder = res.data
+                const res = await createOrder(payload)
+                this.currentOrder = res
                 return res.data
             } catch (err) {
                 this.error = err.response?.data?.message || 'Error al crear pedido'
@@ -26,8 +26,10 @@ export const useOrdersStore = defineStore('orders', {
         async fetchOrdersByUser(userId) {
             try {
                 this.loading = true
-                const res = await axios.get(`/orders/customer/${userId}`)
-                this.orders = res.data
+                const res = await getOrdersByCustomer(userId)
+                this.orders = res
+                console.log(res);
+                
             } catch (err) {
                 this.error = err.response?.data?.message || 'Error al obtener pedidos'
             } finally {
@@ -37,7 +39,7 @@ export const useOrdersStore = defineStore('orders', {
 
         async fetchOrderById(id) {
             try {
-                const res = await axios.get(`/orders/${id}`)
+                const res = await getOrderById(userId)
                 this.currentOrder = res.data
             } catch (err) {
                 this.error = 'No se pudo obtener el pedido'

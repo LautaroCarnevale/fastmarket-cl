@@ -183,7 +183,7 @@
 </template>
 
 <script setup>
-import { onMounted, watch } from 'vue'
+import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useVendor } from '../composables/useVendor'
 import defaultRest from '../assets/images/defaultRest.jpg'
@@ -213,23 +213,17 @@ onMounted(async () => {
         await fetchVendorById(vendorId)
         await fetchProducts(vendorId)
     }
-  
+
 
 })
 
-
-
-// Filtrar productos por categoría
 const productsByCategory = (categoryId) => {
     if (!products.value) return;
-    console.log(products.value);
-    
     return products.value.filter(
         (p) => p.categoryId === categoryId && p.active
     )
 }
 
-// Ir al checkout
 const goToCheckout = () => {
     router.push('/marketplace/checkout/' + vendor.value.id)
 }
