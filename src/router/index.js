@@ -67,6 +67,17 @@ const router = createRouter({
             children: [
                 { path: '', name: 'AdminDashboard', component: { render: () => h('span', 'Admin Dashboard') } },
                 { path: 'vendors', name: 'AdminVendors', component: { render: () => h('span', 'Admin Vendors') } },
+                {
+                    path: 'account',
+                    component: AccountLayout,
+                    children: [
+                        { path: '', redirect: { name: 'UserAccountSettings' } },
+                        { path: 'profile', name: 'UserAccountSettings', component: UserAccountSettings },
+                        { path: 'payments', name: 'UserPayments', component: UserPayments },
+                        { path: 'notifications', name: 'UserNotifications', component: UserNotifications },
+                        { path: 'last-orders', name: 'UserLastOrders', component: UserLastOrders },
+                    ],
+                },
             ],
         },
 
@@ -79,6 +90,17 @@ const router = createRouter({
                 { path: '', name: 'VendorDashboard', component: VendorDashboard },
                 { path: 'menu', name: 'VendorMenu', component: VendorMenu },
                 { path: 'orders', name: 'VendorOrders', component: VendorOrders },
+                {
+                    path: 'account',
+                    component: AccountLayout,
+                    children: [
+                        { path: '', redirect: { name: 'UserAccountSettings' } },
+                        { path: 'profile', name: 'UserAccountSettings', component: UserAccountSettings },
+                        { path: 'payments', name: 'UserPayments', component: UserPayments },
+                        { path: 'notifications', name: 'UserNotifications', component: UserNotifications },
+                        { path: 'last-orders', name: 'UserLastOrders', component: UserLastOrders },
+                    ],
+                },
             ],
         },
 
