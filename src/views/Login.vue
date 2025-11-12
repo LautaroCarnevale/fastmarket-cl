@@ -3,10 +3,10 @@ import { ref } from "vue";
 import { RouterLink } from "vue-router";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { ROLES } from "../constants/roles";
-
 import Input from "../components/ui/Input.vue";
 import Button from "../components/ui/Button.vue";
 import { useAuth } from "../composables/useAuth";
+import { loginSchema } from "../validations/loginSchema";
 
 const selectedType = ref(ROLES.USER);
 const auth = useAuth();
@@ -86,6 +86,7 @@ async function onSubmit(values, { setErrors, setFieldError }) {
     </div>
 
     <Form @submit="onSubmit"
+          :validationSchema="loginSchema"
           class="flex flex-col gap-4">
         <Field name="email"
                v-slot="{ field, errorMessage }">
