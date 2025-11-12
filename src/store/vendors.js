@@ -39,10 +39,8 @@ export const useVendorsStore = defineStore('vendors', {
 			this.loading = true
 			this.error = null
 			try {
-				console.log(id);
 				const res = await getVendorById(id)
 				this.selectedVendor = res
-				console.log(res);
 			} catch (err) {
 				this.error = err.message || 'No se encontró el comercio'
 			} finally {

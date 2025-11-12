@@ -22,6 +22,8 @@ export async function getOrdersByVendor(vendorId) {
 
 export async function updateOrderStatus(id, statusData) {
     const res = await api.patch(`/orders/${id}/status`, statusData)
+    console.log(res);
+
     return res.data
 }
 

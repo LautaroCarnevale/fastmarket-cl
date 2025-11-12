@@ -13,23 +13,24 @@
 
             <nav class="w-full">
                 <ul class="list-none p-0 m-0 text-gray-700">
-                    <li>
+                    <li v-if="userRole.value === ROLES.USER">
                         <RouterLink @click="closeMenu"
                                     to="marketplace/account"
                                     class="flex justify-between items-center w-full px-5 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">
                             Mi cuenta
                             <span class="icon-[lucide--edit] w-5 h-5"></span>
                         </RouterLink>
+
+                        <RouterLink @click="closeMenu"
+                                    to="marketplace/orders"
+                                    class="flex justify-between items-center w-full px-5 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">
+                            Mis pedidos
+                            <span class="icon-[lucide--package] w-5 h-5"></span>
+                        </RouterLink>
                     </li>
 
-                    <hr class="border-gray-200 my-2 mx-auto w-11/12" />
-
-                    <li>
-                        <button @click="closeMenu"
-                                class="flex justify-between items-center w-full text-left px-5 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">
-                            Feedback
-                        </button>
-                    </li>
+                    <hr v-if="userRole.value === ROLES.USER"
+                        class="border-gray-200 my-2 mx-auto w-11/12" />
 
                     <li>
                         <button @click="closeMenu"
@@ -66,6 +67,7 @@
 <script setup>
 import { computed, ref, } from 'vue'
 import { useAuth } from '../composables/useAuth'
+import { ROLES } from '../constants/roles'
 
 const auth = useAuth()
 

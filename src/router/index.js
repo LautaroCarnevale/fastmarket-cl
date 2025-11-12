@@ -17,14 +17,15 @@ import MarketplaceLayout from '../components/layout/MarketplaceLayout.vue'
 import VendorLayout from '../components/layout/VendorLayout.vue'
 import VendorDashboard from '../views/VendorDashboard.vue'
 import VendorMenu from '../views/VendorMenu.vue'
-import VendorCheckout from '../views/VendorCheckout.vue'
-import VendorOrders from '../views/VendorOrders.vue'
 import AccountLayout from '../components/layout/AccountLayout.vue'
 import UserAccountSettings from '../views/UserAccountSettings.vue'
 import UserPayments from '../views/UserPayments.vue'
 import UserNotifications from '../views/UserNotifications.vue'
 import UserLastOrders from '../views/UserLastOrders.vue'
 import MarketplaceDetail from '../views/MarketplaceDetail.vue'
+import MarketplaceOrders from '../views/MarketplaceOrders.vue'
+import VendorOrders from '../views/VendorOrders.vue'
+import MarketplaceCheckout from '../views/MarketplaceCheckout.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -42,8 +43,8 @@ const router = createRouter({
             children: [
                 { path: '', name: 'UserMarketplace', component: MarketplacePanel },
                 { path: 'restaurantes/:id', name: 'UserVendorDetail', component: MarketplaceDetail },
-                { path: 'checkout/:id', name: 'UserCheckout', component: VendorCheckout },
-                { path: 'orders', name: 'UserOrders', component: VendorOrders },
+                { path: 'checkout/:id', name: 'UserCheckout', component: MarketplaceCheckout },
+                { path: 'orders', name: 'UserOrders', component: MarketplaceOrders },
                 {
                     path: 'account',
                     component: AccountLayout,
@@ -77,7 +78,7 @@ const router = createRouter({
             children: [
                 { path: '', name: 'VendorDashboard', component: VendorDashboard },
                 { path: 'menu', name: 'VendorMenu', component: VendorMenu },
-                { path: 'orders', name: 'VendorOrders', component: { render: () => h('span', 'Vendor Orders') } },
+                { path: 'orders', name: 'VendorOrders', component: VendorOrders },
             ],
         },
 

@@ -1,6 +1,7 @@
 // composables/useOrders.js
 import { computed } from 'vue'
 import { useOrdersStore } from '../store/orders'
+import { updateOrderStatus } from '../api/orders'
 
 export function useOrders() {
     const ordersStore = useOrdersStore()
@@ -22,6 +23,15 @@ export function useOrders() {
         await ordersStore.fetchOrderById(id)
     }
 
+    
+    const fetchOrdersByVendor = async (id) => {
+        await ordersStore.fetchOrdersByVendor(id)
+    }
+
+    const updateOrderStatus = async (orderId, newStatus) => {
+        await ordersStore.updateOrderStatus(orderId, newStatus)
+    }
+
     const clearError = () => {
         ordersStore.error = null
     }
@@ -34,6 +44,8 @@ export function useOrders() {
         createOrder,
         fetchOrdersByUser,
         fetchOrderById,
+        fetchOrdersByVendor,
+        updateOrderStatus,
         clearError
     }
 }
