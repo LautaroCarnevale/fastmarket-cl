@@ -2,6 +2,8 @@ import api from './index'
 
 export async function createOrder(orderData) {
     const res = await api.post('/orders', orderData)
+    console.log(res);
+    
     return res.data
 }
 

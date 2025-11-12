@@ -14,8 +14,8 @@ export const useOrdersStore = defineStore('orders', {
             try {
                 this.loading = true
                 const res = await createOrder(payload)
-                this.currentOrder = res
-                return res.data
+                this.orders.push(res)
+                return res
             } catch (err) {
                 this.error = err.response?.data?.message || 'Error al crear pedido'
             } finally {

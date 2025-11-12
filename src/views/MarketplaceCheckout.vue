@@ -274,7 +274,7 @@ const confirmOrder = async () => {
             ]
         }
 
-        // clearCart()
+        clearCart()
         createOrder(orderData)
         router.push({
             name: 'UserOrders',
