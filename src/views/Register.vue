@@ -6,6 +6,7 @@ import { RouterLink } from 'vue-router'
 import { useAuth } from '../composables/useAuth'
 import { ROLES } from '../constants/roles'
 import { Form, Field, ErrorMessage } from 'vee-validate'
+import { registerSchema } from '@/validation/auth/register.schema'
 
 const { register } = useAuth()
 const selectedType = ref(ROLES.USER)
@@ -13,7 +14,8 @@ const form = ref({
     email: "",
     password: "",
     confirmPassword: "",
-    name: ""
+    name: "",
+      surname: '',
 });
 async function handleRegister(values, { setErrors, setFieldError }) {
     setErrors({});
@@ -24,7 +26,8 @@ async function handleRegister(values, { setErrors, setFieldError }) {
         email: values.email,
         password: values.password,
         name: values.name,
-        role: selectedType.value,
+         surname: values.surname,       
+        roles: [selectedType.value],
     }
 
 
@@ -89,53 +92,61 @@ async function handleRegister(values, { setErrors, setFieldError }) {
         </div>
     </div>
 
-    <!-- Formulario -->
-    <Form @submit="handleRegister"
-          class="flex flex-col gap-4">
-        <Field name="name"
-               v-slot="{ field, errorMessage }">
-            <Input v-model="form.name"
-                   label="Nombre completo"
-                   type="text"
-                   name="name"
-                   placeholder="Juan Pérez"
-                   v-bind="field"
-                   :errorMessage="errorMessage" />
-        </Field>
+<Form @submit="handleRegister"
+        :validationSchema="registerSchema"
+        class="flex flex-col gap-4">
 
-        <Field name="email"
-               v-slot="{ field, errorMessage }">
-            <Input v-model="form.email"
-                   label="Email"
-                   type="email"
-                   name="email"
-                   placeholder="tu@email.com"
-                   v-bind="field"
-                   :errorMessage="errorMessage" />
-        </Field>
+    <Field name="name" v-slot="{ field, errorMessage }">
+      <Input v-model="form.name"
+             label="Nombre"
+             type="text"
+             name="name"
+             placeholder="Juan"
+             v-bind="field"
+             :errorMessage="errorMessage" />
+    </Field>
 
-        <Field name="password"
-               v-slot="{ field, errorMessage }">
-            <Input v-model="form.password"
-                   label="Contraseña"
-                   type="password"
-                   name="password"
-                   placeholder="••••••••"
-                   v-bind="field"
-                   :errorMessage="errorMessage" />
-        </Field>
+    <Field name="surname" v-slot="{ field, errorMessage }">
+      <Input v-model="form.surname"
+             label="Apellido"
+             type="text"
+             name="surname"
+             placeholder="Perez"
+             v-bind="field"
+             :errorMessage="errorMessage" />
+    </Field>
 
-        <Field name="confirmPassword"
-               v-slot="{ field, errorMessage }">
-            <Input v-model="form.confirmPassword"
-                   label="Confirmar contraseña"
-                   type="password"
-                   name="confirmPassword"
-                   placeholder="••••••••"
-                   v-bind="field"
-                   :errorMessage="errorMessage" />
-        </Field>
-        <ErrorMessage name="__root__"
+    <Field name="email" v-slot="{ field, errorMessage }">
+      <Input v-model="form.email"
+             label="Email"
+             type="email"
+             name="email"
+             placeholder="tu@email.com"
+             v-bind="field"
+             :errorMessage="errorMessage" />
+    </Field>
+
+    <Field name="password" v-slot="{ field, errorMessage }">
+      <Input v-model="form.password"
+             label="Contraseña"
+             type="password"
+             name="password"
+             placeholder="••••••••"
+             v-bind="field"
+             :errorMessage="errorMessage" />
+    </Field>
+
+    <Field name="confirmPassword" v-slot="{ field, errorMessage }">
+      <Input v-model="form.confirmPassword"
+             label="Confirmar contraseña"
+             type="password"
+             name="confirmPassword"
+             placeholder="••••••••"
+             v-bind="field"
+             :errorMessage="errorMessage" />
+    </Field>
+    
+    <ErrorMessage name="__root__"
                       class="text-red-600 text-sm" />
         <Button type="submit"
                 variant="default"
