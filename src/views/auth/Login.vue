@@ -86,30 +86,30 @@ async function onSubmit(values, { setErrors, setFieldError }) {
     </div>
 
     <Form @submit="onSubmit"
-            :validationSchema="loginSchema"
-            class="flex flex-col gap-4">
+          :validationSchema="loginSchema"
+          class="flex flex-col gap-4">
         <Field name="email"
-                v-slot="{ field, errorMessage }">
+               v-slot="{ field, errorMessage }">
             <Input label="Email"
-                    type="email"
-                    placeholder="tu@email.com"
-                    v-model="form.email"
-                    v-bind="field"
-                    :errorMessage="errorMessage" />
+                   type="email"
+                   placeholder="tu@email.com"
+                   v-model="form.email"
+                   v-bind="field"
+                   :errorMessage="errorMessage" />
         </Field>
 
         <Field name="password"
-                v-slot="{ field, errorMessage }">
+               v-slot="{ field, errorMessage }">
             <Input label="Contraseña"
-                    type="password"
-                    placeholder="••••••••"
-                    v-model="form.password"
-                    v-bind="field"
-                    :errorMessage="errorMessage" />
+                   type="password"
+                   placeholder="••••••••"
+                   v-model="form.password"
+                   v-bind="field"
+                   :errorMessage="errorMessage" />
         </Field>
 
         <ErrorMessage name="__root__"
-                        class="text-red-600 text-sm" />
+                      class="text-red-600 text-sm" />
 
         <Button type="submit"
                 variant="default"

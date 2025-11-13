@@ -1,6 +1,6 @@
 // store/vendors.js
 import { defineStore } from 'pinia'
-import { getVendors, getVendorById, getVendorByOwnerId } from '../api/vendors'
+import { getVendors, getVendorById, getVendorByOwnerId, updateVendorStatus, createVendor } from '../api/vendors'
 
 export const useVendorsStore = defineStore('vendors', {
 	state: () => ({
@@ -23,6 +23,22 @@ export const useVendorsStore = defineStore('vendors', {
 	},
 
 	actions: {
+
+		async createVendor(data) {
+			this.loading = true
+			this.error = null
+			try {
+				const res = await createVendor(data)
+				this.vendors.push(res)
+				return res
+			} catch (err) {
+				this.error = err.message || 'Error al crear comercio'
+			} finally {
+				this.loading = false
+			}
+		},
+
+
 		async fetchVendors() {
 			this.loading = true
 			this.error = null
@@ -62,9 +78,23 @@ export const useVendorsStore = defineStore('vendors', {
 			}
 		},
 
-		setSelectedVendor(vendor) {
-			this.selectedVendor = vendor
+		async updateVendorStatus(id, data) {
+			this.loading = true
+			this.error = null
+			try {
+				const res = await updateVendorStatus(id, data)
+
+				const index = this.vendors.findIndex((p) => p.id === id)
+				if (index !== -1) this.vendors[index] = res
+				return res
+
+			} catch (err) {
+				this.error = err.message || 'No se encontró el comercio'
+			} finally {
+				this.loading = false
+			}
 		},
+
 
 		clearSelectedVendor() {
 			this.selectedVendor = null
@@ -106,6 +136,8 @@ export const useVendorsStore = defineStore('vendors', {
 			}
 		},
 
+
+
 		clearCart() {
 			this.cart = []
 		},
@@ -118,6 +150,6 @@ export const useVendorsStore = defineStore('vendors', {
 	persist: {
 		key: 'fastmarket-cart',
 		storage: localStorage,
-		paths: ['cart'] 
+		paths: ['cart']
 	}
 })

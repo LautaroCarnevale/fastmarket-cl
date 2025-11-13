@@ -49,7 +49,7 @@
                 <div class="flex items-center justify-between mb-4">
                     <div>
                         <p class="text-xs text-grisMedio">Pedido #{{ order.id.slice(-8) }}</p>
-                        <p class="font-bold text-grisOscuro">{{ order.vendorId.slice(-8) }}</p>
+                        <p class="font-bold text-grisOscuro">{{ getVendorName(order.vendorId) }}</p>
                         <p class="text-xs text-grisMedio">{{ formatDate(order.createdAt) }}</p>
                     </div>
 
@@ -68,7 +68,7 @@
                         <span class="icon-[lucide--store] w-4 h-4 mt-1 text-orange-500"></span>
                         <div>
                             <p class="text-sm font-medium text-grisOscuro">Recolectar en:</p>
-                            <p class="text-sm text-grisMedio">Vendor: {{ order.vendorId.slice(-8) }}</p>
+                            <p class="text-sm text-grisMedio">{{ getVendorName(order.vendorId) }}</p>
                         </div>
                     </div>
 
@@ -155,11 +155,12 @@ import { useAuth } from '../../composables/useAuth'
 import { useDriver } from '../../composables/useDriver'
 import Button from '../../components/ui/Button.vue'
 import { ORDER_STATUS } from '../../constants/roles'
+import { useVendor } from '../../composables/useVendor'
 
 const { loading: ordersLoading } = useOrders()
+const { vendors } = useVendor()
 const { orders, updateOrderStatus } = useDriver()
 const { user } = useAuth()
-
 const loading = ref(ordersLoading.value)
 const filterStatus = ref('all')
 
@@ -172,6 +173,12 @@ const orderStatuses = [
     { id: ORDER_STATUS.ON_THE_WAY, label: 'En camino' },
     { id: ORDER_STATUS.DELIVERED, label: 'Entregados' }
 ]
+
+const getVendorName = (vendorId) => {
+    if (!vendors.value || !Array.isArray(vendors.value)) return vendorId.slice(-8)
+    const vendor = vendors.value.find(v => v.id === vendorId)
+    return vendor?.displayName || vendor?.businessName || vendorId.slice(-8)
+}
 
 const filteredOrders = computed(() => {
     if (!orders.value || !Array.isArray(orders.value)) return []

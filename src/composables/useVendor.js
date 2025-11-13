@@ -36,6 +36,10 @@ export function useVendor() {
         return result
     })
 
+    const createVendor = async (vendorData) => {
+        await store.createVendor(vendorData)
+    }
+
     const fetchVendors = async () => {
         await store.fetchVendors()
     }
@@ -48,13 +52,6 @@ export function useVendor() {
         await store.fetchVendorByOwnerId(id)
     }
 
-    const setSelectedVendor = (vendor) => {
-        store.setSelectedVendor(vendor)
-    }
-
-    const clearSelectedVendor = () => {
-        store.clearSelectedVendor()
-    }
 
     const addToCart = (product) => {
         store.addToCart(product)
@@ -68,8 +65,14 @@ export function useVendor() {
         store.updateQuantity(productId, quantity)
     }
 
+
+
     const clearCart = () => {
         store.clearCart()
+    }
+
+    const updateVendorStatus = async (id, vendorData) => {
+        await store.updateVendorStatus(id, vendorData)
     }
 
     const getItemQuantity = (productId) => {
@@ -95,15 +98,15 @@ export function useVendor() {
         cartTotal,
         cartItemsCount,
 
-        setSelectedVendor,
-        clearSelectedVendor,
+        createVendor,
         fetchVendors,
         fetchVendorById,
         fetchVendorByOwnerId,
-        
+        updateVendorStatus,
         addToCart,
         removeFromCart,
         updateQuantity,
+
         clearCart,
         getItemQuantity,
         removeItemFromCart

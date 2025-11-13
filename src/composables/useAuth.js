@@ -5,6 +5,7 @@ import { useAuthStore } from '../store/auth'
 export function useAuth() {
     const auth = useAuthStore()
     const user = computed(() => auth.user)
+    const users = computed(() => auth.users)
     const initialized = computed(() => auth.initialized)
     const isAuthenticated = computed(() => auth.isAuthenticated)
     const role = computed(() => auth.role)
@@ -31,6 +32,17 @@ export function useAuth() {
         }
     }
 
+    const getUsersByRole = async (role) => {
+        try {
+           const res =  await auth.getUsersByRole(role)
+           return res
+           console.log(res);
+           
+        } catch (err) {
+            console.error('Error en registro:', err)
+            throw err
+        }
+    }
 
     const newAdress = async (id, data) => {
         try {
@@ -72,6 +84,7 @@ export function useAuth() {
 
     return {
         user,
+        users,
         role,
         initialized,
         isAuthenticated,
@@ -80,6 +93,7 @@ export function useAuth() {
         login,
         register,
         newAdress,
+        getUsersByRole,
         updateAdress,
         logout,
         initialize,

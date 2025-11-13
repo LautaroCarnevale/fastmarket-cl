@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import {
+	getUsersByRole,
 	loginRequest,
 	logoutRequest,
 	registerAddressRequest,
@@ -13,6 +14,7 @@ import { ROLE_ROUTES, ROLES } from '../constants/roles'
 export const useAuthStore = defineStore('auth', {
 	state: () => ({
 		user: null,
+		users: [],
 		isAuthenticated: false,
 		loading: false,
 		error: null,
@@ -52,6 +54,20 @@ export const useAuthStore = defineStore('auth', {
 				await registerRequest(data)
 			} catch (err) {
 				this.error = err.response?.data?.message || 'Error al registrarse'
+				throw err
+			} finally {
+				this.loading = false
+			}
+		},
+
+		async getUsersByRole(role) {
+			this.loading = true
+			try {
+				const res = await getUsersByRole(role)
+				this.users = res
+				return res
+			} catch (err) {
+				this.error = err.response?.data?.message || 'Error al obtener usuarios'
 				throw err
 			} finally {
 				this.loading = false

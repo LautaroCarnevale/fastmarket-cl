@@ -38,6 +38,15 @@ export const updateAddressRequest = async (id, data) => {
     }
 }
 
+export const getUsersByRole = async (role) => {
+    try {
+        const res = await api.get(`/auth/find/${role}`)
+        return res.data
+    } catch (err) {
+        throw err.response?.data || { message: 'Error al obtener usuarios' }
+    }
+}
+
 export const validateSessionRequest = async () => {
     try {
         const res = await api.get('/auth/profile')
@@ -73,3 +82,6 @@ export const getProfileRequest = async () => {
         throw err.response?.data || { message: 'Error al obtener perfil' }
     }
 }
+
+
+

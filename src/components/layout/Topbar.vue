@@ -113,11 +113,8 @@ const commonLinks = computed(() => {
     const role = userRole.value
     if (role === ROLES.ADMIN) {
         return [
-            { label: 'Comercios', to: '/admin/panel/vendors' },
+            { label: 'Comercios', to: '/admin/panel' },
             { label: 'Repartidores', to: '/admin/panel/drivers' },
-            { label: 'Usuarios', to: '/admin/panel/users' },
-            { label: 'Reportes', to: '/admin/panel/reports' },
-            { label: 'Configuración', to: '/admin/panel/settings' },
         ]
     }
     if (role === ROLES.VENDOR_STAFF) {
