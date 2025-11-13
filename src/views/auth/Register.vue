@@ -1,12 +1,12 @@
 <script setup>
-import Input from '../components/ui/Input.vue'
-import Button from '../components/ui/Button.vue'
+import Input from '../../components/ui/Input.vue'
+import Button from '../../components/ui/Button.vue'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import { useAuth } from '../composables/useAuth'
-import { ROLES } from '../constants/roles'
+import { useAuth } from '../../composables/useAuth'
+import { ROLES } from '../../constants/roles'
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import { registerSchema } from '../validations/auth/registerSchema'
+import { registerSchema } from '../../validations/auth/registerSchema'
 
 const { register } = useAuth()
 const selectedType = ref(ROLES.USER)

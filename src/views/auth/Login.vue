@@ -2,11 +2,11 @@
 import { ref } from "vue";
 import { RouterLink } from "vue-router";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import { ROLES } from "../constants/roles";
-import Input from "../components/ui/Input.vue";
-import Button from "../components/ui/Button.vue";
-import { useAuth } from "../composables/useAuth";
-import { loginSchema } from "../validations/auth/loginSchema";
+import { ROLES } from "../../constants/roles";
+import Input from "../../components/ui/Input.vue";
+import Button from "../../components/ui/Button.vue";
+import { useAuth } from "../../composables/useAuth";
+import { loginSchema } from "../../validations/auth/loginSchema";
 
 const selectedType = ref(ROLES.USER);
 const auth = useAuth();

@@ -186,11 +186,10 @@
 
 <script setup>
 import { ref } from 'vue'
-import Button from '../components/ui/Button.vue'
-import { useAuth } from '../composables/useAuth'
+import Button from '../../components/ui/Button.vue'
+import { useAuth } from '../../composables/useAuth'
 
 const { user } = useAuth()
-console.log(user.value);
 
 const activeDelivery = ref(null)
 const deliveryStatus = ref(null)

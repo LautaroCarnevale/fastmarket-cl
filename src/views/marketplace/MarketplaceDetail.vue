@@ -174,9 +174,9 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useVendor } from '../composables/useVendor'
-import defaultRest from '../assets/images/defaultRest.jpg'
-import { useProduct } from '../composables/useProducts'
+import { useVendor } from '../../composables/useVendor'
+import defaultRest from '../../assets/images/defaultRest.jpg'
+import { useProduct } from '../../composables/useProducts'
 
 const route = useRoute()
 const router = useRouter()

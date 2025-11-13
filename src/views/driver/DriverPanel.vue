@@ -4,7 +4,7 @@ import Input from '../components/ui/Input.vue'
 import Button from '../components/ui/Button.vue'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { driverProfileSchema } from '@/validations/driver/driverProfileSchema'
-import { useAuth } from '../composables/useAuth'
+import { useAuth } from '../../composables/useAuth'
 
 const { user } = useAuth()
 

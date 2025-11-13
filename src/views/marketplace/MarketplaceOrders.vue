@@ -147,7 +147,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useOrders } from '../composables/useOrders'
+import { useOrders } from '../../composables/useOrders'
 
 const { orders, loading: ordersLoading } = useOrders()
 const route = useRoute()

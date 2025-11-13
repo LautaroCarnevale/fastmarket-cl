@@ -208,15 +208,15 @@
 import { ref, computed } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { Form, Field } from 'vee-validate'
-import { checkoutSchema } from '../validations/orders/checkoutSchema'
+import { checkoutSchema } from '../../validations/orders/checkoutSchema'
 
-import { useVendor } from '../composables/useVendor'
-import { useAuth } from '../composables/useAuth'
-import defaultRest from '../assets/images/defaultRest.jpg'
-import Button from '../components/ui/Button.vue'
-import Input from '../components/ui/Input.vue'
-import Textarea from '../components/ui/BaseTextarea.vue'
-import { useOrders } from '../composables/useOrders'
+import { useVendor } from '../../composables/useVendor'
+import { useAuth } from '../../composables/useAuth'
+import defaultRest from '../../assets/images/defaultRest.jpg'
+import Button from '../../components/ui/Button.vue'
+import Input from '../../components/ui/Input.vue'
+import Textarea from '../../components/ui/BaseTextarea.vue'
+import { useOrders } from '../../composables/useOrders'
 
 const router = useRouter()
 const { cart, cartTotal, clearCart, selectedVendor } = useVendor()

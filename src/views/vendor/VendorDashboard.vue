@@ -1,8 +1,8 @@
 <script setup>
 import { computed } from 'vue'
-import { useVendor } from '../composables/useVendor'
-import { useProduct } from '../composables/useProducts'
-import { useOrders } from '../composables/useOrders'
+import { useVendor } from '../../composables/useVendor'
+import { useProduct } from '../../composables/useProducts'
+import { useOrders } from '../../composables/useOrders'
 const { selectedVendor, loading } = useVendor()
 const { orders } = useOrders()
 const { products } = useProduct()

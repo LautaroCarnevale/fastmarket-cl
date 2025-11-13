@@ -142,9 +142,9 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { useOrders } from '../composables/useOrders'
-import { useAuth } from '../composables/useAuth'
-import { useDriver } from '../composables/useDriver'
+import { useOrders } from '../../composables/useOrders'
+import { useAuth } from '../../composables/useAuth'
+import { useDriver } from '../../composables/useDriver'
 
 const { loading: ordersLoading, updateOrderStatus } = useOrders()
 const { orders, } = useDriver()

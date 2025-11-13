@@ -5,12 +5,12 @@ import logo from '../../public/images/logo.png'
 
 <template>
     <section
-                class="min-h-screen bg-linear-to-b from-rose-50 via-orange-50 to-white flex flex-col items-center justify-center px-4">
+             class="min-h-screen bg-linear-to-b from-rose-50 via-orange-50 to-white flex flex-col items-center justify-center px-4">
         <section class="text-center mb-10">
             <div>
                 <img :src="logo"
-                        alt="Logo"
-                        class="w-100 mx-auto">
+                     alt="Logo"
+                     class="w-100 mx-auto">
             </div>
             <p class="mt-2 text-gray-600 text-lg max-w-md mx-auto">
                 Tu marketplace de delivery favorito. Comida, compras y más, todo en un solo lugar.

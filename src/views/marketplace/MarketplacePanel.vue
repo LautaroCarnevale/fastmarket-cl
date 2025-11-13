@@ -143,9 +143,9 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useVendor } from '../composables/useVendor'
-import defaultRest from '../assets/images/defaultRest.jpg'
-import Button from '../components/ui/Button.vue'
+import { useVendor } from '../../composables/useVendor'
+import defaultRest from '../../assets/images/defaultRest.jpg'
+import Button from '../../components/ui/Button.vue'
 
 const { vendors, setSelectedVendor, loading, searchQuery, selectedCategory } = useVendor()
 
