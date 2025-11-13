@@ -10,80 +10,116 @@
                 </button>
             </div>
 
-            <form @submit.prevent="onSubmit"
+            <Form @submit="onSubmit"
                   class="p-6 space-y-4">
 
-                <Input label="Nombre del Comercio *"
-                       type="text"
-                       placeholder="Burger King"
-                       v-model="form.displayName" />
+                <Field name="displayName"
+                       v-slot="{ field }">
+                    <Input label="Nombre del Comercio *"
+                           type="text"
+                           placeholder="Burger King"
+                           v-model="form.displayName"
+                           v-bind="field" />
+                </Field>
 
-                <div>
-                    <label class="block text-sm font-medium text-grisOscuro mb-2">
-                        Dueño del Comercio *
-                    </label>
-                    <select v-model="form.ownerId"
-                            class="w-full px-4 py-2 border border-grisMedio rounded-md focus:ring-2 focus:ring-naranjaMedio focus:border-naranjaMedio">
-                        <option value="">Seleccionar dueño</option>
-                        <option v-for="user in vendorUsers"
-                                :key="user.id"
-                                :value="user.id">
-                            {{ user.name }} - {{ user.email }}
-                        </option>
-                    </select>
-                </div>
+                <Field name="ownerId"
+                       v-slot="{ field }">
+                    <div>
+                        <label class="block text-sm font-medium text-grisOscuro mb-2">
+                            Dueño del Comercio *
+                        </label>
+                        <select v-model="form.ownerId"
+                                v-bind="field"
+                                class="w-full px-4 py-2 border border-grisMedio rounded-md focus:ring-2 focus:ring-naranjaMedio focus:border-naranjaMedio">
+                            <option value="">Seleccionar dueño</option>
+                            <option v-for="user in vendorUsers"
+                                    :key="user.id"
+                                    :value="user.id">
+                                {{ user.name }} - {{ user.email }}
+                            </option>
+                        </select>
+                    </div>
+                </Field>
 
-                <div>
-                    <label class="block text-sm font-medium text-grisOscuro mb-2">
-                        Descripción
-                    </label>
-                    <textarea v-model="form.description"
-                              rows="3"
-                              placeholder="Descripción del comercio..."
-                              class="w-full px-4 py-2 border border-grisMedio rounded-md focus:ring-2 focus:ring-naranjaMedio focus:border-naranjaMedio"></textarea>
-                </div>
+                <Field name="description"
+                       v-slot="{ field }">
+                    <div>
+                        <label class="block text-sm font-medium text-grisOscuro mb-2">
+                            Descripción
+                        </label>
+                        <textarea v-model="form.description"
+                                  v-bind="field"
+                                  rows="3"
+                                  placeholder="Descripción del comercio..."
+                                  class="w-full px-4 py-2 border border-grisMedio rounded-md focus:ring-2 focus:ring-naranjaMedio focus:border-naranjaMedio"></textarea>
+                    </div>
+                </Field>
 
                 <div class="space-y-2">
                     <h3 class="font-semibold text-grisOscuro">Dirección *</h3>
 
-                    <Input label="Calle"
-                           type="text"
-                           placeholder="Av. Corrientes 1500"
-                           v-model="form.address.street" />
+                    <Field name="address.street"
+                           v-slot="{ field }">
+                        <Input label="Calle"
+                               type="text"
+                               placeholder="Av. Corrientes 1500"
+                               v-model="form.address.street"
+                               v-bind="field" />
+                    </Field>
 
                     <div class="grid grid-cols-2 gap-4">
-                        <Input label="Ciudad"
-                               type="text"
-                               placeholder="Córdoba"
-                               v-model="form.address.city" />
+                        <Field name="address.city"
+                               v-slot="{ field }">
+                            <Input label="Ciudad"
+                                   type="text"
+                                   placeholder="Córdoba"
+                                   v-model="form.address.city"
+                                   v-bind="field" />
+                        </Field>
 
-                        <Input label="Provincia"
-                               type="text"
-                               placeholder="Córdoba"
-                               v-model="form.address.province" />
+                        <Field name="address.province"
+                               v-slot="{ field }">
+                            <Input label="Provincia"
+                                   type="text"
+                                   placeholder="Córdoba"
+                                   v-model="form.address.province"
+                                   v-bind="field" />
+                        </Field>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
-                        <Input label="País"
-                               type="text"
-                               placeholder="Argentina"
-                               v-model="form.address.country" />
+                        <Field name="address.country"
+                               v-slot="{ field }">
+                            <Input label="País"
+                                   type="text"
+                                   placeholder="Argentina"
+                                   v-model="form.address.country"
+                                   v-bind="field" />
+                        </Field>
 
-                        <Input label="Código Postal"
-                               type="text"
-                               placeholder="5000"
-                               v-model="form.address.postalCode" />
+                        <Field name="address.postalCode"
+                               v-slot="{ field }">
+                            <Input label="Código Postal"
+                                   type="text"
+                                   placeholder="5000"
+                                   v-model="form.address.postalCode"
+                                   v-bind="field" />
+                        </Field>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <input type="checkbox"
-                           v-model="form.active"
-                           class="w-5 h-5 text-naranjaMedio border-grisMedio rounded focus:ring-naranjaMedio" />
-                    <label class="text-sm font-medium text-grisOscuro">
-                        Comercio activo
-                    </label>
-                </div>
+                <Field name="active"
+                       v-slot="{ field }">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox"
+                               v-model="form.active"
+                               v-bind="field"
+                               class="w-5 h-5 text-naranjaMedio border-grisMedio rounded focus:ring-naranjaMedio" />
+                        <label class="text-sm font-medium text-grisOscuro">
+                            Comercio activo
+                        </label>
+                    </div>
+                </Field>
 
                 <div v-if="error"
                      class="text-rojoError text-sm bg-red-50 p-3 rounded-md">
@@ -104,19 +140,20 @@
                         Crear Comercio
                     </Button>
                 </div>
-            </form>
+            </Form>
         </div>
     </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { Form, Field } from 'vee-validate'
 import Input from '../components/ui/Input.vue'
 import Button from '../components/ui/Button.vue'
-
 import { useVendor } from '../composables/useVendor'
 import { useAuth } from '../composables/useAuth'
 import { ROLES } from '../constants/roles'
+
 const { getUsersByRole } = useAuth()
 const { createVendor } = useVendor()
 const emit = defineEmits(['close', 'created'])
@@ -148,13 +185,14 @@ onMounted(async () => {
     }
 })
 
-const onSubmit = async () => {
+const onSubmit = async (values, { resetForm }) => {
     loading.value = true
     error.value = ''
 
     try {
         await createVendor(form.value)
         emit('created')
+        resetForm()
     } catch (err) {
         error.value = err.message || 'Error al crear el comercio'
     } finally {

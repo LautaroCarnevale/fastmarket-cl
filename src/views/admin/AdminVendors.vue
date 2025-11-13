@@ -1,5 +1,5 @@
 <template>
-    <section class="min-h-screen bg-grisClaro py-8">
+    <section class="min-h-screen  py-8">
         <div class="container mx-auto px-4 max-w-7xl">
             <div class="mb-8 flex items-center justify-between">
                 <Button @click="showCreateModal = true"
