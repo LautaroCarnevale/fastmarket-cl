@@ -9,8 +9,8 @@ import { userSettingsSchema } from '@/validation/user/userSettingsSchema'
 const auth = useAuth()
 
 const formData = ref({
-  firstName: 'Lautaro',
-  lastName: 'Carnovalo',
+  name: 'Lautaro',
+  surname: 'Carnovalo',
   email: 'carnovolalautaro72@gmail.com',
   phone: '3576415006',
   idNumber: '',
@@ -37,7 +37,7 @@ const deleteAccount = () => {
 }
 
 const closeOtherSessions = () => {
-  if (confirm('¿Deseas cerrar todas las demás sesiones?')) {
+  if (confirm('¿Deseas cerrar todas las demas sesiones?')) {
     // Lógica para cerrar sesiones
   }
 }
@@ -53,22 +53,22 @@ const closeOtherSessions = () => {
       class="space-y-4"
     >
       <div class="grid grid-cols-2 gap-4">
-        <Field name="firstName" v-slot="{ field, errorMessage }">
+        <Field name="name" v-slot="{ field, errorMessage }">
           <Input
             v-model="formData.firstName"
             label="Nombre(s)"
-            name="firstName"
+            name="Name"
             placeholder="Lautaro"
             v-bind="field"
             :errorMessage="errorMessage"
           />
         </Field>
 
-        <Field name="lastName" v-slot="{ field, errorMessage }">
+        <Field name="surname" v-slot="{ field, errorMessage }">
           <Input
             v-model="formData.lastName"
             label="Apellido(s)"
-            name="lastName"
+            name="surname"
             placeholder="Carnovalo"
             v-bind="field"
             :errorMessage="errorMessage"

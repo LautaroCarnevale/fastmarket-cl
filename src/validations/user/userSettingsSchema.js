@@ -1,16 +1,15 @@
-// src/validation/user/userSettingsSchema.js
 import * as yup from 'yup';
 
 export const userSettingsSchema = yup.object({
-  firstName: yup
+  name: yup
     .string()
     .required('El nombre es obligatorio')
-    .max(60, 'Máximo 60 caracteres'),
+    .max(60, 'Maximo 60 caracteres'),
 
-  lastName: yup
+  surname: yup
     .string()
     .required('El apellido es obligatorio')
-    .max(60, 'Máximo 60 caracteres'),
+    .max(60, 'Maximo 60 caracteres'),
 
   email: yup
     .string()
@@ -19,23 +18,23 @@ export const userSettingsSchema = yup.object({
 
   phone: yup
     .string()
-    .required('El teléfono es obligatorio')
-    .matches(/^[0-9+\s-]{7,20}$/, 'Teléfono inválido'),
+    .required('El telefono es obligatorio')
+    .matches(/^[0-9+\s-]{7,20}$/, 'Teléfono invalido'),
 
   idNumber: yup
     .string()
     .nullable()
     .notRequired()
-    .max(30, 'Máximo 30 caracteres'),
+    .max(30, 'Maximo 30 caracteres'),
 
   birthDate: yup
     .date()
     .nullable()
-    .typeError('Fecha inválida'),
+    .typeError('Fecha invalida'),
 
   gender: yup
     .string()
-    .oneOf(['Hombre', 'Mujer'], 'Género inválido')
+    .oneOf(['Hombre', 'Mujer'], 'Genero invalido')
     .nullable()
     .notRequired(),
 });
