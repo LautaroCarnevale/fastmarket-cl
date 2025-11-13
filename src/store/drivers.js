@@ -4,12 +4,14 @@ import {
 	getDriverOrders,
 	findForDriver,
 	getOrdersForReady,
-	updateOrderStatus
+	updateOrderStatus,
+	getAllDrivers
 } from '../api/driver'
 
 export const useDriversStore = defineStore('drivers', {
 	state: () => ({
 		driver: null,
+		drivers: [],
 		stats: null,
 		orders: [],
 		loading: false,
@@ -76,6 +78,19 @@ export const useDriversStore = defineStore('drivers', {
 				this.stats = data
 			} catch (err) {
 				this.error = err.message || 'Error al cargar estadísticas'
+			} finally {
+				this.loading = false
+			}
+		},
+
+		async findAllDrivers() {
+			this.loading = true
+			this.error = null
+			try {
+				const data = await getAllDrivers()
+				this.drivers = data
+			} catch (err) {
+				this.error = err.message || 'Error al cargar drivers'
 			} finally {
 				this.loading = false
 			}

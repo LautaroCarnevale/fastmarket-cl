@@ -5,6 +5,7 @@ export function useDriver() {
     const store = useDriversStore()
 
     const driver = computed(() => store.driver)
+    const drivers = computed(() => store.drivers)
     const stats = computed(() => store.stats)
     const orders = computed(() => store.orders)
     const loading = computed(() => store.loading)
@@ -16,6 +17,10 @@ export function useDriver() {
 
     const fetchDriverProfile = async (id) => {
         await store.fetchDriverProfile(id)
+    }
+
+    const fetchFindAllDrivers = async () => {
+        await store.findAllDrivers()
     }
 
     const fetchDriverStats = async (id) => {
@@ -39,6 +44,7 @@ export function useDriver() {
 
     return {
         driver,
+        drivers,
         stats,
         orders,
         loading,
@@ -50,6 +56,7 @@ export function useDriver() {
         fetchDriverProfile,
         fetchDriverStats,
         fetchDriverOrders,
+        fetchFindAllDrivers,
         fetchOrdersForReady,
         fetchOrderForDriver,
     }

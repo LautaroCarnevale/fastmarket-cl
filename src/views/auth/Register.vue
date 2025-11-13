@@ -27,7 +27,7 @@ async function handleRegister(values, { setErrors, setFieldError }) {
         password: values.password,
         name: values.name,
         surname: values.surname,
-        role: selectedType.value,
+        roles: [selectedType.value],
     }
 
 
