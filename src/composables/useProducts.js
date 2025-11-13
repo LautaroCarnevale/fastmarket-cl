@@ -62,20 +62,16 @@ export function useProduct() {
     }
 
     return {
-        // Estado global
         products,
         selectedProduct,
         loading,
         error,
 
-        // Estado local
         searchQuery,
         selectedCategory,
 
-        // Derivados
         filteredProducts,
 
-        // Acciones
         fetchProducts,
         fetchProductById,
         createProduct,

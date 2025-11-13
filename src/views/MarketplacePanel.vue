@@ -5,11 +5,11 @@
             <div class="mb-8">
                 <div class="relative max-w-2xl mx-auto">
                     <span
-                          class="icon-[lucide--search] absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></span>
+                            class="icon-[lucide--search] absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></span>
                     <input type="text"
-                           placeholder="Buscar restaurantes o tiendas..."
-                           v-model="searchQuery"
-                           class="pl-10 w-full h-12 text-base rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none" />
+                            placeholder="Buscar restaurantes o tiendas..."
+                            v-model="searchQuery"
+                            class="pl-10 w-full h-12 text-base rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none" />
                 </div>
             </div>
 
@@ -82,23 +82,23 @@
                 <h2 class="text-xl font-bold mb-4">Todos los restaurantes</h2>
 
                 <div v-if="loading"
-                     class="text-center py-10 text-gray-500">
+                        class="text-center py-10 text-gray-500">
                     Cargando restaurantes...
                 </div>
 
                 <div v-else-if="filteredVendors.length"
-                     class="grid md:grid-cols-3 gap-6">
+                        class="grid md:grid-cols-3 gap-6">
                     <RouterLink v-for="vendor in filteredVendors"
                                 :key="vendor.id"
                                 @click="setSelectedVendor(vendor)"
                                 :to="`/marketplace/restaurantes/${vendor.id}`"
                                 class="block">
                         <div
-                             class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow h-full">
+                                class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow h-full">
                             <div class="relative h-40">
                                 <img :src="vendor.image || defaultRest"
-                                     :alt="vendor.displayName"
-                                     class="w-full h-full object-cover" />
+                                        :alt="vendor.displayName"
+                                        class="w-full h-full object-cover" />
                             </div>
                             <div class="p-4">
                                 <h3 class="font-bold text-lg mb-1">
@@ -110,7 +110,7 @@
                                 <div class="flex items-center justify-between text-sm mb-2 text-gray-600">
                                     <span class="flex items-center gap-1">
                                         <span
-                                              class="icon-[lucide--star] w-4 h-4 text-yellow-400 fill-yellow-400"></span>
+                                                class="icon-[lucide--star] w-4 h-4 text-yellow-400 fill-yellow-400"></span>
                                         {{ vendor.rating.average.toFixed(1) }} ({{ vendor.rating.count }})
                                     </span>
                                     <span class="flex items-center gap-1">
@@ -133,7 +133,7 @@
                 </div>
 
                 <div v-else
-                     class="text-center text-gray-500 py-10">
+                        class="text-center text-gray-500 py-10">
                     No se encontraron restaurantes.
                 </div>
             </div>
@@ -149,7 +149,6 @@ import Button from '../components/ui/Button.vue'
 
 const { vendors, setSelectedVendor, loading, searchQuery, selectedCategory } = useVendor()
 
-// Obtener categorías únicas de todos los vendors
 const uniqueCategories = computed(() => {
     const map = new Map()
     vendors.value.forEach((v) => {
@@ -160,7 +159,6 @@ const uniqueCategories = computed(() => {
 })
 
 
-//Filtrar vendors por búsqueda y categoría
 const filteredVendors = computed(() => {
     return vendors.value.filter((v) => {
         const matchSearch = v.displayName
@@ -173,7 +171,6 @@ const filteredVendors = computed(() => {
     })
 })
 
-//Filtrar los más destacados (mejor rating)
 const topVendors = computed(() =>
     vendors.value
         .filter((v) => v.rating?.average >= 4.5 && v.active)

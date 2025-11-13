@@ -49,8 +49,8 @@ const viewOrderDetails = (orderId) => {
 
     <div class="space-y-4">
       <div v-for="order in orders"
-           :key="order.id"
-           class="border border-grisBajo rounded-lg p-4 hover:border-naranjaMedio transition-colors">
+            :key="order.id"
+            class="border border-grisBajo rounded-lg p-4 hover:border-naranjaMedio transition-colors">
         <div class="flex justify-between items-start mb-3">
           <div>
             <h3 class="font-semibold text-grisOscuro">{{ order.vendor }}</h3>
@@ -79,7 +79,7 @@ const viewOrderDetails = (orderId) => {
       </div>
 
       <div v-if="orders.length === 0"
-           class="text-center py-12 text-grisMedio">
+            class="text-center py-12 text-grisMedio">
         <p>No tienes órdenes recientes</p>
         <Button @click="router.push({ name: 'UserMarketplace' })"
                 variant="default"

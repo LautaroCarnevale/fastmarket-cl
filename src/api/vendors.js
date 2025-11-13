@@ -1,4 +1,4 @@
-import api from './index' // tu instancia base de axios
+import api from './index' 
 
 export async function getVendors() {
     const res = await api.get(`/vendors/find`)

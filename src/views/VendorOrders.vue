@@ -34,19 +34,19 @@
             </div>
 
             <div v-if="loading"
-                 class="text-center py-20">
+                    class="text-center py-20">
                 <span class="icon-[lucide--loader-2] w-12 h-12 animate-spin text-orange-500 mx-auto"></span>
                 <p class="text-gray-500 mt-4">Cargando pedidos...</p>
             </div>
 
             <div v-else-if="!orders || orders.length === 0"
-                 class="text-center py-20">
+                    class="text-center py-20">
                 <span class="icon-[lucide--package] w-20 h-20 text-gray-300 mx-auto mb-4"></span>
                 <h3 class="text-xl font-bold text-gray-600 mb-2">No hay pedidos</h3>
             </div>
 
             <div v-else
-                 class="space-y-4">
+                    class="space-y-4">
                 <div v-for="order in filteredOrders"
                      :key="order.id"
                      class="bg-white rounded-lg border-2 p-4"
@@ -83,8 +83,7 @@
                     </div>
 
                     <div class="mb-4 text-sm">
-                        <p><strong>Dirección:</strong> {{ order.deliveryAddress.street }}, {{ order.deliveryAddress.city
-                            }}</p>
+                        <p><strong>Dirección:</strong> {{ order.deliveryAddress.street }}, {{ order.deliveryAddress.city}}</p>
                         <p><strong>Pago:</strong> {{ getPaymentLabel(order.payment.method) }}</p>
                     </div>
 

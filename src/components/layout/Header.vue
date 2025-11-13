@@ -1,12 +1,9 @@
 <template>
   <header class="bg-white border-b border-gray-200 shadow-sm">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <!-- Logo -->
+      
       <RouterLink to="/"
-                  class="flex items-center gap-2">
-        <!-- <img src="/logo.svg"
-             alt="FastMarket"
-             class="w-8 h-8" /> -->
+                    class="flex items-center gap-2">
         <h1 class="text-xl font-semibold text-gray-800">FastMarket</h1>
       </RouterLink>
 
@@ -19,14 +16,14 @@
                     class="hover:text-blue-600 transition">Carrito</RouterLink>
       </nav>
 
-      <!-- Botón móvil -->
+
       <button @click="toggleMenu"
               class="md:hidden text-gray-700 hover:text-blue-600 transition">
         <svg xmlns="http://www.w3.org/2000/svg"
-             class="h-6 w-6"
-             fill="none"
-             viewBox="0 0 24 24"
-             stroke="currentColor">
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
           <path stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -35,9 +32,9 @@
       </button>
     </div>
 
-    <!-- Menú móvil -->
+
     <div v-if="menuOpen"
-         class="md:hidden bg-white border-t border-gray-100 py-2 flex flex-col items-center gap-2">
+          class="md:hidden bg-white border-t border-gray-100 py-2 flex flex-col items-center gap-2">
       <RouterLink @click="toggleMenu"
                   to="/"
                   class="text-gray-700 hover:text-blue-600">Inicio</RouterLink>

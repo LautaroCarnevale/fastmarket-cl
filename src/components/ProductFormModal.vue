@@ -106,7 +106,7 @@ const handleSubmit = () => {
 <template>
     <transition name="fade">
         <div v-if="show"
-             class="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+                class="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
             <div class="bg-blanco w-full max-w-lg rounded-2xl shadow-lg p-6 relative">
                 <button class="absolute top-3 right-3 text-grisMedio hover:text-grisOscuro text-xl"
                         @click="emit('close')">
@@ -118,48 +118,48 @@ const handleSubmit = () => {
                 </h2>
 
                 <Form @submit="handleSubmit"
-                      class="space-y-4">
+                        class="space-y-4">
                     <Field name="name"
-                           v-slot="{ field, errorMessage }">
+                            v-slot="{ field, errorMessage }">
                         <Input label="Nombre"
-                               placeholder="Ej: Hamburguesa"
-                               v-model="form.name"
-                               v-bind="field"
-                               :errorMessage="errorMessage" />
+                                placeholder="Ej: Hamburguesa"
+                                v-model="form.name"
+                                v-bind="field"
+                                :errorMessage="errorMessage" />
                     </Field>
 
                     <Field name="description"
-                           v-slot="{ field, errorMessage }">
+                            v-slot="{ field, errorMessage }">
                         <Input label="Descripción"
-                               placeholder="Breve descripción del producto"
-                               v-model="form.description"
-                               v-bind="field"
-                               :errorMessage="errorMessage" />
+                                placeholder="Breve descripción del producto"
+                                v-model="form.description"
+                                v-bind="field"
+                                :errorMessage="errorMessage" />
                     </Field>
 
                     <div class="grid grid-cols-2 gap-4">
                         <Field name="priceAmount"
-                               v-slot="{ field, errorMessage }">
+                                v-slot="{ field, errorMessage }">
                             <Input label="Precio"
-                                   type="number"
-                                   placeholder="Ej: 1200"
-                                   v-model="form.priceAmount"
-                                   v-bind="field"
-                                   :errorMessage="errorMessage" />
+                                    type="number"
+                                    placeholder="Ej: 1200"
+                                    v-model="form.priceAmount"
+                                    v-bind="field"
+                                    :errorMessage="errorMessage" />
                         </Field>
 
                         <Field name="priceCurrency"
-                               v-slot="{ field, errorMessage }">
+                                v-slot="{ field, errorMessage }">
                             <Input label="Moneda"
-                                   placeholder="ARS"
-                                   v-model="form.priceCurrency"
-                                   v-bind="field"
-                                   :errorMessage="errorMessage" />
+                                    placeholder="ARS"
+                                    v-model="form.priceCurrency"
+                                    v-bind="field"
+                                    :errorMessage="errorMessage" />
                         </Field>
                     </div>
 
                     <Field name="categoryId"
-                           v-slot="{ field, errorMessage }">
+                            v-slot="{ field, errorMessage }">
                         <div>
                             <label class="text-sm font-medium text-grisMedio">Categoría</label>
                             <select v-model="form.categoryId"
@@ -174,55 +174,55 @@ const handleSubmit = () => {
                                 </option>
                             </select>
                             <p v-if="errorMessage"
-                               class="text-red-500 text-xs mt-1">
+                                class="text-red-500 text-xs mt-1">
                                 {{ errorMessage }}
                             </p>
                         </div>
                     </Field>
 
                     <Field name="active"
-                           v-slot="{ field }">
+                            v-slot="{ field }">
                         <div class="flex justify-between items-center">
                             <p class="text-sm text-grisMedio">Disponible</p>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox"
-                                       class="sr-only peer"
-                                       v-model="form.active"
-                                       v-bind="field" />
+                                        class="sr-only peer"
+                                        v-model="form.active"
+                                        v-bind="field" />
                                 <div
-                                     class="group peer bg-white rounded-full duration-300 w-14 h-7 ring-2 ring-red-500 after:duration-300 after:bg-red-500 peer-checked:after:bg-green-500 peer-checked:ring-green-500 after:rounded-full after:absolute after:h-5 after:w-5 after:top-1 after:left-1 peer-checked:after:translate-x-7">
+                                        class="group peer bg-white rounded-full duration-300 w-14 h-7 ring-2 ring-red-500 after:duration-300 after:bg-red-500 peer-checked:after:bg-green-500 peer-checked:ring-green-500 after:rounded-full after:absolute after:h-5 after:w-5 after:top-1 after:left-1 peer-checked:after:translate-x-7">
                                 </div>
                             </label>
                         </div>
                     </Field>
 
                     <Field name="promoPriceAmount"
-                           v-slot="{ field, errorMessage }">
+                            v-slot="{ field, errorMessage }">
                         <Input label="Precio Promocional"
-                               type="number"
-                               placeholder="Ej: 900"
-                               v-model="form.promoPriceAmount"
-                               v-bind="field"
-                               :errorMessage="errorMessage" />
+                                type="number"
+                                placeholder="Ej: 900"
+                                v-model="form.promoPriceAmount"
+                                v-bind="field"
+                                :errorMessage="errorMessage" />
                     </Field>
 
                     <div class="grid grid-cols-2 gap-4">
                         <Field name="promoStart"
-                               v-slot="{ field, errorMessage }">
+                                v-slot="{ field, errorMessage }">
                             <Input label="Inicio Promoción"
-                                   type="date"
-                                   v-model="form.promoStart"
-                                   v-bind="field"
-                                   :errorMessage="errorMessage" />
+                                    type="date"
+                                    v-model="form.promoStart"
+                                    v-bind="field"
+                                    :errorMessage="errorMessage" />
                         </Field>
 
                         <Field name="promoEnd"
-                               v-slot="{ field, errorMessage }">
+                                v-slot="{ field, errorMessage }">
                             <Input label="Fin Promoción"
-                                   type="date"
-                                   v-model="form.promoEnd"
-                                   v-bind="field"
-                                   :errorMessage="errorMessage" />
+                                    type="date"
+                                    v-model="form.promoEnd"
+                                    v-bind="field"
+                                    :errorMessage="errorMessage" />
                         </Field>
                     </div>
 

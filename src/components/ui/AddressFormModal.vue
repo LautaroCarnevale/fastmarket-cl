@@ -1,8 +1,8 @@
 <template>
     <section class="fixed inset-0 z-[60] flex items-center justify-center bg-black/40"
-             @click="$emit('close')">
+                @click="$emit('close')">
         <div class="bg-white w-full max-w-lg rounded-xl shadow-2xl border border-gray-300 animate-fadeIn"
-             @click.stop>
+                @click.stop>
             <header class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-grisOscuro">
                     {{ isEditing ? 'Editar dirección' : 'Nueva dirección' }}
@@ -15,51 +15,51 @@
             </header>
 
             <Form ref="formRef"
-                  @submit="onSubmit"
-                  :key="formKey"
-                  class="px-6 py-4 space-y-4">
+                    @submit="onSubmit"
+                    :key="formKey"
+                    class="px-6 py-4 space-y-4">
                 <Field name="street"
-                       v-slot="{ field, errorMessage }">
+                        v-slot="{ field, errorMessage }">
                     <Input label="Calle y número"
-                           placeholder="Av. Principal 123"
-                           :model-value="formData.street"
-                           @update:model-value="(val) => { field.value = val; formData.street = val }"
-                           :error-message="errorMessage" />
+                            placeholder="Av. Principal 123"
+                            :model-value="formData.street"
+                            @update:model-value="(val) => { field.value = val; formData.street = val }"
+                            :error-message="errorMessage" />
                 </Field>
 
                 <div class="grid grid-cols-2 gap-4">
                     <Field name="city"
-                           v-slot="{ field, errorMessage }">
+                            v-slot="{ field, errorMessage }">
                         <Input label="Ciudad"
-                               placeholder="Córdoba"
-                               :model-value="formData.city"
-                               @update:model-value="(val) => { field.value = val; formData.city = val }"
-                               :error-message="errorMessage" />
+                                placeholder="Córdoba"
+                                :model-value="formData.city"
+                                @update:model-value="(val) => { field.value = val; formData.city = val }"
+                                :error-message="errorMessage" />
                     </Field>
 
                     <Field name="province"
-                           v-slot="{ field, errorMessage }">
+                            v-slot="{ field, errorMessage }">
                         <Input label="Provincia"
-                               placeholder="Córdoba"
-                               :model-value="formData.province"
-                               @update:model-value="(val) => { field.value = val; formData.province = val }"
-                               :error-message="errorMessage" />
+                                placeholder="Córdoba"
+                                :model-value="formData.province"
+                                @update:model-value="(val) => { field.value = val; formData.province = val }"
+                                :error-message="errorMessage" />
                     </Field>
                 </div>
 
                 <Field name="select"
-                       v-slot="{ field }">
+                        v-slot="{ field }">
                     <label class="flex items-center gap-2 cursor-pointer">
                         <input type="checkbox"
-                               :checked="formData.select"
-                               @change="(e) => { field.value = e.target.checked; formData.select = e.target.checked }"
-                               class="accent-naranjaMedio w-4 h-4" />
+                                :checked="formData.select"
+                                @change="(e) => { field.value = e.target.checked; formData.select = e.target.checked }"
+                                class="accent-naranjaMedio w-4 h-4" />
                         <span class="text-sm text-grisOscuro">Establecer como dirección principal</span>
                     </label>
                 </Field>
 
                 <ErrorMessage name="__root__"
-                              class="text-red-600 text-sm" />
+                                class="text-red-600 text-sm" />
 
                 <div class="flex justify-end gap-3 pt-4">
                     <Button type="button"

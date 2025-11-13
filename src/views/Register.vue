@@ -49,11 +49,9 @@ async function handleRegister(values, { setErrors, setFieldError }) {
 
 <template>
 
-    <!-- Título -->
     <h1 class="text-2xl font-bold text-gray-900 mb-1">Registro</h1>
     <p class="text-gray-500 mb-6">Crea tu cuenta para comenzar</p>
 
-    <!-- Tipo de cuenta -->
     <div class="mb-6">
         <h3 class="text-sm font-medium text-gray-700 mb-2">Tipo de cuenta</h3>
         <div class="grid grid-cols-3 gap-3">
@@ -157,7 +155,6 @@ async function handleRegister(values, { setErrors, setFieldError }) {
         </Button>
     </Form>
 
-    <!-- Enlaces -->
     <div class="text-center mt-5 text-sm text-gray-600">
         <p>
             ¿Ya tienes cuenta?
