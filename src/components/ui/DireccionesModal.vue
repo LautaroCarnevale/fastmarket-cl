@@ -1,9 +1,9 @@
 <template>
     <section v-if="isOpen"
-             class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-             @click="closeModal">
+                class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+                @click="closeModal">
         <div class="bg-white w-full max-w-2xl rounded-xl shadow-2xl border border-gray-300 max-h-[90vh] overflow-hidden flex flex-col animate-fadeIn"
-             @click.stop>
+                @click.stop>
             <header class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-grisOscuro">Mis direcciones</h2>
                 <button @click="closeModal"
@@ -21,16 +21,16 @@
 
                 <div class="space-y-3">
                     <article v-for="(address, index) in addresses"
-                             :key="index"
-                             class="flex justify-between p-4 rounded-lg border border-gray-200 hover:border-naranjaMedio/50 transition cursor-pointer">
+                                :key="index"
+                                class="flex justify-between p-4 rounded-lg border border-gray-200 hover:border-naranjaMedio/50 transition cursor-pointer">
                         <div class="flex items-center gap-5 w-full"
-                             @click="editAddressSelect(address)">
+                                @click="editAddressSelect(address)">
                             <div v-if="address.select === true">
                                 <span class="icon-[grommet-icons--radial-selected] w-5.5 h-5.5 text-verdeOk"></span>
                             </div>
                             <div v-else>
                                 <span
-                                      class="icon-[lsicon--radio-unselected-filled] w-5.5 h-5.5 text-grisOscuro/70"></span>
+                                        class="icon-[lsicon--radio-unselected-filled] w-5.5 h-5.5 text-grisOscuro/70"></span>
                             </div>
                             <div class="flex-1 min-w-0">
                                 <p class="font-medium text-grisOscuro">{{ address.street }}</p>
@@ -49,7 +49,7 @@
                 </div>
 
                 <div v-if="addresses.length === 0"
-                     class="text-center py-12 text-grisMedio">
+                        class="text-center py-12 text-grisMedio">
                     <span class="icon-[ps--pin-map] w-16 h-16 mx-auto mb-4 opacity-30"></span>
                     <p class="font-medium">No tienes direcciones</p>
                 </div>
@@ -63,9 +63,9 @@
     </section>
 
     <AddressFormModal v-if="isAddingAddress || isEditingAddress"
-                      :address="editingAddress"
-                      :address-index="editingAddressIndex"
-                      @close="closeAddressForm" />
+                        :address="editingAddress"
+                        :address-index="editingAddressIndex"
+                        @close="closeAddressForm" />
 </template>
 
 <script setup>

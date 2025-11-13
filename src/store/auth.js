@@ -1,4 +1,3 @@
-// src/store/auth.js
 import { defineStore } from 'pinia'
 import {
 	loginRequest,

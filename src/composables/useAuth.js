@@ -1,4 +1,3 @@
-// src/composables/useAuth.js
 import { computed } from 'vue'
 import { useAuthStore } from '../store/auth'
 

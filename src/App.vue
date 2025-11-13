@@ -8,7 +8,6 @@
 import { computed, ref, onMounted } from 'vue'
 import { useRoute, RouterView } from 'vue-router'
 
-// --- Layouts ---
 import DefaultLayout from './components/layout/DefaultLayout.vue'
 import AuthLayout from './components/layout/AuthLayout.vue'
 import DashboardLayout from './components/layout/DashboardLayout.vue'
@@ -20,7 +19,6 @@ onMounted(() => {
   routeReady.value = true
 })
 
-// Determina el layout de forma segura
 const layout = computed(() => {
   const layoutType = route?.meta?.layout
 

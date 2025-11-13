@@ -1,15 +1,12 @@
-// src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
 import { h } from 'vue'
 import { useAuth } from '../composables/useAuth'
 import { ROLES } from '../constants/roles'
 
-// --- Vistas principales ---
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 
-// --- Layouts y paneles ---
 import MarketplacePanel from '../views/MarketplacePanel.vue'
 import AdminPanel from '../views/AdminPanel.vue'
 import DriverPanel from '../views/DriverPanel.vue'
@@ -29,12 +26,10 @@ import MarketplaceDetail from '../views/MarketplaceDetail.vue'
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        // --- Público ---
         { path: '/', name: 'Home', component: Home, meta: { layout: 'default' } },
         { path: '/login', name: 'Login', component: Login, meta: { guest: true, layout: 'auth' } },
         { path: '/register', name: 'Register', component: Register, meta: { guest: true, layout: 'auth' } },
 
-        // --- Marketplace (usuario final) ---
         {
             path: '/marketplace',
             component: MarketplaceLayout,
@@ -58,7 +53,6 @@ const router = createRouter({
             ],
         },
 
-        // --- Admin ---
         {
             path: '/admin/panel',
             component: AdminPanel,
@@ -69,7 +63,6 @@ const router = createRouter({
             ],
         },
 
-        // --- Vendor ---
         {
             path: '/vendor/panel',
             component: VendorLayout,
@@ -81,7 +74,6 @@ const router = createRouter({
             ],
         },
 
-        // --- Driver ---
         {
             path: '/driver/panel',
             component: DriverPanel,
@@ -91,7 +83,6 @@ const router = createRouter({
             ],
         },
 
-        // --- Fallback ---
         { path: '/:pathMatch(.*)*', redirect: '/' },
     ],
 })

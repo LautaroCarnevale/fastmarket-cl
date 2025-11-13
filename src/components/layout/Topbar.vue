@@ -4,8 +4,8 @@
             <RouterLink to="/"
                         class="flex items-center gap-2">
                 <img :src="logo"
-                     alt="FastMarket"
-                     class="w-35" />
+                        alt="FastMarket"
+                        class="w-35" />
             </RouterLink>
 
 
@@ -26,7 +26,7 @@
 
 
             <nav v-if="userRole !== 'user'"
-                 class="flex items-center gap-1 text-sm text-gray-700 ">
+                    class="flex items-center gap-1 text-sm text-gray-700 ">
                 <RouterLink v-for="link in commonLinks"
                             :key="link.to"
                             :to="link.to"
@@ -45,8 +45,8 @@
                         title="Mi perfil"
                         class="w-10 h-10 rounded-full overflow-hidden border border-gray-300 hover:opacity-90 transition cursor-pointer">
                     <img :src="userInfo.avatar || DefaultAvatar"
-                         alt="Perfil"
-                         class="w-full h-full object-cover" />
+                            alt="Perfil"
+                            class="w-full h-full object-cover" />
                 </button>
 
 
@@ -56,7 +56,7 @@
 
 
         <DireccionesModal ref="direccionModalRef"
-                          @address-selected="handleAddressSelected" />
+                            @address-selected="handleAddressSelected" />
     </header>
 </template>
 

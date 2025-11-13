@@ -37,11 +37,11 @@
                             <td class="py-3 px-4">
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox"
-                                           class="sr-only peer"
-                                           v-model="product.active"
-                                           @change="toggleProductActive(product)" />
+                                            class="sr-only peer"
+                                            v-model="product.active"
+                                            @change="toggleProductActive(product)" />
                                     <div
-                                         class="group peer bg-white rounded-full duration-300 w-14 h-7 ring-2 ring-red-500 after:duration-300 after:bg-red-500 peer-checked:after:bg-green-500 peer-checked:ring-green-500 after:rounded-full after:absolute after:h-5 after:w-5 after:top-1 after:left-1 peer-checked:after:translate-x-7">
+                                            class="group peer bg-white rounded-full duration-300 w-14 h-7 ring-2 ring-red-500 after:duration-300 after:bg-red-500 peer-checked:after:bg-green-500 peer-checked:ring-green-500 after:rounded-full after:absolute after:h-5 after:w-5 after:top-1 after:left-1 peer-checked:after:translate-x-7">
                                     </div>
                                 </label>
                             </td>
@@ -69,23 +69,21 @@
         </div>
 
         <div v-else
-             class="text-center py-10 text-grisMedio">
+                class="text-center py-10 text-grisMedio">
             Cargando comercio...
         </div>
     </section>
 
-    <!-- Modal de crear -->
     <ProductFormModal :show="showCreateModal"
-                      mode="create"
-                      @close="showCreateModal = false"
-                      @create="handleCreateProduct" />
+                        mode="create"
+                        @close="showCreateModal = false"
+                        @create="handleCreateProduct" />
 
-    <!-- Modal de editar -->
     <ProductFormModal :show="showEditModal"
-                      mode="edit"
-                      :product="selectedProductToEdit"
-                      @close="showEditModal = false"
-                      @update="handleUpdateProduct" />
+                        mode="edit"
+                        :product="selectedProductToEdit"
+                        @close="showEditModal = false"
+                        @update="handleUpdateProduct" />
 </template>
 
 <script setup>

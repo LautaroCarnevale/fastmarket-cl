@@ -71,7 +71,6 @@ export const useVendorsStore = defineStore('vendors', {
 			this.selectedVendor = null
 		},
 
-		// --- Acciones del carrito ---
 		addToCart(product) {
 			const existing = this.cart.find(i => i.id === product.id)
 			if (existing) {

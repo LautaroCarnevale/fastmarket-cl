@@ -46,11 +46,9 @@ async function handleRegister(values, { setErrors, setFieldError }) {
 
 <template>
 
-    <!-- Título -->
     <h1 class="text-2xl font-bold text-gray-900 mb-1">Registro</h1>
     <p class="text-gray-500 mb-6">Crea tu cuenta para comenzar</p>
 
-    <!-- Tipo de cuenta -->
     <div class="mb-6">
         <h3 class="text-sm font-medium text-gray-700 mb-2">Tipo de cuenta</h3>
         <div class="grid grid-cols-3 gap-3">
@@ -89,54 +87,53 @@ async function handleRegister(values, { setErrors, setFieldError }) {
         </div>
     </div>
 
-    <!-- Formulario -->
     <Form @submit="handleRegister"
-          class="flex flex-col gap-4">
+            class="flex flex-col gap-4">
         <Field name="name"
-               v-slot="{ field, errorMessage }">
+                v-slot="{ field, errorMessage }">
             <Input v-model="form.name"
-                   label="Nombre completo"
-                   type="text"
-                   name="name"
-                   placeholder="Juan Pérez"
-                   v-bind="field"
-                   :errorMessage="errorMessage" />
+                    label="Nombre completo"
+                    type="text"
+                    name="name"
+                    placeholder="Juan Pérez"
+                    v-bind="field"
+                    :errorMessage="errorMessage" />
         </Field>
 
         <Field name="email"
-               v-slot="{ field, errorMessage }">
+                v-slot="{ field, errorMessage }">
             <Input v-model="form.email"
-                   label="Email"
-                   type="email"
-                   name="email"
-                   placeholder="tu@email.com"
-                   v-bind="field"
-                   :errorMessage="errorMessage" />
+                    label="Email"
+                    type="email"
+                    name="email"
+                    placeholder="tu@email.com"
+                    v-bind="field"
+                    :errorMessage="errorMessage" />
         </Field>
 
         <Field name="password"
-               v-slot="{ field, errorMessage }">
+                v-slot="{ field, errorMessage }">
             <Input v-model="form.password"
-                   label="Contraseña"
-                   type="password"
-                   name="password"
-                   placeholder="••••••••"
-                   v-bind="field"
-                   :errorMessage="errorMessage" />
+                    label="Contraseña"
+                    type="password"
+                    name="password"
+                    placeholder="••••••••"
+                    v-bind="field"
+                    :errorMessage="errorMessage" />
         </Field>
 
         <Field name="confirmPassword"
-               v-slot="{ field, errorMessage }">
+                v-slot="{ field, errorMessage }">
             <Input v-model="form.confirmPassword"
-                   label="Confirmar contraseña"
-                   type="password"
-                   name="confirmPassword"
-                   placeholder="••••••••"
-                   v-bind="field"
-                   :errorMessage="errorMessage" />
+                    label="Confirmar contraseña"
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="••••••••"
+                    v-bind="field"
+                    :errorMessage="errorMessage" />
         </Field>
         <ErrorMessage name="__root__"
-                      class="text-red-600 text-sm" />
+                        class="text-red-600 text-sm" />
         <Button type="submit"
                 variant="default"
                 size="md"
@@ -146,7 +143,6 @@ async function handleRegister(values, { setErrors, setFieldError }) {
         </Button>
     </Form>
 
-    <!-- Enlaces -->
     <div class="text-center mt-5 text-sm text-gray-600">
         <p>
             ¿Ya tienes cuenta?

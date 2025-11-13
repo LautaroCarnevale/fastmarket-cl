@@ -15,7 +15,7 @@
             </h1>
 
             <div v-if="cart.length === 0"
-                 class="text-center py-20">
+                    class="text-center py-20">
                 <span class="icon-[lucide--shopping-cart] w-20 h-20 text-gray-300 mx-auto mb-4"></span>
                 <h3 class="text-xl font-bold text-gray-600 mb-2">
                     Tu carrito está vacío
@@ -33,7 +33,7 @@
             </div>
 
             <div v-else
-                 class="grid lg:grid-cols-3 gap-8">
+                    class="grid lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 space-y-6">
                     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                         <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
@@ -51,10 +51,10 @@
                             </div>
 
                             <Textarea v-model="deliveryNotes"
-                                      label="Referencias adicionales (opcional)"
-                                      name="notes"
-                                      :rows="2"
-                                      placeholder="Ej: Casa azul, portón negro..." />
+                                        label="Referencias adicionales (opcional)"
+                                        name="notes"
+                                        :rows="2"
+                                        placeholder="Ej: Casa azul, portón negro..." />
                         </div>
                     </div>
 
@@ -68,25 +68,25 @@
                             <div class="md:col-span-2 grid grid-cols-2 gap-4">
                                 <Input v-model="contactInfo.name"
                                        label="Nombre completo *"
-                                       name="name"
-                                       type="text"
-                                       placeholder="Tu nombre"
-                                       :error-message="errors.name" />
+                                        name="name"
+                                        type="text"
+                                        placeholder="Tu nombre"
+                                        :error-message="errors.name" />
                                 <Input v-model="contactInfo.surname"
                                        label="Apellido *"
-                                       name="surname"
-                                       type="text"
-                                       placeholder="Tu apellido"
-                                       :error-message="errors.surname" />
+                                        name="surname"
+                                        type="text"
+                                        placeholder="Tu apellido"
+                                        :error-message="errors.surname" />
                             </div>
 
                             <Input class="md:col-span-2"
-                                   v-model="contactInfo.phone"
-                                   label="Teléfono *"
-                                   name="phone"
-                                   type="tel"
-                                   placeholder="+54 11 1234-5678"
-                                   :error-message="errors.phone" />
+                                    v-model="contactInfo.phone"
+                                    label="Teléfono *"
+                                    name="phone"
+                                    type="tel"
+                                    placeholder="+54 11 1234-5678"
+                                    :error-message="errors.phone" />
                         </div>
                     </div>
 
@@ -98,17 +98,17 @@
 
                         <div class="space-y-3">
                             <label v-for="method in paymentMethods"
-                                   :key="method.id"
-                                   :class="[
+                                    :key="method.id"
+                                    :class="[
                                     'flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all',
                                     selectedPaymentMethod === method.id
                                         ? 'border-orange-500 bg-orange-50'
                                         : 'border-gray-200 hover:border-gray-300'
                                 ]">
                                 <input type="radio"
-                                       :value="method.id"
-                                       v-model="selectedPaymentMethod"
-                                       class="w-4 h-4 text-orange-500 focus:ring-orange-500" />
+                                        :value="method.id"
+                                        v-model="selectedPaymentMethod"
+                                        class="w-4 h-4 text-orange-500 focus:ring-orange-500" />
                                 <span :class="`icon-[lucide--${method.icon}] w-5 h-5`"></span>
                                 <span class="font-medium">{{ method.name }}</span>
                             </label>
@@ -124,11 +124,11 @@
 
                         <div class="space-y-3 mb-4 max-h-64 overflow-y-auto">
                             <div v-for="item in cart"
-                                 :key="item.id"
-                                 class="flex gap-3 pb-3 border-b border-gray-100">
+                                    :key="item.id"
+                                    class="flex gap-3 pb-3 border-b border-gray-100">
                                 <img :src="item.images?.[0] || defaultRest"
-                                     :alt="item.name"
-                                     class="w-16 h-16 object-cover rounded-md" />
+                                        :alt="item.name"
+                                        class="w-16 h-16 object-cover rounded-md" />
                                 <div class="flex-1 min-w-0">
                                     <p class="font-medium text-sm text-gray-800 truncate">
                                         {{ item.name }}
@@ -164,7 +164,7 @@
                                 full-width
                                 class="mt-4">
                             <span v-if="!isProcessing"
-                                  class="icon-[lucide--check] w-5 h-5"></span>
+                                    class="icon-[lucide--check] w-5 h-5"></span>
                             {{ isProcessing ? 'Procesando...' : 'Confirmar pedido' }}
                         </Button>
                     </div>
@@ -274,7 +274,6 @@ const confirmOrder = async () => {
             ]
         }
 
-        // clearCart()
         createOrder(orderData)
         router.push({
             name: 'UserOrders',

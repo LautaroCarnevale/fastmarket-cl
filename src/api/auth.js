@@ -1,6 +1,5 @@
 import api from './index'
 
-// --- Autenticación ---
 export const loginRequest = async (data) => {
     try {
         const res = await api.post('/auth/login', data)

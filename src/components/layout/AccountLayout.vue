@@ -21,7 +21,7 @@ const currentRoute = computed(() => router.currentRoute.value.name)
                 <aside class="w-64 bg-blanco rounded-lg shadow-soft p-4 h-fit">
                     <div class="flex items-center gap-3 mb-6 pb-4 border-b border-grisBajo">
                         <div
-                             class="w-16 h-16 bg-naranjaMedio rounded-full flex items-center justify-center text-blanco text-2xl font-bold">
+                                class="w-16 h-16 bg-naranjaMedio rounded-full flex items-center justify-center text-blanco text-2xl font-bold">
                             L
                         </div>
                         <div>

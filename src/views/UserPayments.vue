@@ -8,7 +8,6 @@ const paymentMethods = ref([
 ])
 
 const addPaymentMethod = () => {
-    // Lógica para agregar método de pago
     console.log('Agregar método de pago')
 }
 
@@ -31,11 +30,11 @@ const removePayment = (id) => {
 
         <div class="space-y-4">
             <div v-for="payment in paymentMethods"
-                 :key="payment.id"
-                 class="border border-grisBajo rounded-lg p-4 flex justify-between items-center hover:border-naranjaMedio transition-colors">
+                    :key="payment.id"
+                    class="border border-grisBajo rounded-lg p-4 flex justify-between items-center hover:border-naranjaMedio transition-colors">
                 <div class="flex items-center gap-4">
                     <div
-                         class="w-12 h-12 bg-linear-to-br from-naranjaMedio to-naranjaAlto rounded-lg flex items-center justify-center text-blanco font-bold">
+                            class="w-12 h-12 bg-linear-to-br from-naranjaMedio to-naranjaAlto rounded-lg flex items-center justify-center text-blanco font-bold">
                         💳
                     </div>
                     <div>
@@ -51,7 +50,7 @@ const removePayment = (id) => {
             </div>
 
             <div v-if="paymentMethods.length === 0"
-                 class="text-center py-12 text-grisMedio">
+                    class="text-center py-12 text-grisMedio">
                 <p>No tienes métodos de pago registrados</p>
                 <p class="text-sm">Agrega uno para realizar tus pedidos más rápido</p>
             </div>

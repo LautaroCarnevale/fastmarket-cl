@@ -11,7 +11,7 @@
             </div>
 
             <div v-if="showSuccessMessage"
-                 class="mb-6 bg-green-50 border border-green-500 text-green-700 px-4 py-3 rounded-lg flex items-center gap-2">
+                    class="mb-6 bg-green-50 border border-green-500 text-green-700 px-4 py-3 rounded-lg flex items-center gap-2">
                 <span class="icon-[lucide--check-circle] w-5 h-5"></span>
                 <span class="font-medium">¡Pedido realizado con éxito!</span>
             </div>
@@ -31,13 +31,13 @@
             </div>
 
             <div v-if="loading"
-                 class="text-center py-20">
+                    class="text-center py-20">
                 <span class="icon-[lucide--loader-2] w-12 h-12 animate-spin text-orange-500 mx-auto"></span>
                 <p class="text-gray-500 mt-4">Cargando pedidos...</p>
             </div>
 
             <div v-else-if="!orders || orders.length === 0"
-                 class="text-center py-20">
+                    class="text-center py-20">
                 <span class="icon-[lucide--package] w-20 h-20 text-gray-300 mx-auto mb-4"></span>
                 <h3 class="text-xl font-bold text-gray-600 mb-2">
                     No tienes pedidos aún
@@ -53,12 +53,12 @@
             </div>
 
             <div v-else
-                 class="space-y-4">
+                    class="space-y-4">
                 <div v-for="order in filteredOrders"
-                     :key="order.id"
-                     class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition">
+                        :key="order.id"
+                        class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition">
                     <div
-                         class="p-4 bg-gray-50 border-b border-gray-200 flex flex-wrap items-center justify-between gap-4">
+                            class="p-4 bg-gray-50 border-b border-gray-200 flex flex-wrap items-center justify-between gap-4">
                         <div class="flex items-center gap-4">
                             <div>
                                 <p class="text-xs text-gray-500 mb-1">Pedido #{{ order.id.slice(-8) }}</p>
@@ -86,8 +86,8 @@
                     <div class="p-4">
                         <div class="space-y-3">
                             <div v-for="item in order.items"
-                                 :key="item.productId"
-                                 class="flex items-center gap-3">
+                                    :key="item.productId"
+                                    class="flex items-center gap-3">
                                 <div class="w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center">
                                     <span class="icon-[lucide--package] w-8 h-8 text-gray-400"></span>
                                 </div>

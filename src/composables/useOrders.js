@@ -1,4 +1,3 @@
-// composables/useOrders.js
 import { computed } from 'vue'
 import { useOrdersStore } from '../store/orders'
 

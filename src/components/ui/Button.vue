@@ -56,7 +56,7 @@ const sizes = {
                 props.class
             ]">
         <span v-if="loading"
-              class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>
+                class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>
         <slot />
     </button>
 </template>
