@@ -45,7 +45,7 @@
                 <button @click="toggleUserMenu"
                         title="Mi perfil"
                         class="w-10 h-10 rounded-full overflow-hidden border border-gray-300 hover:opacity-90 transition cursor-pointer">
-                    <img :src="userInfo.avatar || DefaultAvatar"
+                    <img :src="userInfo?.avatar || DefaultAvatar"
                          alt="Perfil"
                          class="w-full h-full object-cover" />
                 </button>
@@ -131,10 +131,9 @@ const commonLinks = computed(() => {
     }
     if (role === ROLES.DRIVER) {
         return [
-            { label: 'Disponibles', to: '/driver/panel/available' },
+            { label: 'Dashboard', to: '/driver/panel' },
             { label: 'Mis Entregas', to: '/driver/panel/deliveries' },
             { label: 'Ganancias', to: '/driver/panel/earnings' },
-            { label: 'Perfil', to: '/driver/panel/profile' },
         ]
     }
     return []

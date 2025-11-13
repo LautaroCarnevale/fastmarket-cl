@@ -12,7 +12,6 @@ import Register from '../views/Register.vue'
 // --- Layouts y paneles ---
 import MarketplacePanel from '../views/MarketplacePanel.vue'
 import AdminPanel from '../views/AdminPanel.vue'
-import DriverPanel from '../views/DriverPanel.vue'
 import MarketplaceLayout from '../components/layout/MarketplaceLayout.vue'
 import VendorLayout from '../components/layout/VendorLayout.vue'
 import VendorDashboard from '../views/VendorDashboard.vue'
@@ -26,6 +25,9 @@ import MarketplaceDetail from '../views/MarketplaceDetail.vue'
 import MarketplaceOrders from '../views/MarketplaceOrders.vue'
 import VendorOrders from '../views/VendorOrders.vue'
 import MarketplaceCheckout from '../views/MarketplaceCheckout.vue'
+import DriverLayout from '../components/layout/DriverLayout.vue'
+import DriverDashboard from '../views/DriverDashboard.vue'
+import DriverOrders from '../views/DriverOrders.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -104,13 +106,24 @@ const router = createRouter({
             ],
         },
 
-        // --- Driver ---
         {
             path: '/driver/panel',
-            component: DriverPanel,
+            component: DriverLayout,
             meta: { requiresAuth: true, role: ROLES.DRIVER, layout: 'dashboard' },
             children: [
-                { path: '', name: 'DriverDashboard', component: { render: () => h('span', 'Driver Dashboard') } },
+                { path: '', name: 'DriverDashboard', component: DriverDashboard },
+                { path: 'deliveries', name: 'DriverOrders', component: DriverOrders },
+                {
+                    path: 'account',
+                    component: AccountLayout,
+                    children: [
+                        { path: '', redirect: { name: 'UserAccountSettings' } },
+                        { path: 'profile', name: 'UserAccountSettings', component: UserAccountSettings },
+                        { path: 'payments', name: 'UserPayments', component: UserPayments },
+                        { path: 'notifications', name: 'UserNotifications', component: UserNotifications },
+                        { path: 'last-orders', name: 'UserLastOrders', component: UserLastOrders },
+                    ],
+                },
             ],
         },
 

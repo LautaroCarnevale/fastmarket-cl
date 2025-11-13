@@ -1,42 +1,80 @@
 import { defineStore } from 'pinia'
-import axios from '../api/drivers'
+import {
+	getOrdersForDriver,
+	getDriverStats,
+	getDriverOrders
+} from '../api/driver'
 
 export const useDriversStore = defineStore('drivers', {
-  state: () => ({
-    drivers: [],
-    activeDriver: null,
-    assignedOrders: [],
-    loading: false,
-    error: null
-  }),
+	state: () => ({
+		driver: null,
+		stats: null,
+		orders: [],
+		loading: false,
+		error: null
+	}),
 
-  actions: {
-    async fetchAvailableOrders() {
-      try {
-        this.loading = true
-        const res = await axios.get('/drivers/orders/available')
-        this.assignedOrders = res.data
-      } catch (err) {
-        this.error = err.response?.data?.message || 'Error al obtener pedidos disponibles'
-      } finally {
-        this.loading = false
-      }
-    },
+	getters: {
+		availableOrders: (state) => {
+			if (!state.orders) return []
+			return state.orders.filter(o => o.status === 'ready_for_pickup' && !o.driverId)
+		},
+		activeOrders: (state) => {
+			if (!state.orders) return []
+			return state.orders.filter(o =>
+				['picked_up', 'on_the_way'].includes(o.status) &&
+				o.driverId === state.driver?.id
+			)
+		},
+		completedOrders: (state) => {
+			if (!state.orders) return []
+			return state.orders.filter(o =>
+				o.status === 'delivered' &&
+				o.driverId === state.driver?.id
+			)
+		}
+	},
 
-    async acceptOrder(orderId) {
-      try {
-        await axios.post(`/drivers/orders/${orderId}/accept`)
-      } catch (err) {
-        this.error = 'Error al aceptar pedido'
-      }
-    },
+	actions: {
 
-    async completeOrder(orderId) {
-      try {
-        await axios.post(`/drivers/orders/${orderId}/complete`)
-      } catch (err) {
-        this.error = 'Error al completar pedido'
-      }
-    }
-  }
+		async fetchOrderForDrivers() {
+			this.loading = true
+			this.error = null
+			try {
+				const data = await getOrdersForDriver()
+				this.orders = data
+			} catch (err) {
+				this.error = err.message || 'Error al cargar perfil'
+			} finally {
+				this.loading = false
+			}
+		},
+
+		async fetchDriverStats(id) {
+			this.loading = true
+			this.error = null
+			try {
+				const data = await getDriverStats(id)
+				this.stats = data
+			} catch (err) {
+				this.error = err.message || 'Error al cargar estadísticas'
+			} finally {
+				this.loading = false
+			}
+		},
+
+		async fetchDriverOrders(driverId) {
+			this.loading = true
+			this.error = null
+			try {
+				const data = await getDriverOrders(driverId)
+				this.orders = data
+			} catch (err) {
+				this.error = err.message || 'Error al cargar órdenes'
+				this.orders = []
+			} finally {
+				this.loading = false
+			}
+		},
+	}
 })

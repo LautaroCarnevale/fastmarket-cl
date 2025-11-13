@@ -31,8 +31,7 @@ const loadVendorAndProducts = async () => {
 
         if (vendorId) {
             await fetchProducts(vendorId)
-            await fetchOrdersByVendor(vendorId)
-
+            await fetchOrdersByVendor(vendorId)            
         }
     }
 }

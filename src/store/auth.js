@@ -47,6 +47,18 @@ export const useAuthStore = defineStore('auth', {
 			}
 		},
 
+		async register(data) {
+			this.loading = true
+			try {
+				await registerRequest(data)
+			} catch (err) {
+				this.error = err.response?.data?.message || 'Error al registrarse'
+				throw err
+			} finally {
+				this.loading = false
+			}
+		},
+
 		async initializeAuth() {
 			this.loading = true
 			try {
@@ -72,6 +84,7 @@ export const useAuthStore = defineStore('auth', {
 				this.initialized = true
 			}
 		},
+
 		async newAdress(id, data) {
 			this.loading = true
 			try {

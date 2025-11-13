@@ -99,6 +99,8 @@ const showCreateModal = ref(false);
 const showEditModal = ref(false);
 const selectedProductToEdit = ref(null);
 
+
+
 const { selectedVendor } = useVendor();
 const { createProduct, updateStatusProduct, deleteProduct, updateProduct, products } = useProduct();
 

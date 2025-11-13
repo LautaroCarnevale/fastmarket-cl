@@ -13,7 +13,8 @@ const form = ref({
     email: "",
     password: "",
     confirmPassword: "",
-    name: ""
+    name: "",
+    surname: ""
 });
 async function handleRegister(values, { setErrors, setFieldError }) {
     setErrors({});
@@ -24,6 +25,7 @@ async function handleRegister(values, { setErrors, setFieldError }) {
         email: values.email,
         password: values.password,
         name: values.name,
+        surname: values.surname,
         role: selectedType.value,
     }
 
@@ -95,10 +97,21 @@ async function handleRegister(values, { setErrors, setFieldError }) {
         <Field name="name"
                v-slot="{ field, errorMessage }">
             <Input v-model="form.name"
-                   label="Nombre completo"
+                   label="Nombre"
                    type="text"
                    name="name"
-                   placeholder="Juan Pérez"
+                   placeholder="Juan"
+                   v-bind="field"
+                   :errorMessage="errorMessage" />
+        </Field>
+
+        <Field name="surname"
+               v-slot="{ field, errorMessage }">
+            <Input v-model="form.surname"
+                   label="Apellido"
+                   type="text"
+                   name="surname"
+                   placeholder="Pérez"
                    v-bind="field"
                    :errorMessage="errorMessage" />
         </Field>

@@ -2,7 +2,9 @@
 import { computed } from 'vue'
 import { useVendor } from '../composables/useVendor'
 import { useProduct } from '../composables/useProducts'
+import { useOrders } from '../composables/useOrders'
 const { selectedVendor, loading } = useVendor()
+const { orders } = useOrders()
 const { products } = useProduct()
 
 const recentActivity = [
@@ -56,8 +58,7 @@ const productosActivos = computed(() => { return products?.value.filter(p => p.a
                         <p class="text-sm font-medium text-grisOscuro">Pedidos de hoy</p>
                         <span class="text-naranjaBajo text-lg">🛒</span>
                     </div>
-                    <span class="text-2xl font-bold text-grisOscuro">56</span>
-                    <p class="text-xs text-grisMedio mt-1">+12% vs ayer</p>
+                    <span class="text-2xl font-bold text-grisOscuro">{{ orders.length }}</span>
                 </div>
 
                 <div class="bg-blanco p-5 rounded-xl shadow-sm border border-grisMedio/30">
