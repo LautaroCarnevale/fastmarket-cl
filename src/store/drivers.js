@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
 import {
-	getOrdersForDriver,
 	getDriverStats,
-	getDriverOrders
+	getDriverOrders,
+	findForDriver,
+	getOrdersForReady,
+	updateOrderStatus
 } from '../api/driver'
 
 export const useDriversStore = defineStore('drivers', {
@@ -37,11 +39,27 @@ export const useDriversStore = defineStore('drivers', {
 
 	actions: {
 
-		async fetchOrderForDrivers() {
+		async fetchOrderForDriver(driverId) {
 			this.loading = true
 			this.error = null
 			try {
-				const data = await getOrdersForDriver()
+
+				const data = await findForDriver(driverId)
+				this.orders = data
+				console.log(data);
+
+			} catch (err) {
+				this.error = err.message || 'Error al cargar perfil'
+			} finally {
+				this.loading = false
+			}
+		},
+
+		async fetchOrdersForReady() {
+			this.loading = true
+			this.error = null
+			try {
+				const data = await getOrdersForReady()
 				this.orders = data
 			} catch (err) {
 				this.error = err.message || 'Error al cargar perfil'
@@ -63,6 +81,23 @@ export const useDriversStore = defineStore('drivers', {
 			}
 		},
 
+		async updateOrderStatus(orderId, newStatus) {
+			try {
+				this.loading = true
+				const res = await updateOrderStatus(orderId, newStatus)
+
+				const index = this.orders.findIndex(o => o.id === orderId)
+				if (index !== -1) {
+					this.orders[index] = res
+				}
+
+				return res
+			} catch (err) {
+				this.error = err.response?.data?.message || 'Error al obtener pedidos'
+			} finally {
+				this.loading = false
+			}
+		},
 		async fetchDriverOrders(driverId) {
 			this.loading = true
 			this.error = null

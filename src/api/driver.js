@@ -1,13 +1,20 @@
 import api from './index'
 
 
-export async function getOrdersForDriver() {
-    const res = await api.get('/orders/available')    
+export async function getOrdersForReady() {
+    const res = await api.get('/orders/available')
     return res.data
 }
 
+export async function findForDriver(id) {
+    const res = await api.get(`/orders/driver/${id}`)
+    return res.data
+}
 
-
+export async function updateOrderStatus(id, statusData) {
+    const res = await api.patch(`/orders/${id}/status`, statusData)
+    return res.data
+}
 
 export async function createDriver(driverData) {
     const res = await api.post('/drivers/create', driverData)

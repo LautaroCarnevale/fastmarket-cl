@@ -122,7 +122,6 @@
 import { ref, computed, watch } from 'vue'
 import { useOrders } from '../../composables/useOrders'
 import { ORDER_STATUS } from '../../constants/roles'
-
 const { orders, loading: ordersLoading, updateOrderStatus } = useOrders()
 
 const loading = ref(ordersLoading.value)

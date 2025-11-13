@@ -2,7 +2,6 @@
 import { useRoute } from 'vue-router'
 import { computed, onMounted as vueOnMounted } from 'vue'
 import { useAuth } from '../../composables/useAuth'
-import { useOrders } from '../../composables/useOrders'
 import { useDriver } from '../../composables/useDriver'
 
 const route = useRoute()
@@ -14,9 +13,11 @@ const titles = {
 
 const currentTitle = computed(() => titles[route.name] || 'Panel del Comercio')
 
-const { fetchOrdersForDriver } = useDriver()
+const { fetchOrdersForReady, fetchOrderForDriver } = useDriver()
+const { user } = useAuth()
 const findOrdersByStatus = async () => {
-    await fetchOrdersForDriver()
+    await fetchOrdersForReady()
+    await fetchOrderForDriver(user.value.id)
 }
 
 vueOnMounted(() => {

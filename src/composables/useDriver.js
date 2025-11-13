@@ -26,8 +26,14 @@ export function useDriver() {
         await store.fetchDriverOrders(driverId)
     }
 
-    const fetchOrdersForDriver = async () => {
-        await store.fetchOrderForDrivers()
+    const fetchOrderForDriver = async (driverId) => {
+        await store.fetchOrderForDriver(driverId)
+    }
+    const updateOrderStatus = async (orderId, newStatus) => {
+        await store.updateOrderStatus(orderId, newStatus)
+    }
+    const fetchOrdersForReady = async () => {
+        await store.fetchOrdersForReady()
     }
 
 
@@ -40,9 +46,11 @@ export function useDriver() {
         availableOrders,
         activeOrders,
         completedOrders,
+        updateOrderStatus,
         fetchDriverProfile,
         fetchDriverStats,
         fetchDriverOrders,
-        fetchOrdersForDriver,
+        fetchOrdersForReady,
+        fetchOrderForDriver,
     }
 }

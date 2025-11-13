@@ -13,17 +13,18 @@
         </div>
 
         <div class="mb-6 flex flex-wrap gap-3">
-            <button v-for="status in orderStatuses"
+            <Button v-for="status in orderStatuses"
                     :key="status.id"
                     @click="filterStatus = status.id"
-                    :class="filterStatus === status.id ? 'bg-naranjaMedio text-blanco' : 'bg-blanco text-grisOscuro border border-grisMedio/30'"
-                    class="px-4 py-2 rounded-full text-sm font-medium">
+                    :variant="filterStatus === status.id ? 'default' : 'secondary'"
+                    size="sm"
+                    class="rounded-full">
                 {{ status.label }}
                 <span v-if="getStatusCount(status.id) > 0"
                       class="ml-2 px-2 py-0.5 bg-grisMedio/20 rounded-full text-xs">
                     {{ getStatusCount(status.id) }}
                 </span>
-            </button>
+            </Button>
         </div>
 
         <div v-if="loading"
@@ -102,41 +103,48 @@
                 </div>
 
                 <div class="flex gap-2">
-                    <button v-if="order.status === 'ready_for_pickup' && !order.driverId"
+                    <Button v-if="order.status === ORDER_STATUS.READY_FOR_PICKUP && !order.driverId"
                             @click="acceptDelivery(order.id)"
-                            class="flex-1 bg-verdeOk text-blanco px-4 py-2 rounded-md">
+                            variant="default"
+                            class="flex-1 !bg-verdeOk hover:!bg-green-600">
                         Aceptar entrega
-                    </button>
+                    </Button>
 
-                    <button v-if="order.status === 'ready_for_pickup' && order.driverId === user.id"
-                            @click="cambiarEstado(order.id, 'picked_up')"
-                            class="flex-1 bg-blue-500 text-blanco px-4 py-2 rounded-md">
+                    <Button v-if="order.status === ORDER_STATUS.READY_FOR_PICKUP && order.driverId === user.id"
+                            @click="cambiarEstado(order.id, ORDER_STATUS.PICKED_UP)"
+                            variant="default"
+                            class="flex-1 !bg-blue-500 hover:!bg-blue-600">
                         Recolectado
-                    </button>
+                    </Button>
 
-                    <button v-if="order.status === 'picked_up'"
-                            @click="cambiarEstado(order.id, 'on_the_way')"
-                            class="flex-1 bg-purple-500 text-blanco px-4 py-2 rounded-md">
+                    <Button v-if="order.status === ORDER_STATUS.PICKED_UP"
+                            @click="cambiarEstado(order.id, ORDER_STATUS.ON_THE_WAY)"
+                            variant="default"
+                            class="flex-1 !bg-purple-500 hover:!bg-purple-600">
                         En camino
-                    </button>
+                    </Button>
 
-                    <button v-if="order.status === 'on_the_way'"
-                            @click="cambiarEstado(order.id, 'delivered')"
-                            class="flex-1 bg-verdeOk text-blanco px-4 py-2 rounded-md">
+                    <Button v-if="order.status === ORDER_STATUS.ON_THE_WAY"
+                            @click="cambiarEstado(order.id, ORDER_STATUS.DELIVERED)"
+                            variant="default"
+                            class="flex-1 !bg-verdeOk hover:!bg-green-600">
                         Entregado
-                    </button>
+                    </Button>
 
-                    <button class="bg-blanco border border-grisMedio/30 text-grisOscuro px-4 py-2 rounded-md">
+                    <Button variant="outline"
+                            size="md"
+                            class="!p-2">
                         <span class="icon-[lucide--map] w-4 h-4"></span>
-                    </button>
+                    </Button>
 
-                    <button class="bg-blanco border border-grisMedio/30 text-grisOscuro px-4 py-2 rounded-md">
+                    <Button variant="outline"
+                            size="md"
+                            class="!p-2">
                         <span class="icon-[lucide--phone] w-4 h-4"></span>
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>
-
     </section>
 </template>
 
@@ -145,9 +153,11 @@ import { ref, computed, watch } from 'vue'
 import { useOrders } from '../../composables/useOrders'
 import { useAuth } from '../../composables/useAuth'
 import { useDriver } from '../../composables/useDriver'
+import Button from '../../components/ui/Button.vue'
+import { ORDER_STATUS } from '../../constants/roles'
 
-const { loading: ordersLoading, updateOrderStatus } = useOrders()
-const { orders, } = useDriver()
+const { loading: ordersLoading } = useOrders()
+const { orders, updateOrderStatus } = useDriver()
 const { user } = useAuth()
 
 const loading = ref(ordersLoading.value)
@@ -157,16 +167,16 @@ watch(ordersLoading, (newVal) => loading.value = newVal)
 
 const orderStatuses = [
     { id: 'all', label: 'Todos' },
-    { id: 'ready_for_pickup', label: 'Disponibles' },
-    { id: 'picked_up', label: 'Recolectados' },
-    { id: 'on_the_way', label: 'En camino' },
-    { id: 'delivered', label: 'Entregados' }
+    { id: ORDER_STATUS.READY_FOR_PICKUP, label: 'Disponibles' },
+    { id: ORDER_STATUS.PICKED_UP, label: 'Recolectados' },
+    { id: ORDER_STATUS.ON_THE_WAY, label: 'En camino' },
+    { id: ORDER_STATUS.DELIVERED, label: 'Entregados' }
 ]
 
 const filteredOrders = computed(() => {
     if (!orders.value || !Array.isArray(orders.value)) return []
     let filtered = orders.value.filter(o =>
-        ['ready_for_pickup', 'picked_up', 'on_the_way', 'delivered'].includes(o.status)
+        [ORDER_STATUS.READY_FOR_PICKUP, ORDER_STATUS.PICKED_UP, ORDER_STATUS.ON_THE_WAY, ORDER_STATUS.DELIVERED].includes(o.status)
     )
 
     if (filterStatus.value !== 'all') {
@@ -178,7 +188,7 @@ const filteredOrders = computed(() => {
 
 const availableOrdersCount = computed(() => {
     if (!orders.value || !Array.isArray(orders.value)) return 0
-    return orders.value.filter(o => o.status === 'ready_for_pickup' && !o.driverId).length
+    return orders.value.filter(o => o.status === ORDER_STATUS.READY_FOR_PICKUP && !o.driverId).length
 })
 
 const getStatusCount = (statusId) => {
@@ -198,29 +208,29 @@ const formatDate = (date) => {
 }
 
 const getBorderColor = (status) => {
-    if (status === 'ready_for_pickup') return 'border-yellow-400'
-    if (status === 'picked_up') return 'border-blue-400'
-    if (status === 'on_the_way') return 'border-purple-400'
-    if (status === 'delivered') return 'border-green-400'
+    if (status === ORDER_STATUS.READY_FOR_PICKUP) return 'border-yellow-400'
+    if (status === ORDER_STATUS.PICKED_UP) return 'border-blue-400'
+    if (status === ORDER_STATUS.ON_THE_WAY) return 'border-purple-400'
+    if (status === ORDER_STATUS.DELIVERED) return 'border-green-400'
     return 'border-grisMedio/20'
 }
 
 const getStatusColor = (status) => {
     const colors = {
-        ready_for_pickup: 'bg-yellow-100 text-yellow-700',
-        picked_up: 'bg-blue-100 text-blue-700',
-        on_the_way: 'bg-purple-100 text-purple-700',
-        delivered: 'bg-green-100 text-green-700'
+        [ORDER_STATUS.READY_FOR_PICKUP]: 'bg-yellow-100 text-yellow-700',
+        [ORDER_STATUS.PICKED_UP]: 'bg-blue-100 text-blue-700',
+        [ORDER_STATUS.ON_THE_WAY]: 'bg-purple-100 text-purple-700',
+        [ORDER_STATUS.DELIVERED]: 'bg-green-100 text-green-700'
     }
     return colors[status] || 'bg-grisMedio/20 text-grisMedio'
 }
 
 const getStatusLabel = (status) => {
     const labels = {
-        ready_for_pickup: 'Listo para recoger',
-        picked_up: 'Recolectado',
-        on_the_way: 'En camino',
-        delivered: 'Entregado'
+        [ORDER_STATUS.READY_FOR_PICKUP]: 'Listo para recoger',
+        [ORDER_STATUS.PICKED_UP]: 'Recolectado',
+        [ORDER_STATUS.ON_THE_WAY]: 'En camino',
+        [ORDER_STATUS.DELIVERED]: 'Entregado'
     }
     return labels[status] || status
 }
@@ -228,8 +238,8 @@ const getStatusLabel = (status) => {
 const acceptDelivery = async (orderId) => {
     try {
         await updateOrderStatus(orderId, {
-            status: 'picked_up',
-            driverId: user.value.id
+            status: ORDER_STATUS.PICKED_UP,
+            by: user.value.id
         })
     } catch (error) {
         console.error('Error:', error)

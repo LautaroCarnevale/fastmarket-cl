@@ -37,9 +37,8 @@ export const useOrdersStore = defineStore('orders', {
 
         async fetchOrdersByVendor(vendorId) {
             try {
-                this.loading = true                
+                this.loading = true
                 const res = await getOrdersByVendor(vendorId)
-                
                 this.orders = res
             } catch (err) {
                 this.error = err.response?.data?.message || 'Error al obtener pedidos'
@@ -47,6 +46,8 @@ export const useOrdersStore = defineStore('orders', {
                 this.loading = false
             }
         },
+
+   
 
         async updateOrderStatus(orderId, newStatus) {
             try {

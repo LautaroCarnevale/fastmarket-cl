@@ -1,6 +1,5 @@
 import { computed } from 'vue'
 import { useOrdersStore } from '../store/orders'
-import { updateOrderStatus } from '../api/orders'
 
 export function useOrders() {
     const ordersStore = useOrdersStore()
@@ -27,9 +26,10 @@ export function useOrders() {
         await ordersStore.fetchOrdersByVendor(id)
     }
 
-    const updateOrderStatus = async (orderId, newStatus) => {
+  const updateOrderStatus = async (orderId, newStatus) => {
         await ordersStore.updateOrderStatus(orderId, newStatus)
     }
+
 
     const clearError = () => {
         ordersStore.error = null

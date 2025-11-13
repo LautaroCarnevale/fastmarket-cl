@@ -21,11 +21,11 @@ export async function getOrdersByVendor(vendorId) {
     return res.data
 }
 
-
 export async function updateOrderStatus(id, statusData) {
     const res = await api.patch(`/orders/${id}/status`, statusData)
     return res.data
 }
+
 
 
 export async function deleteOrder(id) {

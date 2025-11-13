@@ -34,11 +34,7 @@
 
 			<div v-else
 				 class="grid lg:grid-cols-3 gap-8">
-
-				<Form :validationSchema="checkoutSchema"
-					  @submit="onSubmit"
-					  class="lg:col-span-2 space-y-6">
-					<!-- Dirección de entrega -->
+				<div class="lg:col-span-2 space-y-6">
 					<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
 						<h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
 							<span class="icon-[lucide--map-pin] w-5 h-5 text-orange-500"></span>
@@ -47,25 +43,21 @@
 
 						<div class="space-y-4">
 							<div>
-								<p>{{ addressClient.street + ', ' + addressClient.city + ', ' + addressClient.province
-								}}</p>
+								<p>
+									{{
+										addressClient.street + ', ' + addressClient.city + ', ' + addressClient.province
+									}}
+								</p>
 							</div>
 
-							<Field name="notes"
-								   v-slot="{ field, errorMessage }">
-								<Textarea v-bind="field"
-										  v-model="deliveryNotes"
-										  label="Referencias adicionales (opcional)"
-										  name="notes"
-										  :rows="2"
-										  placeholder="Ej: Casa azul, portón negro..." />
-								<p v-if="errorMessage"
-								   class="text-red-600 text-sm mt-1">{{ errorMessage }}</p>
-							</Field>
+							<Textarea v-model="deliveryNotes"
+									  label="Referencias adicionales (opcional)"
+									  name="notes"
+									  :rows="2"
+									  placeholder="Ej: Casa azul, portón negro..." />
 						</div>
 					</div>
 
-					<!-- Datos de contacto -->
 					<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
 						<h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
 							<span class="icon-[lucide--user] w-5 h-5 text-orange-500"></span>
@@ -74,92 +66,61 @@
 
 						<div class="grid md:grid-cols-2 gap-4">
 							<div class="md:col-span-2 grid grid-cols-2 gap-4">
-								<Field name="name"
-									   v-slot="{ field, errorMessage }">
-									<Input v-bind="field"
-										   v-model="contactInfo.name"
-										   label="Nombre completo *"
-										   name="name"
-										   type="text"
-										   placeholder="Tu nombre"
-										   :error-message="errorMessage" />
-								</Field>
-
-								<Field name="surname"
-									   v-slot="{ field, errorMessage }">
-									<Input v-bind="field"
-										   v-model="contactInfo.surname"
-										   label="Apellido *"
-										   name="surname"
-										   type="text"
-										   placeholder="Tu apellido"
-										   :error-message="errorMessage" />
-								</Field>
+								<Input v-model="contactInfo.name"
+									   label="Nombre completo *"
+									   name="name"
+									   type="text"
+									   placeholder="Tu nombre"
+									   :error-message="errors.name" />
+								<Input v-model="contactInfo.surname"
+									   label="Apellido *"
+									   name="surname"
+									   type="text"
+									   placeholder="Tu apellido"
+									   :error-message="errors.surname" />
 							</div>
 
-							<Field name="phone"
-								   v-slot="{ field, errorMessage }">
-								<Input v-bind="field"
-									   class="md:col-span-2"
-									   v-model="contactInfo.phone"
-									   label="Teléfono *"
-									   name="phone"
-									   type="tel"
-									   placeholder="+54 11 1234-5678"
-									   :error-message="errorMessage" />
-							</Field>
+							<Input class="md:col-span-2"
+								   v-model="contactInfo.phone"
+								   label="Teléfono *"
+								   name="phone"
+								   type="tel"
+								   placeholder="+54 11 1234-5678"
+								   :error-message="errors.phone" />
 						</div>
 					</div>
 
-					<!-- Método de pago -->
 					<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
 						<h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
 							<span class="icon-[lucide--credit-card] w-5 h-5 text-orange-500"></span>
 							Método de pago
 						</h2>
 
-						<Field name="paymentMethod"
-							   v-slot="{ field, errorMessage }">
-							<div class="space-y-3">
-								<label v-for="method in paymentMethods"
-									   :key="method.id"
-									   :class="[
-										'flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all',
-										(field.value || selectedPaymentMethod) === method.id
-											? 'border-orange-500 bg-orange-50'
-											: 'border-gray-200 hover:border-gray-300'
-									]">
-									<input type="radio"
-										   :value="method.id"
-										   v-bind="field"
-										   :checked="(field.value || selectedPaymentMethod) === method.id"
-										   @change="(e) => { field.onChange(e); selectedPaymentMethod = method.id }"
-										   class="w-4 h-4 text-orange-500 focus:ring-orange-500" />
-									<span :class="`icon-[lucide--${method.icon}] w-5 h-5`"></span>
-									<span class="font-medium">{{ method.name }}</span>
-								</label>
-							</div>
-							<p v-if="errorMessage"
-							   class="text-red-600 text-sm mt-1">{{ errorMessage }}</p>
-						</Field>
+						<div class="space-y-3">
+							<label v-for="method in paymentMethods"
+								   :key="method.id"
+								   :class="[
+									'flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all',
+									selectedPaymentMethod === method.id
+										? 'border-orange-500 bg-orange-50'
+										: 'border-gray-200 hover:border-gray-300'
+								]">
+								<input type="radio"
+									   :value="method.id"
+									   v-model="selectedPaymentMethod"
+									   class="w-4 h-4 text-orange-500 focus:ring-orange-500" />
+								<span :class="`icon-[lucide--${method.icon}] w-5 h-5`"></span>
+								<span class="font-medium">{{ method.name }}</span>
+							</label>
+						</div>
 					</div>
+				</div>
 
-					<!-- Submit del formulario -->
-					<Button type="submit"
-							variant="default"
-							size="lg"
-							full-width
-							class="mt-4">
-						<span v-if="!isProcessing"
-							  class="icon-[lucide--check] w-5 h-5"></span>
-						{{ isProcessing ? 'Procesando...' : 'Confirmar pedido' }}
-					</Button>
-				</Form>
-
-				<!-- DERECHA: Resumen del pedido (sin tocar) -->
 				<div class="lg:col-span-1">
 					<div class="sticky top-4 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-						<h2 class="text-xl font-bold text-gray-800 mb-4">Resumen del pedido</h2>
+						<h2 class="text-xl font-bold text-gray-800 mb-4">
+							Resumen del pedido
+						</h2>
 
 						<div class="space-y-3 mb-4 max-h-64 overflow-y-auto">
 							<div v-for="item in cart"
@@ -197,6 +158,15 @@
 							</div>
 						</div>
 
+						<Button @click="confirmOrder"
+								variant="default"
+								size="lg"
+								full-width
+								class="mt-4">
+							<span v-if="!isProcessing"
+								  class="icon-[lucide--check] w-5 h-5"></span>
+							{{ isProcessing ? 'Procesando...' : 'Confirmar pedido' }}
+						</Button>
 					</div>
 				</div>
 			</div>
@@ -204,12 +174,9 @@
 	</div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
-import { Form, Field } from 'vee-validate'
-import { checkoutSchema } from '../../validations/orders/checkoutSchema'
-
+import { useRouter } from 'vue-router'
 import { useVendor } from '../../composables/useVendor'
 import { useAuth } from '../../composables/useAuth'
 import defaultRest from '../../assets/images/defaultRest.jpg'
@@ -223,7 +190,7 @@ const { cart, cartTotal, clearCart, selectedVendor } = useVendor()
 const { createOrder } = useOrders()
 const { user } = useAuth()
 
-const addressClient = user.value?.addresses.find((a: any) => a.select)
+const addressClient = user.value?.addresses.find((a) => a.select)
 
 const deliveryNotes = ref('')
 
@@ -233,7 +200,7 @@ const contactInfo = ref({
 	phone: ''
 })
 
-const selectedPaymentMethod = ref<'cash' | 'card' | 'transfer'>('cash')
+const selectedPaymentMethod = ref('cash')
 const isProcessing = ref(false)
 
 const errors = ref({
@@ -251,10 +218,6 @@ const deliveryFee = 300
 const taxesAmount = 0
 const totalWithDelivery = computed(() => cartTotal.value + deliveryFee + taxesAmount)
 
-const onSubmit = (_values: any) => {
-	confirmOrder()
-}
-
 const confirmOrder = async () => {
 	isProcessing.value = true
 
@@ -262,7 +225,7 @@ const confirmOrder = async () => {
 		const orderData = {
 			customerId: user.value.id,
 			vendorId: selectedVendor.value.id,
-			items: cart.value.map((item: any) => ({
+			items: cart.value.map(item => ({
 				vendorId: selectedVendor.value.id,
 				productName: item.name,
 				productId: item.id,

@@ -47,7 +47,7 @@ const productosActivos = computed(() => { return products?.value.filter(p => p.a
 <template>
     <section class="min-h-screen">
         <div v-if="loading"
-                class="flex items-center justify-center h-screen">
+             class="flex items-center justify-center h-screen">
             <p class="text-grisMedio text-lg">Cargando comercio...</p>
         </div>
 
@@ -137,13 +137,13 @@ const productosActivos = computed(() => { return products?.value.filter(p => p.a
 
                 <div class="space-y-4">
                     <div v-for="activity in recentActivity"
-                            :key="activity.id"
-                            class="border border-grisMedio/40 rounded-xl p-5 flex flex-col md:flex-row justify-between gap-4 shadow-sm hover:shadow transition bg-blanco">
+                         :key="activity.id"
+                         class="border border-grisMedio/40 rounded-xl p-5 flex flex-col md:flex-row justify-between gap-4 shadow-sm hover:shadow transition bg-blanco">
                         <div class="flex flex-col">
                             <p class="font-bold text-grisOscuro">
                                 {{ activity.title || `Evento #${activity.id}` }}
                                 <span class="ml-2 px-2 py-0.5 text-xs font-medium rounded-full"
-                                        :class="{
+                                      :class="{
                                         'bg-[#FFF3CD] text-[#856404]': activity.status === 'Nuevo',
                                         'bg-[#CCE5FF] text-[#004085]': activity.status === 'Preparando',
                                         'bg-[#D4EDDA] text-[#155724]': activity.status === 'Listo',
@@ -161,7 +161,7 @@ const productosActivos = computed(() => { return products?.value.filter(p => p.a
                             </div>
 
                             <div v-if="activity.actions"
-                                    class="flex gap-2 mt-2">
+                                 class="flex gap-2 mt-2">
                                 <button v-for="(action, i) in activity.actions"
                                         :key="i"
                                         class="px-4 py-1.5 text-sm font-medium rounded-md transition"
@@ -171,7 +171,7 @@ const productosActivos = computed(() => { return products?.value.filter(p => p.a
                                             'bg-grisMedio/10 text-grisOscuro hover:bg-grisMedio/20': action.type === 'neutral',
                                         }">
                                     <i v-if="action.icon"
-                                        :class="['fa-solid', action.icon, 'mr-1']"></i>
+                                       :class="['fa-solid', action.icon, 'mr-1']"></i>
                                     {{ action.label }}
                                 </button>
                             </div>
@@ -182,7 +182,7 @@ const productosActivos = computed(() => { return products?.value.filter(p => p.a
         </div>
 
         <div v-else
-                class="flex items-center justify-center h-screen">
+             class="flex items-center justify-center h-screen">
             <p class="text-grisOscuro text-lg">No se encontró información del comercio</p>
         </div>
 
