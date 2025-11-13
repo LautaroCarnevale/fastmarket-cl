@@ -6,7 +6,7 @@ import { RouterLink } from 'vue-router'
 import { useAuth } from '../composables/useAuth'
 import { ROLES } from '../constants/roles'
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import { registerSchema } from '@/validation/auth/register.schema'
+import { registerSchema } from '../validations/auth/registerSchema'
 
 const { register } = useAuth()
 const selectedType = ref(ROLES.USER)
