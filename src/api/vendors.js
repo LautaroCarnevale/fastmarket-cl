@@ -16,7 +16,7 @@ export async function getVendorById(id) {
 }
 
 export async function getVendorByOwnerId(id) {
-    const res = await api.get(`/vendors/findByOwner/${id}`)
+    const res = await api.get(`/vendors/findByOwner/${id}`)    
     return res.data
 }
 

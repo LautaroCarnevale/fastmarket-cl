@@ -28,7 +28,8 @@ const loadVendorAndProducts = async () => {
     if (user?.id) {
         await fetchVendorByOwnerId(user.id)
         const vendorId = selectedVendor.value?.id
-
+        console.log(vendorId);
+        
         if (vendorId) {
             await fetchProducts(vendorId)
             await fetchOrdersByVendor(vendorId)            

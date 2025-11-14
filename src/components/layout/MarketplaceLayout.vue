@@ -15,7 +15,7 @@ const { fetchOrdersByUser, orders } = useOrders()
 onMounted(() => {
     fetchVendors()
     if (!user.value) return
-
+    
     fetchOrdersByUser(user.value?.id)
 })
 

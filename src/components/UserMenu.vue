@@ -15,7 +15,7 @@
                 <ul class="list-none p-0 m-0 text-gray-700">
                     <li>
                         <RouterLink @click="closeMenu"
-                                    to="marketplace/account"
+                                    to="/marketplace/account"
                                     class="flex justify-between items-center w-full px-5 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">
                             Mi cuenta
                             <span class="icon-[lucide--edit] w-5 h-5"></span>
@@ -24,7 +24,7 @@
 
                     <li v-if="userRole.value === ROLES.USER">
                         <RouterLink @click="closeMenu"
-                                    to="marketplace/orders"
+                                    to="/marketplace/orders"
                                     class="flex justify-between items-center w-full px-5 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">
                             Mis pedidos
                             <span class="icon-[lucide--package] w-5 h-5"></span>
